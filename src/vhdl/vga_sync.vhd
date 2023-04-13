@@ -23,6 +23,7 @@ video_on <= video_on_H AND video_on_V;
 
 
 PROCESS
+
 BEGIN
 	WAIT UNTIL(clock_25Mhz'EVENT) AND (clock_25Mhz='1');
 
