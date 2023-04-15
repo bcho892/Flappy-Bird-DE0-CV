@@ -1,11 +1,11 @@
-entity ClockDivider is
+entity clock_divider is
     port(
       clk_in : in std_logic;
       clk_out : out std_logic
     );
-  end entity ClockDivider;
+  end entity clock_divider;
   
-  architecture Behavioral of ClockDivider is
+  architecture behaviour of clock_divider is
     signal counter : integer range 0 to 1 := 0;
   begin
     process(clk_in)
@@ -18,5 +18,5 @@ entity ClockDivider is
         end if;
       end if;
     end process;
-  end architecture Behavioral;
+  end architecture behaviour;
   
