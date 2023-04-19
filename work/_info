@@ -7,35 +7,35 @@ z2
 !i10e 25
 !i10f 100
 cModel Technology
-Z0 dC:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV
+dC:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV
 Eball
-Z1 w1681339762
-Z2 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
-Z3 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
-Z4 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
-Z5 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
-R0
-Z6 8C:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/ball.vhd
-Z7 FC:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/ball.vhd
+Z0 w1680415040
+Z1 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z2 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z5 dC:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV
+Z6 8C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/ball.vhd
+Z7 FC:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/ball.vhd
 l0
 L7
 V=;7=RZf6?]nY608H1T=TT3
 !s100 fdMF<]MXgTi@W1[amE0z=0
 Z8 OL;C;10.6d;65
 32
-Z9 !s110 1681340216
+Z9 !s110 1681524128
 !i10b 1
-Z10 !s108 1681340216.000000
-Z11 !s90 -reportprogress|300|-work|work|C:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/ball.vhd|
-Z12 !s107 C:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/ball.vhd|
+Z10 !s108 1681524128.000000
+Z11 !s90 -reportprogress|300|-work|work|C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/ball.vhd|
+Z12 !s107 C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/ball.vhd|
 !i113 0
 Z13 o-work work
 Z14 tExplicit 1 CvgOpt 0
 Abehavior
+R1
 R2
 R3
 R4
-R5
 DEx4 work 4 ball 0 22 =;7=RZf6?]nY608H1T=TT3
 l20
 L14
@@ -52,76 +52,179 @@ R12
 R13
 R14
 Ebouncy_ball
-Z15 w1681337086
+Z15 w1680415032
 Z16 DPx4 ieee 16 std_logic_signed 0 22 C<aanc0R`<LWPSe[JYRP^3
+R2
 R3
 R4
 R5
-R0
-Z17 8C:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/bouncy_ball.vhd
-Z18 FC:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/bouncy_ball.vhd
+Z17 8C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/bouncy_ball.vhd
+Z18 FC:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/bouncy_ball.vhd
 l0
 L7
 VRzd]gm[U]90fD4LfiDNPj1
 !s100 PcWWhRe_Kf<RNk7h2nT3F3
 R8
 32
-Z19 !s110 1681340218
+Z19 !s110 1681525204
 !i10b 1
-Z20 !s108 1681340218.000000
-Z21 !s90 -reportprogress|300|-work|work|C:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/bouncy_ball.vhd|
-!s107 C:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/bouncy_ball.vhd|
+Z20 !s108 1681525204.000000
+Z21 !s90 -reportprogress|300|-work|work|C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/bouncy_ball.vhd|
+Z22 !s107 C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/bouncy_ball.vhd|
 !i113 0
 R13
 R14
 Abehavior
 R16
+R2
 R3
 R4
-R5
 DEx4 work 11 bouncy_ball 0 22 Rzd]gm[U]90fD4LfiDNPj1
+32
+R19
 l22
 L14
 V[WYLOPbeTDfX23zQePmGQ1
 !s100 2@WfSKjakJH]^VFN2kkT_2
 R8
-32
-R19
 !i10b 1
 R20
 R21
-Z22 !s107 C:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/bouncy_ball.vhd|
+R22
 !i113 0
 R13
 R14
-Emouse
-R15
+Eclock_divider
+Z23 w1681524105
+R3
+R4
+R5
+Z24 8C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/clock_divider.vhd
+Z25 FC:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/clock_divider.vhd
+l0
+L4
+V]7IF_ITGD:ma;EZWW8XD93
+!s100 W9mWd95z<nLlcZ4[bgB2c2
+R8
+32
+Z26 !s110 1681525207
+!i10b 1
+Z27 !s108 1681525207.000000
+Z28 !s90 -reportprogress|300|-work|work|C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/clock_divider.vhd|
+Z29 !s107 C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/clock_divider.vhd|
+!i113 0
+R13
+R14
+Abehavioral
+R3
+R4
+DEx4 work 13 clock_divider 0 22 ]7IF_ITGD:ma;EZWW8XD93
+32
+R26
+l13
+L11
+VD^<m?8>EP58DbDVPj^S371
+!s100 e:aTlDZOnj6WThe`GeSh50
+R8
+!i10b 1
+R27
+R28
+R29
+!i113 0
+R13
+R14
+Abehaviour
+R1
+R2
+R3
+R4
+DEx4 work 13 clock_divider 0 22 IS@=zz]?;9BjNi<?MK6nn3
+32
+!s110 1681523882
+l16
+L13
+Vi_:<50kRoFPQgPFG6U2FV0
+!s100 mO]gOHkZJcnB1=95kEMn70
+R8
+!i10b 1
+!s108 1681523882.000000
+R28
+R29
+!i113 0
+R13
+R14
+w1681524016
+Eflappy_bird
+Z30 w1681525577
+R1
 R2
 R3
 R4
 R5
-R0
-Z23 8C:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/mouse.vhd
-Z24 FC:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/mouse.vhd
+Z31 8C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/flappy_bird.vhd
+Z32 FC:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/flappy_bird.vhd
+l0
+L6
+VQC2VV`=Wed@WQS;g1b9k:1
+!s100 <j8fkbkPhJheId7UR=;5o0
+R8
+32
+Z33 !s110 1681525592
+!i10b 1
+Z34 !s108 1681525592.000000
+Z35 !s90 -reportprogress|300|-work|work|C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/flappy_bird.vhd|
+Z36 !s107 C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/flappy_bird.vhd|
+!i113 0
+R13
+R14
+Astructural
+R1
+R2
+R3
+R4
+DEx4 work 11 flappy_bird 0 22 QC2VV`=Wed@WQS;g1b9k:1
+32
+R33
+l39
+L13
+V44bf8:aZkT_[Sn@8o7CFj1
+!s100 Ni>S3kW;K]78c5hRL3QHX0
+R8
+!i10b 1
+R34
+R35
+R36
+!i113 0
+R13
+R14
+Emouse
+Z37 w1617185575
+R1
+R2
+R3
+R4
+R5
+Z38 8C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/mouse.vhd
+Z39 FC:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/mouse.vhd
 l0
 L9
 VdBfBNf`20z6RSEg9P6dR@3
 !s100 NW:2PZGF>]B=@dDA=NGMT0
 R8
 32
-Z25 !s110 1681340211
+Z40 !s110 1681524129
 !i10b 1
-Z26 !s108 1681340211.000000
-Z27 !s90 -reportprogress|300|-work|work|C:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/mouse.vhd|
-Z28 !s107 C:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/mouse.vhd|
+Z41 !s108 1681524129.000000
+Z42 !s90 -reportprogress|300|-work|work|C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/mouse.vhd|
+Z43 !s107 C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/mouse.vhd|
 !i113 0
 R13
 R14
 Abehavior
+R1
 R2
 R3
 R4
-R5
 DEx4 work 5 mouse 0 22 dBfBNf`20z6RSEg9P6dR@3
 l44
 L18
@@ -129,54 +232,179 @@ V6iV>HgH2ib9kUgU?R6@1e3
 !s100 zCU_b4jngd_4lC86n0`7F0
 R8
 32
-R25
+R40
 !i10b 1
-R26
-R27
-R28
+R41
+R42
+R43
 !i113 0
 R13
 R14
-Evga_sync
-R15
+Etb_flappy_bird
+Z44 w1681525397
+R1
 R2
 R3
 R4
 R5
-R0
-Z29 8C:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/vga_sync.vhd
-Z30 FC:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/vga_sync.vhd
+Z45 8C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/testbench/testbench1.vhd
+Z46 FC:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/testbench/testbench1.vhd
+l0
+L6
+Vk6<O0Gc<0Re5MRK3GgTLj0
+!s100 nSJzJQKABCANMh`3`Vhn:0
+R8
+32
+Z47 !s110 1681525595
+!i10b 1
+Z48 !s108 1681525595.000000
+Z49 !s90 -reportprogress|300|-work|work|C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/testbench/testbench1.vhd|
+Z50 !s107 C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/testbench/testbench1.vhd|
+!i113 0
+R13
+R14
+Atest
+R1
+R2
+R3
+R4
+DEx4 work 14 tb_flappy_bird 0 22 k6<O0Gc<0Re5MRK3GgTLj0
+32
+R47
+l18
+L9
+VYLoQ7<33Kh?=[g1Cda_0]3
+!s100 AObQe_2mHfBCC_UFm>NPI3
+R8
+!i10b 1
+R48
+R49
+R50
+!i113 0
+R13
+R14
+Evga_example
+Z51 w1681529913
+R1
+R2
+R3
+R4
+R5
+Z52 8C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/VGA_EXAMPLE.vhd
+Z53 FC:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/VGA_EXAMPLE.vhd
+l0
+L11
+VM`8^WX<6W`JMXMRCBDcWm2
+!s100 1e0DDkJ[FZ^`f5G5R]ZZW0
+R8
+32
+Z54 !s110 1681532320
+!i10b 1
+Z55 !s108 1681532320.000000
+Z56 !s90 -reportprogress|300|-work|work|C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/VGA_EXAMPLE.vhd|
+Z57 !s107 C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/VGA_EXAMPLE.vhd|
+!i113 0
+R13
+R14
+Abehavioral
+R1
+R2
+R3
+R4
+DEx4 work 11 vga_example 0 22 M`8^WX<6W`JMXMRCBDcWm2
+32
+R54
+l39
+L29
+VWSO?Sl9j:mjJYDnONK_D81
+!s100 IVWZPeSZJ4=lfjiP;INlA1
+R8
+!i10b 1
+R55
+R56
+R57
+!i113 0
+R13
+R14
+Evga_example_tb
+Z58 w1681532296
+R3
+R4
+R5
+R45
+R46
+l0
+L4
+Vf:;ADGHONWJoHEIPZW9Z[1
+!s100 KHE`<=gb7JB>DYS>EJK<W0
+R8
+32
+Z59 !s110 1681532326
+!i10b 1
+Z60 !s108 1681532326.000000
+R49
+R50
+!i113 0
+R13
+R14
+Abehavioral
+R3
+R4
+DEx4 work 14 vga_example_tb 0 22 f:;ADGHONWJoHEIPZW9Z[1
+32
+R59
+l25
+L7
+VYbm]>6oP0JQE_DZ=Y7eO^2
+!s100 5>?5o80iOVaAdX>d1oOJ<0
+R8
+!i10b 1
+R60
+R49
+R50
+!i113 0
+R13
+R14
+Evga_sync
+Z61 w1681437552
+R1
+R2
+R3
+R4
+R5
+Z62 8C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/vga_sync.vhd
+Z63 FC:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/vga_sync.vhd
 l0
 L7
 VMdI7Y31oA]60C@FFgoE0z1
 !s100 _l^FX8bbCD3IjI0S=_RTW3
 R8
 32
-Z31 !s110 1681340210
+R40
 !i10b 1
-Z32 !s108 1681340210.000000
-Z33 !s90 -reportprogress|300|-work|work|C:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/vga_sync.vhd|
-Z34 !s107 C:/Users/ianku/OneDrive/Documents/Flappy-Bird-DE0-CV/src/vhdl/vga_sync.vhd|
+R41
+Z64 !s90 -reportprogress|300|-work|work|C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/vga_sync.vhd|
+Z65 !s107 C:/Users/AKLbc/Desktop/305/Flappy-Bird-DE0-CV/src/vhdl/vga_sync.vhd|
 !i113 0
 R13
 R14
 Aa
+R1
 R2
 R3
 R4
-R5
 DEx4 work 8 vga_sync 0 22 MdI7Y31oA]60C@FFgoE0z1
+32
+R40
 l18
 L13
-V9UII;YDd:b]4D7T:f?DdW2
-!s100 WFb=Ah6ekZG;K4j`AXbUV2
+VTEeJU0PP7l_663]E^HU<R0
+!s100 kC]g0N_S[>9<o7PImfYen3
 R8
-32
-R31
 !i10b 1
-R32
-R33
-R34
+R41
+R64
+R65
 !i113 0
 R13
 R14

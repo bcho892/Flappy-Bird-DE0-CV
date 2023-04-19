@@ -1,9 +1,14 @@
+library IEEE;
+use  IEEE.STD_LOGIC_1164.all;
+use  IEEE.STD_LOGIC_ARITH.all;
+use  IEEE.STD_LOGIC_UNSIGNED.all;
+
 Entity FLAPPY_BIRD is
 	Port (
 		clk, pb1, pb2 : IN STD_LOGIC;
-		red_out, green_out, blue_out, horiz_sync_out, vert_sync_out: OUT STD_LOGIC,
-	)
-end Entity;
+		red_out, green_out, blue_out, horiz_sync_out, vert_sync_out: OUT STD_LOGIC
+	);
+END Entity FLAPPY_BIRD;
 
 ARCHITECTURE structural of FLAPPY_BIRD IS
 	-- Clock Divider
@@ -27,17 +32,17 @@ ARCHITECTURE structural of FLAPPY_BIRD IS
 			pixel_row, pixel_column: OUT STD_LOGIC_VECTOR(9 DOWNTO 0));
 	END COMPONENT vga_sync;
 	-- Internal Signals
-	SIGNAL internal_clk : STD_LOGIC;
-	SIGNAL red, green, blue : STD_LOGIC;
-	SIGNAL vert_sync: STD_LOGIC;
-	SIGNAL pixel_row, pixel_column : STD_LOGIC_VECTOR(9 DOWNTO 0);
+	SIGNAL internal_clk : STD_LOGIC := '0';
+	SIGNAL red, green, blue : STD_LOGIC := '0';
+	SIGNAL vert_sync: STD_LOGIC := '0';
+	SIGNAL pixel_row, pixel_column : STD_LOGIC_VECTOR(9 DOWNTO 0) := "0000000000";
 BEGIN
-	clock_divider: clock_divider PORT MAP(clk, internal_clk);
-	bouncy_ball: bouncy_ball PORT MAP(pb1, pb2, internal_clk, vert_sync,  pixel_row, pixel_column,
+	clock_divider1: clock_divider PORT MAP(clk, internal_clk);
+	bouncy_ball1: bouncy_ball PORT MAP(pb1, pb2, internal_clk, vert_sync,  pixel_row, pixel_column,
 									 red, green, blue);
-	vga_sync: vga_sync PORT MAP(internal_clk, red, green, blue,
+	vga_sync1: vga_sync PORT MAP(internal_clk, red, green, blue,
 							   red_out, green_out, blue_out, horiz_sync_out, vert_sync,
 								pixel_row, pixel_column
 						   );
 	vert_sync_out <= vert_sync;	
-END ARCHITECTURE;
+END ARCHITECTURE structural;
