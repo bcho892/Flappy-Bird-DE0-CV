@@ -47,7 +47,7 @@ begin
 		--elsif (ball_y_pos <= size) then 
 		--	ball_y_motion <= CONV_STD_LOGIC_VECTOR(2,10);
 		--end if;
-		if(left_button) then
+		if(left_button) then -- NEED TO CHECK IF PROCESS CAN SEE LEFT_BUTTON
 			-- Compute next ball Y position
 			ball_y_motion <= CONV_STD_LOGIC_VECTOR(2,10);
 			ball_y_pos <= ball_y_pos + ball_y_motion;
