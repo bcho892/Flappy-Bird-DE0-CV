@@ -6,7 +6,7 @@ USE  IEEE.STD_LOGIC_SIGNED.all;
 
 ENTITY bouncy_ball IS
 	PORT
-		( pb1, pb2, clk, vert_sync	: IN std_logic;
+		( pb1, pb2, clk, vert_sync, left_button	: IN std_logic;
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		  red, green, blue 			: OUT std_logic);		
 END bouncy_ball;
@@ -37,19 +37,24 @@ Green <= (not pb2) and (not ball_on);
 Blue <=  not ball_on;
 
 
-Move_Ball: process (vert_sync)  	
+Move_Ball: process (left_button)  -- add left_button to sens list
 begin
-	-- Move ball once every vertical sync
-	if (rising_edge(vert_sync)) then			
-		-- Bounce off top or bottom of the screen
-		if ( ('0' & ball_y_pos >= CONV_STD_LOGIC_VECTOR(479,10) - size) ) then
-			ball_y_motion <= - CONV_STD_LOGIC_VECTOR(2,10);
-		elsif (ball_y_pos <= size) then 
-			ball_y_motion <= CONV_STD_LOGIC_VECTOR(2,10);
-		end if;
+	-- Move ball on mouse click rising edge and vert_sync rising edge
+	if (Rising_Edge(left_button) and Rising_Edge(vert_sync)) then			
+		-- Bounce off top or bottom of the screen DON'T NEED THIS BUT WILL KEEP
+		--if ( ('0' & ball_y_pos >= CONV_STD_LOGIC_VECTOR(479,10) - size) ) then
+		--	ball_y_motion <= - CONV_STD_LOGIC_VECTOR(2,10);
+		--elsif (ball_y_pos <= size) then 
+		--	ball_y_motion <= CONV_STD_LOGIC_VECTOR(2,10);
+		--end if;
+		
 		-- Compute next ball Y position
+		ball_y_motion <= CONV_STD_LOGIC_VECTOR(2,10);
 		ball_y_pos <= ball_y_pos + ball_y_motion;
-	end if;
+	else 
+		-- GRAVITY COMES HERE this is a place holder
+		ball_y_motion <= - CONV_STD_LOGIC_VECTOR(2,10);
+		ball_y_pos <= ball_y_pos - ball_y_motion;
 end process Move_Ball;
 
 END behavior;
