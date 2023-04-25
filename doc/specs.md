@@ -12,7 +12,15 @@ This document is to be used for planning and documenting the implementaion detai
 
 The _Bird_ is a sprite that is fixed horizontally on the screen, and travels up and down. The upwards motion is to be triggered on a mouse click.
 
+#### Constants
+
+**Acceleration**: To be added to fall speed
+
+**Up speed**: To be added while ascending
+
 #### Important Signals
+
+**Ascending**: (_Flag_) Set to 1 if the bird is currently ascending
 
 **Ball on**: Outputs 1 if the bird sprite is present in the current vsync pixel (x,y).
 
