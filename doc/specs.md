@@ -20,6 +20,8 @@ The _Bird_ is a sprite that is fixed horizontally on the screen, and travels up 
 
 #### Important Signals
 
+**Counter** Used to track how long the bird will be travelling up for
+
 **Ascending**: (_Flag_) Set to 1 if the bird is currently ascending
 
 **Ball on**: Outputs 1 if the bird sprite is present in the current vsync pixel (x,y).
