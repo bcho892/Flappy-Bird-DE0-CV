@@ -14,23 +14,34 @@ The _Bird_ is a sprite that is fixed horizontally on the screen, and travels up 
 
 #### Constants
 
-**Acceleration**: To be added to fall speed
+- **Acceleration**: To be added to fall speed
 
-**Up speed**: To be added while ascending
+- **Up speed**: To be added while ascending
 
 #### Important Signals
 
-**Counter** Used to track how long the bird will be travelling up for
+- **Counter** Used to track how long the bird will be travelling up for
 
-**Ascending**: (_Flag_) Set to 1 if the bird is currently ascending
+- **Ascending**: (_Flag_) Set to 1 if the bird is currently ascending
 
-**Ball on**: Outputs 1 if the bird sprite is present in the current vsync pixel (x,y).
+- **Ball on**: Outputs 1 if the bird sprite is present in the current vsync pixel (x,y).
 
-**Size**: (_Constant_) determines how much space the bird will take up relative to its center.
+- **Size**: (_Constant_) determines how much space the bird will take up relative to its center.
 
-**Y Motion**: Acts as fall speed, can be positive or negative.
+- **Y Motion**: Acts as fall speed, can be positive or negative.
 
-**Mouse In**: 1 or 0, comes from PS/2 mouse module
+- **Mouse In**: 1 or 0, comes from PS/2 mouse module
+
+#### Game state
+
+- **Game Over**
+Do not accept user inputs
+
+- **Game Start** 
+Stay in middle of screen
+
+- **Gameplay (Game/Training)**
+*See below*
 
 #### Implementation Details
 
