@@ -21,8 +21,8 @@ BEGIN
 
 size <= CONV_STD_LOGIC_VECTOR(8,10);
 -- ball_x_pos and ball_y_pos show the (x,y) for the centre of ball
-ball_x_pos <= CONV_STD_LOGIC_VECTOR(590,10);
-ball_y_pos <= CONV_STD_LOGIC_VECTOR(350,10);
+ball_x_pos <= CONV_STD_LOGIC_VECTOR(590,10); 
+ball_y_pos <= CONV_STD_LOGIC_VECTOR(350,10); 
 
 
 ball_on <= '1' when ( ('0' & ball_x_pos <= pixel_column + size) and ('0' & pixel_column <= ball_x_pos + size) 	-- x_pos - size <= pixel_column <= x_pos + size
