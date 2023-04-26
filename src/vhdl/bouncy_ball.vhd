@@ -19,7 +19,7 @@ SIGNAL size 					: std_logic_vector(9 DOWNTO 0);
 SIGNAL ball_y_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL ball_x_pos				: std_logic_vector(10 DOWNTO 0);
 SIGNAL ball_y_motion			: std_logic_vector(9 DOWNTO 0);
-SIGNAL ascending_flag 				: std_logic := '0';
+SIGNAL ascending_flag 			: std_logic := '1';
 SIGNAL frame_count 				: unsigned(2 downto 0) := "000";
 
 BEGIN           
