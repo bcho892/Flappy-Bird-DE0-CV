@@ -71,3 +71,15 @@ IF at ground
 Else if at top
     - Do not increment y pos
 ```
+
+### Pipe
+
+#### Requirements
+
+The pipe is an entity which has a random height gap with a constant width, starts from the right of the screen and stops operation when it passes the left side of the screen.
+
+#### Constants
+
+**Pipe Gap**: Distance from the end of the pipe to the start of the next gap
+
+**Pipe Width**: Distance from
