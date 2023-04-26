@@ -172,3 +172,15 @@ The priority should be as follows:
 3. Ground
 4. Pipes
 5. Background
+
+### Collision Detection
+
+#### Requirements
+
+This will output a bit that is fed into the FSM when the bird touches the ground or pipe
+
+### Random Number Generator
+
+#### Requirements
+
+This will generate a random number within a range to be fed into the pipes. (Possibly clock triggered?)
