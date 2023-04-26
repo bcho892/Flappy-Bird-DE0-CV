@@ -23,11 +23,14 @@ type unsigned_height_vector is array (0 to 14) of unsigned;
 --CONSTANTS
 CONSTANT preset_scroll_speeds : unsigned_vector := (5, 10, 12, 15, 18);
 CONSTANT preset_pipe_heights : unsigned_height_vector;
-CONSTANT pipe_gap : STD_LOGIC_VECTOR();
-CONSTANT pipe_width : STD_LOGIC_VECTOR();
+CONSTANT pipe_gap : STD_LOGIC_VECTOR(); -- TODO 
+CONSTANT pipe_width : STD_LOGIC_VECTOR(); -- TODO
 CONSTANT screen_max_x : STD_LOGIC_VECTOR(10 downto 0) := CONV_STD_LOGIC_VECTOR(639, 10);
 
 begin
+--TODO write the conditions for pipe_on
+
+--TODO assign a color
 move_pipe : process(vert_sync) 	
 begin
 	if Rising_Edge(vert_sync) then
