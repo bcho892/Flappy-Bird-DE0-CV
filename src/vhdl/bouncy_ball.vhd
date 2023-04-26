@@ -48,19 +48,30 @@ begin
 	if Rising_Edge(vert_sync) then
 		if left_button = '1' then
 			-- Go up
-			ball_y_motion <= -CONV_STD_LOGIC_VECTOR(5, 10); -- Set upward motion
+			if ball_y_pos > 0 then -- Check if ball is not at the top of the screen
+				ball_y_motion <= -CONV_STD_LOGIC_VECTOR(5, 10); -- Set upward motion
+			else
+				ball_y_motion <= (others => '0'); -- Dont move
+			end if;
 		else
 			-- Apply gravity
-			if ball_y_motion < CONV_STD_LOGIC_VECTOR(15, 10) then -- Check if ball_y_motion is less than 15
-				ball_y_motion <= ball_y_motion + CONV_STD_LOGIC_VECTOR(1, 10); -- Increment ball_y_motion by 1
+			if ball_y_pos < (CONV_STD_LOGIC_VECTOR(479,10) - size) then -- Check if ball is not at the bottom of the screen
+				if ball_y_motion < CONV_STD_LOGIC_VECTOR(10, 10) then -- Limit fall speed
+					ball_y_motion <= ball_y_motion + CONV_STD_LOGIC_VECTOR(1, 10); -- Make it fall faster
+				end if;
+			else
+				ball_y_motion <= (others => '0'); -- Stop downward motion
 			end if;
 		end if;
-		
-		ball_y_pos <= ball_y_pos + ball_y_motion;
-		
+		if ball_y_pos + ball_y_motion >= (CONV_STD_LOGIC_VECTOR(479,10) - size) then
+			ball_y_pos <= CONV_STD_LOGIC_VECTOR(479,10) - size; --Make it fall to bottom gracefully
+		else
+			ball_y_pos <= ball_y_pos + ball_y_motion; -- normal
+		end if;
 
 	end if;
 end process Move_Ball;
+
 
 END behavior;
 
