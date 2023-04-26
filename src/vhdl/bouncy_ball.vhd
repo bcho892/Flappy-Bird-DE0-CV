@@ -20,7 +20,9 @@ SIGNAL ball_y_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL ball_x_pos				: std_logic_vector(10 DOWNTO 0);
 SIGNAL ball_y_motion			: std_logic_vector(9 DOWNTO 0);
 SIGNAL ascending_flag 			: std_logic := '0';
-SIGNAL frame_count 				: unsigned(2 downto 0) := "000";
+SIGNAL max_frames_ascending 	: Integer := 30;
+SIGNAL frame_count : Integer := 0;
+SIGNAL click_disabled : std_logic := '0';
 
 BEGIN           
 
@@ -39,27 +41,24 @@ Red <=  pb1;
 Green <= (not pb2) and (not ball_on);
 Blue <=  not ball_on;
 
-Change_Motion: process (left_button)
+
+
+Move_Ball: process (vert_sync) -- Add left_button to sensitivity list
 begin
-	if(Rising_Edge(left_button)) then
-		if(ascending_flag = '0') then
-			-- set flag
-			ascending_flag <= '1';
-			ball_y_motion <= CONV_STD_LOGIC_VECTOR(2,10);
-		else 
-			ball_y_motion <= - CONV_STD_LOGIC_VECTOR(2,10);
-			ascending_flag <= '0';
+	if Rising_Edge(vert_sync) then
+		if left_button = '1' then
+			-- Go up
+			ball_y_motion <= -CONV_STD_LOGIC_VECTOR(5, 10); -- Set upward motion
+		else
+			-- Apply gravity
+			if ball_y_motion < CONV_STD_LOGIC_VECTOR(15, 10) then -- Check if ball_y_motion is less than 15
+				ball_y_motion <= ball_y_motion + CONV_STD_LOGIC_VECTOR(1, 10); -- Increment ball_y_motion by 1
+			end if;
 		end if;
-	end if;
-end process;
+		
+		ball_y_pos <= ball_y_pos + ball_y_motion;
+		
 
-
-
-Move_Ball: process (vert_sync)  -- add left_button to sens list
-begin
-	-- Move ball on mouse click rising edge and vert_sync rising edge
-	if (Rising_Edge(vert_sync)) then
-			ball_y_pos <= ball_y_pos + ball_y_motion;
 	end if;
 end process Move_Ball;
 
