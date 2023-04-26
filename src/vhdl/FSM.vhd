@@ -32,32 +32,31 @@ BEGIN
 
    END PROCESS state_sync;
 
-   state_decode : PROCESS (clk_in, state_in)
+   output_decode : PROCESS (state)
 
-      output_decode : PROCESS (state)
-      BEGIN
-         CASE (state) IS
-            WHEN menu =>
-               IF (state_in = normal_game) THEN
-                  next_state <= normal_game;
-               ELSIF (state_in = training) THEN
-                  next_state <= training;
-               END IF;
-            WHEN NORMAL GAME =>
-               IF (state_in = game_over);
-                  next_state <= game_over;
-               END IF;
-            WHEN game_over =>
-               IF (state_in = menu) THEN
-                  next_state <= menu;
-               ELSIF (state_in <= GAME_training) THEN
-                  next_state <= GAME_training;
-               END IF;
-            WHEN GAME_training =>
-               IF (state_in <= menu) THEN
-                  next_state <= menu;
-               END IF;
-         END CASE;
-      END PROCESS output_decode;
+   BEGIN
+      CASE (state) IS
+         WHEN menu =>
+            IF (state_in = normal_game) THEN
+               next_state <= normal_game;
+            ELSIF (state_in = training) THEN
+               next_state <= training;
+            END IF;
+         WHEN normal_game =>
+            IF (state_in = game_over) THEN
+               next_state <= game_over;
+            END IF;
+         WHEN game_over =>
+            IF (state_in = menu) THEN
+               next_state <= menu;
+            ELSIF (state_in <= training) THEN
+               next_state <= training;
+            END IF;
+         WHEN training =>
+            IF (state_in <= menu) THEN
+               next_state <= menu;
+            END IF;
+      END CASE;
+   END PROCESS output_decode;
 
-   END ARCHITECTURE Moore;
+END ARCHITECTURE Moore;
