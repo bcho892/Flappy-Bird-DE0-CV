@@ -137,3 +137,38 @@ PIPE_ON IF
 ***AND***
 (row =< Pipe Height) AND (row >= Pipe Height + Pipe Gap)
 ```
+
+### Display MUX
+
+#### Requirements
+
+This multiplexer requires bus inputs for **R,G,B** for the following components:
+
+-   Background x 1
+-   Bird x 1
+-   Pipe x 5
+-   Ground x 1
+-   Text x 1
+
+The select input will need to be priority encoded
+
+#### Important Signals
+
+-   **RGB Inputs**: These come from every display component
+-   **RGB Outputs**: Three signals, RGB to be sent to the vga sync
+-   **Select**: Comes from the "On" signal of each component
+
+#### Implementation Details
+
+```
+ Chain 2x1 MUX for non pipes to create a priority multiplexer
+ Create a separate MUX for all the pipes that feeds into the MUX chain
+```
+
+The priority should be as follows:
+
+1. Text
+2. Bird
+3. Ground
+4. Pipes
+5. Background
