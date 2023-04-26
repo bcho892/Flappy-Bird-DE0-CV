@@ -105,7 +105,7 @@ The pipe is an entity which has a random height gap with a constant width, start
 
 -   **Scroll speed**: Input from FSM that determines how fast the pipes will scroll
 
--   **R Offset**: How far the start of the pipe is from the start of the right of the screen
+-   **L Offset**: How far the start of the pipe is from the start of the screen
 
 -   **Pipe Index**: Randomly generated number to index a height from the random height vector
 
@@ -130,19 +130,27 @@ The pipe is an entity which has a random height gap with a constant width, start
 Init:
 
 ```
+Store a random height using the random index
 Set scroll speed to input scroll speed
 ```
 
 Reset:
 
 ```
-Set R offset to 0 and scroll speed to 0
+Set L offset to 639 (Max width) and scroll speed to 0
 ```
 
 VGA_Sync:
 
 ```
-Move left by scroll speed
+Move left by scroll speed (decrease L offset)
 ```
 
 **VGA Display Conditions:**
+
+```
+PIPE_ON IF
+(column >= L offset) AND (column <= L+Pipe Width)
+***AND***
+(row =< Pipe Height) AND (row >= Pipe Height + Pipe Gap)
+```
