@@ -8,7 +8,7 @@ ENTITY bouncy_ball IS
 	PORT
 		( pb1, pb2, clk, vert_sync, left_button	: IN std_logic;
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
-		  game_state : IN std_logic_vector(1 downto 0) -- 00 game over, 01 game start, 10 gameplay
+		  game_state : IN std_logic_vector(1 downto 0); -- 00 game over, 01 game start, 10 gameplay
 		  red, green, blue 			: OUT std_logic);		
 END bouncy_ball;
 
@@ -20,7 +20,7 @@ SIGNAL ball_y_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL ball_x_pos				: std_logic_vector(10 DOWNTO 0);
 SIGNAL ball_y_motion			: std_logic_vector(9 DOWNTO 0);
 SIGNAL ascending 				: std_logic;
-SIGNAL frame_count 				: unsigned(2 downto 0) : "000";
+SIGNAL frame_count 				: unsigned(2 downto 0) <= "000";
 
 BEGIN           
 
@@ -49,7 +49,6 @@ begin
 	end if;
 end process;
 
-		
 Move_Ball: process (vert_sync, ascending)  -- add left_button to sens list
 begin
 	-- Move ball on mouse click rising edge and vert_sync rising edge
@@ -58,13 +57,13 @@ begin
 			-- Compute next ball Y position
 			ball_y_motion <= CONV_STD_LOGIC_VECTOR(2,10);
 			ball_y_pos <= ball_y_pos + ball_y_motion;
-			ascending = '0';
+			ascending <= '0';
 		else
 			-- GRAVITY COMES HERE this is a place holder
 			ball_y_motion <= - CONV_STD_LOGIC_VECTOR(2,10);
 			ball_y_pos <= ball_y_pos - ball_y_motion;
 		end if;
-
+	end if;
 end process Move_Ball;
 
 END behavior;
