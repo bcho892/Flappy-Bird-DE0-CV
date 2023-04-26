@@ -1,10 +1,11 @@
 entity pipe is
 	PORT(
-		init, reset : IN STD_LOGIC;
+		vert_sync, init, reset : IN STD_LOGIC;
+        pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		game_state: IN STD_LOGIC_VECTOR(2 downto 0);
 		game_level : IN STD_LOGIC_VECTOR(2 downto 0);
 		random_index : IN STD_LOGIC_VECTOR(3 downto 0);
-		init_next : OUT STD_LOGIC
+		init_next, red, green, blue : OUT STD_LOGIC
 	)
 end entity;
 
@@ -24,4 +25,5 @@ CONSTANT pipe_gap : STD_LOGIC_VECTOR();
 CONSTANT pipe_width : STD_LOGIC_VECTOR();
 
 begin
+	
 end behaviour;
