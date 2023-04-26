@@ -34,11 +34,14 @@ begin
 move_pipe : process(vert_sync) 	
 begin
 	if Rising_Edge(vert_sync) then
+		if init = '1' then 
+			enable <= '1';
+		end if;
 		-- off the screen
 		if left_offset < conv_std_logic_vector(0, 10) - pipe_width then 
-			left_offset <= CONV_STD_LOGIC_VECTOR(0, 10);
-			pipe_x_motion <= CONV_STD_LOGIC_VECTOR(0,10);
-		elsif init = '1'
+			left_offset <= screen_max_x;
+			enable <= '0';
+		else
 			pipe_x_motion <= CONV_STD_LOGIC_VECTOR(preset_scroll_speeds(1), 10);
 		end if;
 		-- when to start moving next pipe
@@ -47,7 +50,8 @@ begin
 		else 
 			init_next <= '0';
 		end if;
-		left_offset <= left_offset - pipe_x_motion;
+		
+		left_offset <= left_offset + pipe_x_motion when enable = '1' else left_offset <= left_offset;
 	end if;
 end process move_pipe;
 end behaviour;
