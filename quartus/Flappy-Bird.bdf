@@ -718,64 +718,50 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 928 632 1120 808)
-	(text "bouncy_ball" (rect 5 0 64 12)(font "Arial" ))
-	(text "inst7" (rect 8 160 30 177)(font "Intel Clear" ))
+	(rect 928 632 1120 776)
+	(text "bird" (rect 5 0 22 12)(font "Arial" ))
+	(text "inst8" (rect 8 128 30 145)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
-		(text "pb1" (rect 0 0 17 12)(font "Arial" ))
-		(text "pb1" (rect 21 27 38 39)(font "Arial" ))
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
 		(line (pt 0 32)(pt 16 32))
 	)
 	(port
 		(pt 0 48)
 		(input)
-		(text "pb2" (rect 0 0 17 12)(font "Arial" ))
-		(text "pb2" (rect 21 43 38 55)(font "Arial" ))
+		(text "vert_sync" (rect 0 0 50 12)(font "Arial" ))
+		(text "vert_sync" (rect 21 43 71 55)(font "Arial" ))
 		(line (pt 0 48)(pt 16 48))
 	)
 	(port
 		(pt 0 64)
 		(input)
-		(text "clk" (rect 0 0 14 12)(font "Arial" ))
-		(text "clk" (rect 21 59 35 71)(font "Arial" ))
+		(text "left_button" (rect 0 0 53 12)(font "Arial" ))
+		(text "left_button" (rect 21 59 74 71)(font "Arial" ))
 		(line (pt 0 64)(pt 16 64))
 	)
 	(port
 		(pt 0 80)
 		(input)
-		(text "vert_sync" (rect 0 0 50 12)(font "Arial" ))
-		(text "vert_sync" (rect 21 75 71 87)(font "Arial" ))
-		(line (pt 0 80)(pt 16 80))
+		(text "pixel_row[9..0]" (rect 0 0 70 12)(font "Arial" ))
+		(text "pixel_row[9..0]" (rect 21 75 91 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
 	)
 	(port
 		(pt 0 96)
 		(input)
-		(text "left_button" (rect 0 0 53 12)(font "Arial" ))
-		(text "left_button" (rect 21 91 74 103)(font "Arial" ))
-		(line (pt 0 96)(pt 16 96))
+		(text "pixel_column[9..0]" (rect 0 0 89 12)(font "Arial" ))
+		(text "pixel_column[9..0]" (rect 21 91 110 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96)(line_width 3))
 	)
 	(port
 		(pt 0 112)
 		(input)
-		(text "pixel_row[9..0]" (rect 0 0 70 12)(font "Arial" ))
-		(text "pixel_row[9..0]" (rect 21 107 91 119)(font "Arial" ))
-		(line (pt 0 112)(pt 16 112)(line_width 3))
-	)
-	(port
-		(pt 0 128)
-		(input)
-		(text "pixel_column[9..0]" (rect 0 0 89 12)(font "Arial" ))
-		(text "pixel_column[9..0]" (rect 21 123 110 135)(font "Arial" ))
-		(line (pt 0 128)(pt 16 128)(line_width 3))
-	)
-	(port
-		(pt 0 144)
-		(input)
 		(text "game_state[1..0]" (rect 0 0 83 12)(font "Arial" ))
-		(text "game_state[1..0]" (rect 21 139 104 151)(font "Arial" ))
-		(line (pt 0 144)(pt 16 144)(line_width 3))
+		(text "game_state[1..0]" (rect 21 107 104 119)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
 		(pt 192 32)
@@ -799,7 +785,7 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 192 64)(pt 176 64))
 	)
 	(drawing
-		(rectangle (rect 16 16 176 160))
+		(rectangle (rect 16 16 176 128))
 	)
 )
 (connector
@@ -990,20 +976,12 @@ https://fpgasoftware.intel.com/eula.
 	(pt 200 1216)
 )
 (connector
-	(pt 1432 288)
-	(pt 1432 728)
-)
-(connector
 	(pt 1248 288)
 	(pt 1432 288)
 )
 (connector
 	(pt 1432 288)
 	(pt 1480 288)
-)
-(connector
-	(pt 928 728)
-	(pt 1432 728)
 )
 (connector
 	(pt 1184 496)
@@ -1042,14 +1020,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 1120 696)
 )
 (connector
-	(pt 928 712)
-	(pt 856 712)
-)
-(connector
-	(pt 856 712)
-	(pt 856 912)
-)
-(connector
 	(pt 856 912)
 	(pt 1480 912)
 )
@@ -1060,16 +1030,6 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 1480 544)
 	(pt 1480 912)
-)
-(connector
-	(pt 928 744)
-	(pt 872 744)
-	(bus)
-)
-(connector
-	(pt 872 744)
-	(pt 872 896)
-	(bus)
 )
 (connector
 	(pt 872 896)
@@ -1102,16 +1062,6 @@ https://fpgasoftware.intel.com/eula.
 	(bus)
 )
 (connector
-	(pt 888 872)
-	(pt 888 760)
-	(bus)
-)
-(connector
-	(pt 888 760)
-	(pt 928 760)
-	(bus)
-)
-(connector
 	(pt 856 256)
 	(pt 856 480)
 )
@@ -1126,6 +1076,50 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 856 256)
 	(pt 984 256)
+)
+(connector
+	(pt 888 872)
+	(pt 888 728)
+	(bus)
+)
+(connector
+	(pt 888 728)
+	(pt 928 728)
+	(bus)
+)
+(connector
+	(pt 928 712)
+	(pt 872 712)
+	(bus)
+)
+(connector
+	(pt 872 712)
+	(pt 872 896)
+	(bus)
+)
+(connector
+	(pt 856 912)
+	(pt 856 680)
+)
+(connector
+	(pt 856 680)
+	(pt 928 680)
+)
+(connector
+	(pt 1432 800)
+	(pt 904 800)
+)
+(connector
+	(pt 1432 288)
+	(pt 1432 800)
+)
+(connector
+	(pt 904 800)
+	(pt 904 696)
+)
+(connector
+	(pt 904 696)
+	(pt 928 696)
 )
 (junction (pt 1432 288))
 (junction (pt 856 256))
