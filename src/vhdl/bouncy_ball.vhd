@@ -8,6 +8,7 @@ ENTITY bouncy_ball IS
 	PORT
 		( pb1, pb2, clk, vert_sync, left_button	: IN std_logic;
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
+		  game_state : IN std_logic_vector(1 downto 0) -- 00 game over, 01 game start, 10 gameplay
 		  red, green, blue 			: OUT std_logic);		
 END bouncy_ball;
 
@@ -18,6 +19,8 @@ SIGNAL size 					: std_logic_vector(9 DOWNTO 0);
 SIGNAL ball_y_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL ball_x_pos				: std_logic_vector(10 DOWNTO 0);
 SIGNAL ball_y_motion			: std_logic_vector(9 DOWNTO 0);
+SIGNAL ascending 				: std_logic;
+SIGNAL frame_count 				: unsigned(2 downto 0) : "000";
 
 BEGIN           
 
@@ -36,27 +39,31 @@ Red <=  pb1;
 Green <= (not pb2) and (not ball_on);
 Blue <=  not ball_on;
 
+Change_Motion: process (left_button)
+begin
+	if(Rising_Edge(left_button)) then
+		if(ascending = '0') then
+			-- set flag
+			ascending <= '1';
+		end if;
+	end if;
+end process;
 
-Move_Ball: process (vert_sync)  -- add left_button to sens list
+		
+Move_Ball: process (vert_sync, ascending)  -- add left_button to sens list
 begin
 	-- Move ball on mouse click rising edge and vert_sync rising edge
-	if (Rising_Edge(vert_sync)) then			
-		-- Bounce off top or bottom of the screen DON'T NEED THIS BUT WILL KEEP
-		--if ( ('0' & ball_y_pos >= CONV_STD_LOGIC_VECTOR(479,10) - size) ) then
-		--	ball_y_motion <= - CONV_STD_LOGIC_VECTOR(2,10);
-		--elsif (ball_y_pos <= size) then 
-		--	ball_y_motion <= CONV_STD_LOGIC_VECTOR(2,10);
-		--end if;
-		if(left_button) then -- NEED TO CHECK IF PROCESS CAN SEE LEFT_BUTTON
+	if (Rising_Edge(vert_sync)) then
+		if(ascending) then 
 			-- Compute next ball Y position
 			ball_y_motion <= CONV_STD_LOGIC_VECTOR(2,10);
 			ball_y_pos <= ball_y_pos + ball_y_motion;
-		else 
+			ascending = '0';
+		else
 			-- GRAVITY COMES HERE this is a place holder
 			ball_y_motion <= - CONV_STD_LOGIC_VECTOR(2,10);
 			ball_y_pos <= ball_y_pos - ball_y_motion;
 		end if;
-	end if;
 
 end process Move_Ball;
 
