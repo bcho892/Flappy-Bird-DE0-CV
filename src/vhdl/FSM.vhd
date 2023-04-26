@@ -2,14 +2,14 @@ LIBRARY IEEE;
 USE iee.std_logic_1164.ALL;
 
 -- CUSTOM STATE TYPE
-TYPE state_types IS (MENU, NORMAL_GAME, GAME_OVER, TRAINING);
+TYPE state_types IS (menu, normal_game, game_over, training);
 
 ENTITY FSM IS
 
    PORT (
       clk_in : IN STD_LOGIC;
-      next_state_in : IN STD_LOGIC_VECTOR(1 TO 0); -- 4 different states possible so input is 
-      state_out : OUT INTEGER; -- Output of FSM is game state (MENU, NORMAL GAME, GAME OVER, TRAINING)
+      state_in : IN STD_LOGIC_VECTOR(1 TO 0); -- 4 different states possible so input is 
+      state_out : OUT state_types; -- Output of FSM is game state (menu, NORMAL GAME, GAME OVER, training)
 
    );
 END ENTITY FSM;
@@ -32,14 +32,32 @@ BEGIN
 
    END PROCESS state_sync;
 
-   state_decode : PROCESS (clk_in, next_state_in)
+   state_decode : PROCESS (clk_in, state_in)
 
-      output : PROCESS (state)
+      output_decode : PROCESS (state)
       BEGIN
          CASE (state) IS
-            WHEN MENU =>
-
+            WHEN menu =>
+               IF (state_in = normal_game) THEN
+                  next_state <= normal_game;
+               ELSIF (state_in = training) THEN
+                  next_state <= training;
+               END IF;
+            WHEN NORMAL GAME =>
+               IF (state_in = game_over);
+                  next_state <= game_over;
+               END IF;
+            WHEN game_over =>
+               IF (state_in = menu) THEN
+                  next_state <= menu;
+               ELSIF (state_in <= GAME_training) THEN
+                  next_state <= GAME_training;
+               END IF;
+            WHEN GAME_training =>
+               IF (state_in <= menu) THEN
+                  next_state <= menu;
+               END IF;
          END CASE;
-      END PROCESS output;
+      END PROCESS output_decode;
 
    END ARCHITECTURE Moore;
