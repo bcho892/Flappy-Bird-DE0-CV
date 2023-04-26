@@ -14,34 +14,34 @@ The _Bird_ is a sprite that is fixed horizontally on the screen, and travels up 
 
 #### Constants
 
-- **Acceleration**: To be added to fall speed
+-   **Acceleration**: To be added to fall speed
 
-- **Up speed**: To be added while ascending
+-   **Up speed**: To be added while ascending
 
 #### Important Signals
 
-- **Counter** Used to track how long the bird will be travelling up for
+-   **Counter** Used to track how long the bird will be travelling up for
 
-- **Ascending**: (_Flag_) Set to 1 if the bird is currently ascending
+-   **Ascending**: (_Flag_) Set to 1 if the bird is currently ascending
 
-- **Ball on**: Outputs 1 if the bird sprite is present in the current vsync pixel (x,y).
+-   **Ball on**: Outputs 1 if the bird sprite is present in the current vsync pixel (x,y).
 
-- **Size**: (_Constant_) determines how much space the bird will take up relative to its center.
+-   **Size**: (_Constant_) determines how much space the bird will take up relative to its center.
 
-- **Y Motion**: Acts as fall speed, can be positive or negative.
+-   **Y Motion**: Acts as fall speed, can be positive or negative.
 
-- **Mouse In**: 1 or 0, comes from PS/2 mouse module
+-   **Mouse In**: 1 or 0, comes from PS/2 mouse module
 
 #### Game state
 
-- **Game Over**
-Do not accept user inputs
+-   **Game Over**
+    Do not accept user inputs
 
-- **Game Start** 
-Stay in middle of screen
+-   **Game Start**
+    Stay in middle of screen
 
-- **Gameplay (Game/Training)**
-*See below*
+-   **Gameplay (Game/Training)**
+    _See below_
 
 #### Implementation Details
 
@@ -91,6 +91,58 @@ The pipe is an entity which has a random height gap with a constant width, start
 
 #### Constants
 
-**Pipe Gap**: Distance from the end of the pipe to the start of the next gap
+-   **Pipe Gap**: Distance from the end of the pipe to the start of the next gap
 
-**Pipe Width**: Distance from
+-   **Pipe Width**: Distance from start of pipe top end of pipe
+
+-   **Random Heights**: Vector of fixed size containing different pipe Heights
+
+#### Important Signals
+
+-   **Init**: Sets a scrolling speed
+
+-   **Enable Next**: Inits the next pipe
+
+-   **Scroll speed**: Input from FSM that determines how fast the pipes will scroll
+
+-   **R Offset**: How far the start of the pipe is from the start of the right of the screen
+
+-   **Pipe Index**: Randomly generated number to index a height from the random height vector
+
+-   **Reset**: Sets the pipe position to off the screen
+
+-   **Scroll Speed**: How fast the pipes scroll, determined by game difficulty
+
+#### Game State
+
+-   **Game Over**: All pipes stop scrolling
+
+-   **Game Start**: All pipes reset
+
+-   **Game (Train)**: All pipes scrolling
+
+-   **Game (Normal)**: All pipes scrolling, depends on game mode
+
+#### Implementation
+
+**On:**
+
+Init:
+
+```
+Set scroll speed to input scroll speed
+```
+
+Reset:
+
+```
+Set R offset to 0 and scroll speed to 0
+```
+
+VGA_Sync:
+
+```
+Move left by scroll speed
+```
+
+**VGA Display Conditions:**
