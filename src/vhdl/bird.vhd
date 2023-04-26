@@ -6,7 +6,7 @@ USE  IEEE.STD_LOGIC_SIGNED.all;
 
 ENTITY bird IS
 	PORT
-		(clk, vert_sync, left_button	: IN std_logic;
+		(clk, vert_sync, left_click	: IN std_logic;
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		  game_state : IN std_logic_vector(1 downto 0); -- 00 game over, 01 game start, 10 gameplay
 		  red, green, blue 			: OUT std_logic);		
@@ -40,10 +40,10 @@ Blue <= bird_on;
 
 
 
-Move_Bird: process (vert_sync) -- Add left_button to sensitivity list
+Move_Bird: process (vert_sync) -- Add left_click to sensitivity list
 begin
 	if Rising_Edge(vert_sync) then
-		if left_button = '1' then
+		if left_click = '1' then
 			-- Go up
 			if bird_y_pos > 0 then -- Check if ball is not at the top of the screen
 				bird_y_motion <= -CONV_STD_LOGIC_VECTOR(UPWARDS_SPEED, 10); -- Set upward motion

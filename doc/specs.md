@@ -179,8 +179,16 @@ The priority should be as follows:
 
 This will output a bit that is fed into the FSM when the bird touches the ground or pipe
 
+#### Important Signals
+
+-   **Reset**: resets the output back to 0 (for game restart)
+
 ### Random Number Generator
 
 #### Requirements
 
 This will generate a random number within a range to be fed into the pipes. (Possibly clock triggered?)
+
+#### Important Signals
+
+-   **Number**: The number generated, likely represented as STD_LOGIC_VECTOR
