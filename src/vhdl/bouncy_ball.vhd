@@ -19,8 +19,8 @@ SIGNAL size 					: std_logic_vector(9 DOWNTO 0);
 SIGNAL ball_y_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL ball_x_pos				: std_logic_vector(10 DOWNTO 0);
 SIGNAL ball_y_motion			: std_logic_vector(9 DOWNTO 0);
-SIGNAL ascending 				: std_logic;
-SIGNAL frame_count 				: unsigned(2 downto 0) <= "000";
+SIGNAL ascending_flag 				: std_logic := '0';
+SIGNAL frame_count 				: unsigned(2 downto 0) := "000";
 
 BEGIN           
 
@@ -42,22 +42,21 @@ Blue <=  not ball_on;
 Change_Motion: process (left_button)
 begin
 	if(Rising_Edge(left_button)) then
-		if(ascending = '0') then
+		if(ascending_flag = '0') then
 			-- set flag
-			ascending <= '1';
+			ascending_flag <= '1';
 		end if;
 	end if;
 end process;
 
-Move_Ball: process (vert_sync, ascending)  -- add left_button to sens list
+Move_Ball: process (vert_sync)  -- add left_button to sens list
 begin
 	-- Move ball on mouse click rising edge and vert_sync rising edge
 	if (Rising_Edge(vert_sync)) then
-		if(ascending) then 
+		if(ascending_flag = '1') then 
 			-- Compute next ball Y position
 			ball_y_motion <= CONV_STD_LOGIC_VECTOR(2,10);
 			ball_y_pos <= ball_y_pos + ball_y_motion;
-			ascending <= '0';
 		else
 			-- GRAVITY COMES HERE this is a place holder
 			ball_y_motion <= - CONV_STD_LOGIC_VECTOR(2,10);

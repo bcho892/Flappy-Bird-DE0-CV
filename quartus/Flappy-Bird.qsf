@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CEBA4F23C7
-set_global_assignment -name TOP_LEVEL_ENTITY Text
+set_global_assignment -name TOP_LEVEL_ENTITY "Flappy-Bird"
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.1
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "12:21:03  APRIL 19, 2023"
 set_global_assignment -name LAST_QUARTUS_VERSION "18.1.1 Lite Edition"
@@ -81,12 +81,12 @@ set_location_assignment PIN_D3 -to PS2_CLK
 set_location_assignment PIN_Y3 -to LEDR[0]
 set_location_assignment PIN_AA1 -to LEDR[1]
 set_global_assignment -name BDF_FILE Text.bdf
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_location_assignment PIN_J8 -to green_out
 set_location_assignment PIN_A7 -to blue_out
 set_location_assignment PIN_A5 -to red_out
 set_location_assignment PIN_H8 -to horiz_sync_out
 set_location_assignment PIN_G8 -to vert_sync_out
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
