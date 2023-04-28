@@ -186,6 +186,30 @@ This will generate a random number within a range to be fed into the pipes. Cloc
 
 -   **Number**: The number generated, likely represented as STD_LOGIC_VECTOR
 
+#### Implementation Details
+
+Galois LSFR overview:
+
+Initialisation
+
+```
+Store an n-bit seed
+```
+
+_Note that the reset is asynchronous and sets the bits back to the initial seed_
+
+On rising edge
+
+```
+Concat arbitrary LSBs and XOR of Upper bits and stores in LSFR register
+```
+
+Outputs
+
+```
+Current value of LSFR register
+```
+
 ### Pipe Start
 
 #### Requirements
@@ -221,6 +245,10 @@ Have a single component to display text on the screen based on the game state
 -   **Text**: Should be constant values (predefined and stored for display on the relevant game state)
 
 -   **Text on**: Used to output the relevant RGB to the VGA
+
+#### Implementation Details
+
+-- TODO
 
 ### Ground
 
