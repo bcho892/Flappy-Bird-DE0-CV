@@ -22,7 +22,7 @@ https://fpgasoftware.intel.com/eula.
 (header "graphic" (version "1.4"))
 (pin
 	(input)
-	(rect -16 344 184 360)
+	(rect -24 504 176 520)
 	(text "INPUT" (rect 157 0 185 10)(font "Arial" (font_size 6)))
 	(text "background_rgb[2..0]" (rect 5 0 106 17)(font "Intel Clear" ))
 	(pt 200 8)
@@ -102,7 +102,7 @@ https://fpgasoftware.intel.com/eula.
 )
 (pin
 	(input)
-	(rect 544 240 712 256)
+	(rect 528 240 696 256)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
 	(text "ground_on" (rect 5 0 56 17)(font "Intel Clear" ))
 	(pt 168 8)
@@ -118,7 +118,7 @@ https://fpgasoftware.intel.com/eula.
 )
 (pin
 	(input)
-	(rect 800 208 968 224)
+	(rect 784 208 952 224)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
 	(text "bird_on" (rect 5 0 41 17)(font "Intel Clear" ))
 	(pt 168 8)
@@ -134,7 +134,7 @@ https://fpgasoftware.intel.com/eula.
 )
 (pin
 	(input)
-	(rect 288 264 456 280)
+	(rect 272 264 440 280)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
 	(text "pipe_on" (rect 5 0 43 17)(font "Intel Clear" ))
 	(pt 168 8)
@@ -377,7 +377,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 168 480 200 512)
+	(rect 120 416 152 448)
 	(text "GND" (rect 8 16 29 26)(font "Arial" (font_size 6)))
 	(text "inst6" (rect 3 21 25 38)(font "Intel Clear" )(invisible))
 	(port
@@ -400,50 +400,6 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 200 392)
 	(pt 200 304)
-)
-(connector
-	(pt 216 408)
-	(pt 184 408)
-	(bus)
-)
-(connector
-	(pt 184 408)
-	(pt 184 352)
-	(bus)
-)
-(connector
-	(pt 216 424)
-	(pt 184 424)
-	(bus)
-)
-(connector
-	(pt 184 424)
-	(pt 184 480)
-	(bus)
-)
-(connector
-	(pt 456 376)
-	(pt 472 376)
-)
-(connector
-	(pt 456 272)
-	(pt 456 376)
-)
-(connector
-	(pt 712 360)
-	(pt 728 360)
-)
-(connector
-	(pt 712 248)
-	(pt 712 360)
-)
-(connector
-	(pt 968 344)
-	(pt 976 344)
-)
-(connector
-	(pt 968 216)
-	(pt 968 344)
 )
 (connector
 	(pt 1216 328)
@@ -527,4 +483,48 @@ https://fpgasoftware.intel.com/eula.
 	(pt 1216 360)
 	(pt 1216 504)
 	(bus)
+)
+(connector
+	(pt 136 416)
+	(pt 136 408)
+	(bus)
+)
+(connector
+	(pt 216 408)
+	(pt 136 408)
+	(bus)
+)
+(connector
+	(pt 176 424)
+	(pt 176 512)
+	(bus)
+)
+(connector
+	(pt 176 424)
+	(pt 216 424)
+	(bus)
+)
+(connector
+	(pt 976 344)
+	(pt 952 344)
+)
+(connector
+	(pt 952 344)
+	(pt 952 216)
+)
+(connector
+	(pt 728 360)
+	(pt 696 360)
+)
+(connector
+	(pt 696 360)
+	(pt 696 248)
+)
+(connector
+	(pt 472 376)
+	(pt 440 376)
+)
+(connector
+	(pt 440 376)
+	(pt 440 272)
 )

@@ -13,5 +13,5 @@ end rgb_mux;
 
 architecture behaviour of rgb_mux is
 begin
-rgb_out <= rgb_in_0 when select_bit = '0' else rgb_in_1;
+rgb_out <= rgb_in_1 when select_bit = '1' else rgb_in_0;
 end architecture behaviour;
