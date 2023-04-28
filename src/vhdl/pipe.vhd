@@ -11,7 +11,7 @@ entity pipe is
 		game_state: IN STD_LOGIC_VECTOR(2 downto 0);
 		game_level : IN STD_LOGIC_VECTOR(2 downto 0);
 		random_index : IN STD_LOGIC_VECTOR(3 downto 0);
-		init_next, pipe_on, red, green, blue: OUT STD_LOGIC 
+		init_next, score_pulse, pipe_on, red, green, blue: OUT STD_LOGIC 
 	);
 end entity;
 
@@ -35,7 +35,6 @@ SIGNAL pipe_x_pos : STD_LOGIC_VECTOR(9 downto 0) := screen_max_x + pipe_width;
 SIGNAL pipe_x_motion : STD_LOGIC_VECTOR(9 downto 0);
 SIGNAL pipe_height : STD_LOGIC_VECTOR(9 downto 0);
 SIGNAL temp_pipe_on : STD_LOGIC; 
-SIGNAL score_pulse : STD_LOGIC := '0'; 
 SIGNAL enable : STD_LOGIC;
 SIGNAL current_index : Integer;
 
@@ -53,7 +52,7 @@ and pixel_row <= pipe_height)
 green <= temp_pipe_on;
 pipe_on <= temp_pipe_on;
 current_index <= numeric_std.to_integer(numeric_std.unsigned(random_index));
-score_pulse <= '1' when (pipe_x_pos <= screen_halfway and pipe_x_pos >= screen_halfway - pipe_width) else '0';
+--score_pulse <= '1' when (pipe_x_pos <= screen_halfway and pipe_x_pos >= screen_halfway - pipe_width) else '0';
 
 
 move_pipe : process(vert_sync) 	

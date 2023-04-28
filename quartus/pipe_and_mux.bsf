@@ -87,6 +87,13 @@ https://fpgasoftware.intel.com/eula.
 		(text "init_next" (rect 177 59 227 78)(font "Intel Clear" (font_size 8)))
 		(line (pt 248 64)(pt 232 64))
 	)
+	(port
+		(pt 248 80)
+		(output)
+		(text "score_pulse" (rect 0 0 69 19)(font "Intel Clear" (font_size 8)))
+		(text "score_pulse" (rect 158 75 227 94)(font "Intel Clear" (font_size 8)))
+		(line (pt 248 80)(pt 232 80))
+	)
 	(drawing
 		(rectangle (rect 16 16 232 144))
 	)
