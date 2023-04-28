@@ -2,6 +2,7 @@ LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.all;
 USE  IEEE.STD_LOGIC_ARITH.all;
 USE  IEEE.STD_LOGIC_SIGNED.all;
+USE IEEE.NUMERIC_STD;
 
 entity pipe is
 	PORT(
@@ -18,22 +19,23 @@ architecture behaviour of pipe is
 
 -- Typedef
 type speed_vector is array (0 to 4) of integer;
-type height_vector is array (0 to 14) of integer;
+type height_vector is array (0 to 16) of integer;
 
 --CONSTANTS
 CONSTANT preset_scroll_speeds : speed_vector := (5, 10, 12, 15, 18);
-CONSTANT preset_pipe_heights : height_vector:= (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140);
+CONSTANT preset_pipe_heights : height_vector:= (380, 196, 378, 193, 59, 94, 142, 250, 45, 98, 171, 178, 289, 327, 15, 138, 254);
 CONSTANT pipe_gap : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(120, 10); 
 CONSTANT pipe_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(40,10); 
-CONSTANT pipe_spacing : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(200, 10);
+CONSTANT pipe_spacing : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(120, 10);
 CONSTANT screen_max_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(639, 10);
 
 -- SIGNALS
 SIGNAL pipe_x_pos : STD_LOGIC_VECTOR(9 downto 0) := screen_max_x;
 SIGNAL pipe_x_motion : STD_LOGIC_VECTOR(9 downto 0);
-SIGNAL pipe_height : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(20,10);
+SIGNAL pipe_height : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(preset_pipe_heights(1), 10);
 SIGNAL temp_pipe_on : STD_LOGIC; 
 SIGNAL enable : STD_LOGIC;
+SIGNAL current_index : Integer;
 
 begin
 temp_pipe_on <= '1' when ( 
@@ -42,6 +44,7 @@ temp_pipe_on <= '1' when (
 	   ) else	'0';
 green <= temp_pipe_on;
 pipe_on <= temp_pipe_on;
+current_index <= numeric_std.to_integer(numeric_std.unsigned(random_index));
 
 move_pipe : process(vert_sync) 	
 begin
@@ -60,6 +63,7 @@ begin
 			enable <= '0';
 			pipe_x_pos <= screen_max_x + pipe_width;
 			pipe_x_motion <= CONV_STD_LOGIC_VECTOR(0,10);
+			pipe_height <= CONV_STD_LOGIC_VECTOR(preset_pipe_heights(current_index), 10);
 		end if;
 		if enable = '1' then
 			pipe_x_motion <= CONV_STD_LOGIC_VECTOR(2,10);

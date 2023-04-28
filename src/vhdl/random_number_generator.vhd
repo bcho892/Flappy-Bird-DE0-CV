@@ -1,3 +1,8 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.all;
+USE  IEEE.STD_LOGIC_ARITH.all;
+USE  IEEE.STD_LOGIC_SIGNED.all;
+
 entity random_number_generator is
     port (clk : in std_logic;
           reset : in std_logic;
