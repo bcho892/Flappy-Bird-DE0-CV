@@ -88,11 +88,9 @@ The pipe is an entity which has a random height gap with a constant width, start
 
 -   **Scroll speed**: Input from FSM that determines how fast the pipes will scroll
 
--   **L Offset**: How far the start of the pipe is from the start of the screen
+-   **L Offset**: How far the right end of the pipe is from the start of the screen
 
 -   **Pipe Index**: Randomly generated number to index a height from the random height vector
-
--   **Reset**: Sets the pipe position to off the screen
 
 -   **Scroll Speed**: How fast the pipes scroll, determined by game difficulty
 
@@ -117,12 +115,6 @@ Store a random height using the random index
 Set scroll speed to input scroll speed
 ```
 
-Reset:
-
-```
-Set L offset to 639 (Max width) and scroll speed to 0
-```
-
 VGA_Sync:
 
 ```
@@ -133,9 +125,10 @@ Move left by scroll speed (decrease L offset)
 
 ```
 PIPE_ON IF
+- Must be true
 (column >= L offset) AND (column <= L+Pipe Width)
-***AND***
-(row =< Pipe Height) AND (row >= Pipe Height + Pipe Gap)
+- One of these must be true
+(row =< Pipe Height) OR (row >= Pipe Height + Pipe Gap)
 ```
 
 ### Display MUX
@@ -202,4 +195,43 @@ This will give a short pulse signalling the first pipe to enter the screen, it s
 #### Important Signals
 
 -   **State**: 1 or 0 depending on whether the game has started or not
+
 -   **Pulse**: 1 for one vysnc cycle.
+
+### Text Display
+
+#### Requirements
+
+Have a single component to display text on the screen based on the game state
+
+#### Game State
+
+-   **Game Over** Display game over text + score
+
+-   **Game Mode** Display score
+
+-   **Game Start** Display prompt to click + score
+
+#### Important Signals
+
+-   **Character address(es)**: Used to access the pixel data of the the characters in the rom.
+
+-   **Score**: Input that allows the display to update
+
+-   **Text**: Should be constant values (predefined and stored for display on the relevant game state)
+
+-   **Text on**: Used to output the relevant RGB to the VGA
+
+### Ground
+
+#### Requirements
+
+Display graphics for the lower section of the screen
+
+#### Implementation details
+
+Once a y-coordinate is determined for the top of the ground:
+
+```
+Ground is on when pixel_row >= top of ground
+```
