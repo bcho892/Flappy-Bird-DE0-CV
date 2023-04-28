@@ -23,7 +23,7 @@ type height_vector is array (0 to 16) of integer;
 
 --CONSTANTS
 CONSTANT preset_scroll_speeds : speed_vector := (5, 10, 12, 15, 18);
-CONSTANT preset_pipe_heights : height_vector:= (380, 196, 378, 193, 59, 94, 142, 250, 45, 98, 171, 178, 289, 327, 15, 138, 254);
+CONSTANT preset_pipe_heights : height_vector:= (58, 33, 46, 233, 243, 108, 304, 196, 286, 96, 15, 32, 216, 292, 323, 269, 144);
 CONSTANT pipe_gap : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(120, 10); 
 CONSTANT pipe_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(40,10); 
 CONSTANT pipe_spacing : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(120, 10);
