@@ -72,7 +72,7 @@ https://fpgasoftware.intel.com/eula.
 	(input)
 	(rect 384 368 560 384)
 	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
-	(text "pixel_row[9..0]" (rect 5 0 76 12)(font "Arial" ))
+	(text "pixel_row[9..0]" (rect 5 0 75 12)(font "Arial" ))
 	(pt 176 8)
 	(drawing
 		(line (pt 92 12)(pt 117 12))
@@ -88,7 +88,7 @@ https://fpgasoftware.intel.com/eula.
 	(input)
 	(rect 376 384 560 400)
 	(text "INPUT" (rect 141 0 169 10)(font "Arial" (font_size 6)))
-	(text "pixel_column[9..0]" (rect 5 0 93 17)(font "Intel Clear" ))
+	(text "pixel_column[9..0]" (rect 5 0 92 17)(font "Intel Clear" ))
 	(pt 184 8)
 	(drawing
 		(line (pt 100 12)(pt 125 12))
@@ -104,7 +104,7 @@ https://fpgasoftware.intel.com/eula.
 	(input)
 	(rect 392 432 584 448)
 	(text "INPUT" (rect 149 0 177 10)(font "Arial" (font_size 6)))
-	(text "random_index[3..0]" (rect 5 0 100 12)(font "Arial" ))
+	(text "random_index[3..0]" (rect 5 0 99 12)(font "Arial" ))
 	(pt 192 8)
 	(drawing
 		(line (pt 108 12)(pt 133 12))
@@ -137,6 +137,22 @@ https://fpgasoftware.intel.com/eula.
 	(rect 1224 272 1400 288)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "rgb_out[2..0]" (rect 90 0 152 12)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 1000 200 1176 216)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "pipe_on" (rect 90 0 127 12)(font "Arial" ))
 	(pt 0 8)
 	(drawing
 		(line (pt 0 8)(pt 52 8))
@@ -332,10 +348,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 888 360)
 )
 (connector
-	(pt 888 360)
-	(pt 888 280)
-)
-(connector
 	(pt 888 280)
 	(pt 1016 280)
 )
@@ -364,4 +376,17 @@ https://fpgasoftware.intel.com/eula.
 	(pt 536 408)
 	(bus)
 )
+(connector
+	(pt 888 208)
+	(pt 1000 208)
+)
+(connector
+	(pt 888 208)
+	(pt 888 280)
+)
+(connector
+	(pt 888 280)
+	(pt 888 360)
+)
 (junction (pt 536 416))
+(junction (pt 888 280))

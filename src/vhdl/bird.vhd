@@ -9,12 +9,12 @@ ENTITY bird IS
 		(clk, vert_sync, left_click	: IN std_logic;
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		  game_state : IN std_logic_vector(1 downto 0); -- 00 game over, 01 game start, 10 gameplay
-		  red, green, blue 			: OUT std_logic);		
+		  bird_on, red, green, blue 			: OUT std_logic);		
 END bird;
 
 architecture behavior of bird is
 
-SIGNAL bird_on					: std_logic;
+SIGNAL temp_bird_on					: std_logic;
 SIGNAL size 					: std_logic_vector(9 DOWNTO 0);  
 SIGNAL bird_y_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_x_pos				: std_logic_vector(10 DOWNTO 0);
@@ -31,13 +31,13 @@ size <= CONV_STD_LOGIC_VECTOR(8,10);
 -- bird_x_pos and bird_y_pos show the (x,y) for the centre of ball
 bird_x_pos <= CONV_STD_LOGIC_VECTOR(300,11);
 
-bird_on <= '1' when ( ('0' & bird_x_pos <= '0' & pixel_column + size) and ('0' & pixel_column <= '0' & bird_x_pos + size) 	-- x_pos - size <= pixel_column <= x_pos + size
+temp_bird_on <= '1' when ( ('0' & bird_x_pos <= '0' & pixel_column + size) and ('0' & pixel_column <= '0' & bird_x_pos + size) 	-- x_pos - size <= pixel_column <= x_pos + size
 					and ('0' & bird_y_pos <= pixel_row + size) and ('0' & pixel_row <= bird_y_pos + size) )  else	-- y_pos - size <= pixel_row <= y_pos + size
 			'0';
 
 
-Blue <= bird_on;
-
+Blue <= temp_bird_on;
+bird_on <= temp_bird_on;
 
 
 Move_Bird: process (vert_sync) -- Add left_click to sensitivity list
