@@ -24,7 +24,7 @@ SIGNAL bird_y_motion			: std_logic_vector(9 DOWNTO 0);
 CONSTANT ACCELERATION_RATE_DOWN : Integer := 1;
 CONSTANT UPWARDS_SPEED : Integer := 8;
 CONSTANT MAX_FALL_SPEED : Integer := 12;
-CONSTANT GROUND_Y_PIXEL : Integer := 479;
+CONSTANT GROUND_Y_PIXEL : Integer := 420;
 BEGIN           
 
 size <= CONV_STD_LOGIC_VECTOR(8,10);

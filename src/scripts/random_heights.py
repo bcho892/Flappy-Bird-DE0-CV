@@ -1,6 +1,6 @@
 import random
 
-random_numbers = [random.randint(10, 333) for _ in range(17)]
+random_numbers = [random.randint(10, 280) for _ in range(17)]
 random_numbers_str = ', '.join(str(x) for x in random_numbers)
 result_str = f'({random_numbers_str})'
 
