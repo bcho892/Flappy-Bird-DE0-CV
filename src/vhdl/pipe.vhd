@@ -25,6 +25,7 @@ CONSTANT preset_scroll_speeds : speed_vector := (5, 10, 12, 15, 18);
 CONSTANT preset_pipe_heights : height_vector:= (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140);
 CONSTANT pipe_gap : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(120, 10); 
 CONSTANT pipe_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(40,10); 
+CONSTANT pipe_spacing : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(200, 10);
 CONSTANT screen_max_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(639, 10);
 
 -- SIGNALS
@@ -41,20 +42,30 @@ temp_pipe_on <= '1' when (
 	   ) else	'0';
 green <= temp_pipe_on;
 pipe_on <= temp_pipe_on;
+
 move_pipe : process(vert_sync) 	
 begin
 	if Rising_Edge(vert_sync) then
-		if init = '1' then 
+		if init = '1' then
 			enable <= '1';
 		end if;
 
-		if '0' & pipe_x_pos > '0' & CONV_STD_LOGIC_VECTOR(639,10) then
-			pipe_x_motion <= CONV_STD_LOGIC_VECTOR(0,10);
+		if '0' & pipe_x_pos < '0' & screen_max_x - pipe_spacing then
+			init_next <= '1';
 		else 
-			pipe_x_motion <= CONV_STD_LOGIC_VECTOR(1,10);
+			init_next <= '0';
 		end if;
 
-		pipe_x_pos <= pipe_x_pos - pipe_x_motion;
+		if '0' & pipe_x_pos > '0' & screen_max_x + pipe_width then
+			enable <= '0';
+			pipe_x_pos <= screen_max_x + pipe_width;
+			pipe_x_motion <= CONV_STD_LOGIC_VECTOR(0,10);
+		end if;
+		if enable = '1' then
+			pipe_x_motion <= CONV_STD_LOGIC_VECTOR(2,10);
+			pipe_x_pos <= pipe_x_pos - pipe_x_motion;
+		end if;
+
 	end if;
 end process move_pipe;
 end behaviour;
