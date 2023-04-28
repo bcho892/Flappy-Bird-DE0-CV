@@ -16,8 +16,8 @@ architecture behaviour of display_text is
 --CONSTANTS
 CONSTANT score_start_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(100, 10);
 CONSTANT score_start_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(200, 10);
-CONSTANT score_end_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(108, 10);
-CONSTANT score_end_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(208, 10);
+CONSTANT score_end_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(150, 10);
+CONSTANT score_end_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(250, 10);
 
 --SIGNALS
 SIGNAL temp_text_on : STD_LOGIC;
@@ -42,8 +42,8 @@ port map(
 			clock => clk,
 			rom_mux_output => temp_text_on 
 	 	);
-current_row <= pixel_row(2 downto 0) - score_start_y(2 downto 0);
-current_col <= pixel_column(2 downto 0) - score_start_x(2 downto 0);
+current_row <= pixel_row(4 downto 2) - score_start_y(4 downto 2);
+current_col <= pixel_column(4 downto 2) - score_start_x(4 downto 2);
 red <= temp_text_on;  
 text_on <= temp_text_on when
 (pixel_row <= score_end_y and score_start_y <= pixel_row) 
