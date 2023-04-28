@@ -17,16 +17,15 @@ begin
 
 process(score_pulse, reset)
 begin
-	if reset = '1' then
-		current_score <= 0;
-	end if;
 	if Rising_Edge(score_pulse) then
+		if reset = '1' then
+			current_score <= 0;
+		end if;
 		current_score <= current_score + 1;
 		if current_score >= high_score then
 			high_score <= current_score;
 		end if;
 	end if;
 end process;
-
-
+score_digits <= CONV_STD_LOGIC_VECTOR(current_score mod 10, 4) & CONV_STD_LOGIC_VECTOR((current_score/10) mod 10,4);
 end architecture behaviour;

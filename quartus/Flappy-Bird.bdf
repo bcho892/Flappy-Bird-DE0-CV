@@ -1128,23 +1128,6 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 1856 1384 1888 1416)
-	(text "GND" (rect 8 16 29 26)(font "Arial" (font_size 6)))
-	(text "inst10" (rect 3 21 31 38)(font "Intel Clear" )(invisible))
-	(port
-		(pt 16 0)
-		(output)
-		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
-		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
-		(line (pt 16 8)(pt 16 0))
-	)
-	(drawing
-		(line (pt 8 8)(pt 16 16))
-		(line (pt 16 16)(pt 24 8))
-		(line (pt 8 8)(pt 24 8))
-	)
-)
-(symbol
 	(rect 2224 728 2440 808)
 	(text "score" (rect 5 0 32 12)(font "Arial" ))
 	(text "inst11" (rect 8 64 36 81)(font "Intel Clear" ))
@@ -1171,23 +1154,6 @@ https://fpgasoftware.intel.com/eula.
 	)
 	(drawing
 		(rectangle (rect 16 16 200 64))
-	)
-)
-(symbol
-	(rect 2448 808 2480 840)
-	(text "GND" (rect 8 16 29 26)(font "Arial" (font_size 6)))
-	(text "inst12" (rect 3 21 31 38)(font "Intel Clear" )(invisible))
-	(port
-		(pt 16 0)
-		(output)
-		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
-		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
-		(line (pt 16 8)(pt 16 0))
-	)
-	(drawing
-		(line (pt 8 8)(pt 16 16))
-		(line (pt 16 16)(pt 24 8))
-		(line (pt 8 8)(pt 24 8))
 	)
 )
 (symbol
@@ -1854,11 +1820,6 @@ https://fpgasoftware.intel.com/eula.
 	(bus)
 )
 (connector
-	(pt 1872 1328)
-	(pt 1872 1384)
-	(bus)
-)
-(connector
 	(text "text_rgb[0]" (rect 2088 1312 2139 1329)(font "Intel Clear" ))
 	(pt 2088 1328)
 	(pt 2120 1328)
@@ -1904,17 +1865,24 @@ https://fpgasoftware.intel.com/eula.
 	(bus)
 )
 (connector
-	(pt 2464 760)
-	(pt 2464 808)
-	(bus)
-)
-(connector
 	(pt 2224 760)
 	(pt 2208 760)
 )
 (connector
 	(pt 2208 760)
 	(pt 2208 808)
+)
+(connector
+	(text "score_digits[7..0]" (rect 2448 731 2465 810)(font "Intel Clear" )(vertical))
+	(pt 2464 760)
+	(pt 2464 808)
+	(bus)
+)
+(connector
+	(text "score_digits[7..0]" (rect 1856 1307 1873 1386)(font "Intel Clear" )(vertical))
+	(pt 1872 1328)
+	(pt 1872 1384)
+	(bus)
 )
 (junction (pt 856 256))
 (junction (pt 496 264))

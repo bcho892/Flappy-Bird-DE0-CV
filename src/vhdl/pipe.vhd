@@ -52,7 +52,7 @@ and pixel_row <= pipe_height)
 green <= temp_pipe_on;
 pipe_on <= temp_pipe_on;
 current_index <= numeric_std.to_integer(numeric_std.unsigned(random_index));
---score_pulse <= '1' when (pipe_x_pos <= screen_halfway and pipe_x_pos >= screen_halfway - pipe_width) else '0';
+score_pulse <= '1' when (pipe_x_pos <= screen_halfway and pipe_x_pos >= screen_halfway - pipe_width) else '0';
 
 
 move_pipe : process(vert_sync) 	

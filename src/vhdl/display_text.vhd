@@ -6,7 +6,7 @@ USE  IEEE.STD_LOGIC_SIGNED.all;
 entity display_text is 
 	port(
 			clk : IN STD_LOGIC;
-			score : IN STD_LOGIC_VECTOR(5 downto 0);
+			score : IN STD_LOGIC_VECTOR(7 downto 0);
 			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
 			text_on, red, green, blue : OUT STD_LOGIC 
 		);
@@ -45,7 +45,7 @@ port map(
 			rom_mux_output => temp_text_on 
 	 	);
 
-
+score_text_corresponding_address <= "00" & score(3 downto 0);
 current_row <= pixel_row(4 downto 2) - score_start_y(4 downto 2);
 current_col <= pixel_column(4 downto 2) - score_0_start_x(4 downto 2);
 red <= temp_text_on;  
