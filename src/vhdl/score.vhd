@@ -1,7 +1,7 @@
 entity score is 
 	port(
 			reset, score_pulse : IN STD_LOGIC;
-			score_digit_1, score_digit_10 : OUT STD_LOGIC_VECTOR(4 downto 0)
+			score_digits : OUT STD_LOGIC_VECTOR(7 downto 0)
 		);
 end entity;
 
