@@ -193,3 +193,13 @@ This will generate a random number within a range to be fed into the pipes. Cloc
 
 -   **Number**: The number generated, likely represented as STD_LOGIC_VECTOR
 
+### Pipe Start
+
+#### Requirements
+
+This will give a short pulse signalling the first pipe to enter the screen, it should only be triggered once when the FSM goes from Game Start to Game Mode, and needs to be reset when the game goes from Game Over to Game Start
+
+#### Important Signals
+
+-   **State**: 1 or 0 depending on whether the game has started or not
+-   **Pulse**: 1 for one vysnc cycle.
