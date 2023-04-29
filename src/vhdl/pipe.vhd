@@ -40,13 +40,13 @@ SIGNAL current_index : Integer;
 
 begin
 temp_pipe_on <= '1' when ( 
-(pipe_x_pos >= pixel_column 
-and pixel_column >= pipe_x_pos - pipe_width 
-and pipe_height + pipe_gap <= pixel_row) 
+(pipe_x_pos > pixel_column 
+and pixel_column > pipe_x_pos - pipe_width 
+and pipe_height + pipe_gap < pixel_row) 
 or 
-(pipe_x_pos >= pixel_column 
-and pixel_column >= pipe_x_pos - pipe_width 
-and pixel_row <= pipe_height) 
+(pipe_x_pos > pixel_column 
+and pixel_column > pipe_x_pos - pipe_width 
+and pixel_row < pipe_height) 
 ) else	'0';
 
 green <= temp_pipe_on;

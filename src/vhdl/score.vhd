@@ -27,5 +27,5 @@ begin
 		end if;
 	end if;
 end process;
-score_digits <= CONV_STD_LOGIC_VECTOR(current_score mod 10, 4) & CONV_STD_LOGIC_VECTOR((current_score/10) mod 10,4);
+score_digits <= CONV_STD_LOGIC_VECTOR((current_score/10) mod 10,4) & CONV_STD_LOGIC_VECTOR(current_score mod 10, 4);
 end architecture behaviour;

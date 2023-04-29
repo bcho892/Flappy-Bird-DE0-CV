@@ -15,11 +15,12 @@ end display_text;
 architecture behaviour of display_text is
 --CONSTANTS
 CONSTANT score_start_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(70, 10);
-CONSTANT score_end_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(90, 10);
+CONSTANT score_end_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(97, 10);
 CONSTANT score_0_start_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(300, 10);
 CONSTANT score_0_end_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(332, 10);
 CONSTANT score_1_start_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(333, 10);
 CONSTANT score_1_end_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(365, 10);
+CONSTANT number_rom_offset : STD_LOGIC_VECTOR(5 downto 0) := CONV_STD_LOGIC_VECTOR(48,6);
 
 --SIGNALS
 SIGNAL temp_text_on : STD_LOGIC;
@@ -45,7 +46,11 @@ port map(
 			rom_mux_output => temp_text_on 
 	 	);
 
-score_text_corresponding_address <= "00" & score(3 downto 0);
+score_text_corresponding_address <= number_rom_offset  + ("00" & score(7 downto 4)) 
+									when (pixel_column <= score_0_end_x and score_0_start_x <= pixel_column) 
+									else number_rom_offset + ("00" & score(3 downto 0))
+									when (pixel_column <= score_1_end_x and score_1_start_x <= pixel_column)
+									else "000000";
 current_row <= pixel_row(4 downto 2) - score_start_y(4 downto 2);
 current_col <= pixel_column(4 downto 2) - score_0_start_x(4 downto 2);
 red <= temp_text_on;  
