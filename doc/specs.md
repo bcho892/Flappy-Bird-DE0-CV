@@ -6,6 +6,18 @@ This document is to be used for planning and documenting the implementaion detai
 
 ## Entities
 
+### FSM
+
+#### Requirements
+
+Outputs states corresponding to the relevant game mode. Requires the following:
+
+-   Game Start <- Prompts the user to click and start the game
+-   Game Mode
+    -   Training <- Constant scrolling speed of pipes
+    -   Normal <- Increasing scrolling speed with score
+-   Game Over <- On death, stops scrolling and prompts user to return to Game Start.
+
 ### Bird
 
 #### Requirements
@@ -263,3 +275,9 @@ Once a y-coordinate is determined for the top of the ground:
 ```
 Ground is on when pixel_row >= top of ground
 ```
+
+### Background
+
+#### Requirements
+
+Display the very bottom layer of the game, could be solid color or more complex graphics.
