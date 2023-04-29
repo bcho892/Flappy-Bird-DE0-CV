@@ -12,10 +12,8 @@ end entity;
 
 architecture behaviour of score is
 signal current_score, high_score : integer range 0 to 999 := 0;
-
 begin
-
-process(score_pulse, reset)
+process(score_pulse)
 begin
 	if Rising_Edge(score_pulse) then
 		if reset = '1' then
@@ -26,8 +24,8 @@ begin
 			high_score <= current_score;
 		end if;
 	end if;
+	score_digits <= CONV_STD_LOGIC_VECTOR(current_score/100, 4)  
+					& CONV_STD_LOGIC_VECTOR((current_score/10) mod 10,4) 
+					& CONV_STD_LOGIC_VECTOR(current_score mod 10, 4);
 end process;
-score_digits <= CONV_STD_LOGIC_VECTOR((current_score/100), 4)  
-				& CONV_STD_LOGIC_VECTOR((current_score/10) mod 10,4) 
-				& CONV_STD_LOGIC_VECTOR(current_score mod 10, 4);
 end architecture behaviour;
