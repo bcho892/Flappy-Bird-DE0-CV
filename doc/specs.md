@@ -18,6 +18,16 @@ Outputs states corresponding to the relevant game mode. Requires the following:
     -   Normal <- Increasing scrolling speed with score
 -   Game Over <- On death, stops scrolling and prompts user to return to Game Start.
 
+#### Important Signals
+
+-   **Mouse Click**: Will be the primary driver for state changes
+-   **Collision Detected**: Causes shift from a game mode to game over
+-   **Peripheral signals(?)**: Switches, pushbuttons could be used to reset or influence state.
+
+#### Implementation Details
+
+Should be treated as a Moore FSM
+
 ### Bird
 
 #### Requirements
