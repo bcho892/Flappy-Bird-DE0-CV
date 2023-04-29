@@ -6,7 +6,7 @@ USE  IEEE.STD_LOGIC_SIGNED.all;
 entity score is 
 	port(
 			reset, score_pulse : IN STD_LOGIC;
-			score_digits : OUT STD_LOGIC_VECTOR(7 downto 0)
+			score_digits : OUT STD_LOGIC_VECTOR(11 downto 0)
 		);
 end entity;
 
@@ -27,5 +27,7 @@ begin
 		end if;
 	end if;
 end process;
-score_digits <= CONV_STD_LOGIC_VECTOR((current_score/10) mod 10,4) & CONV_STD_LOGIC_VECTOR(current_score mod 10, 4);
+score_digits <= CONV_STD_LOGIC_VECTOR((current_score/100) mod 10, 4)  
+				& CONV_STD_LOGIC_VECTOR((current_score/10) mod 10,4) 
+				& CONV_STD_LOGIC_VECTOR(current_score mod 10, 4);
 end architecture behaviour;
