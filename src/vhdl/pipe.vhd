@@ -29,6 +29,7 @@ CONSTANT pipe_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(40,1
 CONSTANT pipe_spacing : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(140, 10);
 CONSTANT screen_max_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(639, 10);
 CONSTANT screen_halfway : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(320, 10);
+CONSTANT score_pulse_debounce : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(40, 10);
 
 -- SIGNALS
 SIGNAL pipe_x_pos : STD_LOGIC_VECTOR(9 downto 0) := screen_max_x + pipe_width;
@@ -52,35 +53,41 @@ and pixel_row < pipe_height)
 green <= temp_pipe_on;
 pipe_on <= temp_pipe_on;
 current_index <= numeric_std.to_integer(numeric_std.unsigned(random_index));
-score_pulse <= '1' when (pipe_x_pos <= screen_halfway and pipe_x_pos >= screen_halfway - pipe_width) else '0';
 
 
 move_pipe : process(vert_sync) 	
 begin
 	if Rising_Edge(vert_sync) then
+		--allow movement of current pipe
 		if init = '1' then
 			enable <= '1';
 		end if;
-
+		-- start the next pipe
 		if '0' & pipe_x_pos < '0' & screen_max_x - pipe_spacing then
 			init_next <= '1';
 		else 
 			init_next <= '0';
 		end if;
-
+		-- reset the pipe
 		if '0' & pipe_x_pos > '0' & screen_max_x + pipe_width then
 			enable <= '0';
 			pipe_x_pos <= screen_max_x + pipe_width;
 			pipe_x_motion <= CONV_STD_LOGIC_VECTOR(0,10);
 			pipe_height <= CONV_STD_LOGIC_VECTOR(preset_pipe_heights(current_index), 10);
 		end if;
+		--move the pipe
 		if enable = '1' then
 			pipe_x_motion <= CONV_STD_LOGIC_VECTOR(2,10);
 			pipe_x_pos <= pipe_x_pos - pipe_x_motion;
 		else 
 			pipe_height <= CONV_STD_LOGIC_VECTOR(preset_pipe_heights(current_index), 10);
 		end if;
-
+		--score pulse generation
+		if pipe_x_pos < screen_halfway and pipe_x_pos > screen_halfway - score_pulse_debounce then
+			score_pulse <= '1';
+		else 
+			score_pulse <= '0';
+		end if;
 	end if;
 end process move_pipe;
 end behaviour;
