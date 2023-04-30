@@ -496,7 +496,7 @@ https://fpgasoftware.intel.com/eula.
 		(pt 64 40)
 		(output)
 		(text "OUT" (rect 48 31 65 43)(font "Courier New" (bold))(invisible))
-		(text "OUT" (rect 48 31 62 43)(font "Courier New" (bold))(invisible))
+		(text "OUT" (rect 48 31 65 43)(font "Courier New" (bold))(invisible))
 		(line (pt 48 40)(pt 64 40))
 	)
 	(drawing
@@ -507,23 +507,6 @@ https://fpgasoftware.intel.com/eula.
 		(arc (pt 7 45)(pt 7 35)(rect -14 24 19 57))
 		(arc (pt 49 40)(pt 25 29)(rect -6 29 57 92))
 		(arc (pt 25 51)(pt 49 40)(rect -6 -11 57 52))
-	)
-)
-(symbol
-	(rect 8 416 40 448)
-	(text "GND" (rect 8 16 29 26)(font "Arial" (font_size 6)))
-	(text "inst7" (rect 3 21 26 33)(font "Arial" )(invisible))
-	(port
-		(pt 16 0)
-		(output)
-		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
-		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
-		(line (pt 16 8)(pt 16 0))
-	)
-	(drawing
-		(line (pt 8 8)(pt 16 16))
-		(line (pt 16 16)(pt 24 8))
-		(line (pt 8 8)(pt 24 8))
 	)
 )
 (symbol
@@ -548,7 +531,7 @@ https://fpgasoftware.intel.com/eula.
 		(pt 64 24)
 		(output)
 		(text "OUT" (rect 48 15 65 27)(font "Courier New" (bold))(invisible))
-		(text "OUT" (rect 48 15 62 27)(font "Courier New" (bold))(invisible))
+		(text "OUT" (rect 48 15 65 27)(font "Courier New" (bold))(invisible))
 		(line (pt 48 24)(pt 64 24))
 	)
 	(drawing
@@ -595,7 +578,7 @@ https://fpgasoftware.intel.com/eula.
 		(pt 64 40)
 		(output)
 		(text "OUT" (rect 48 31 65 43)(font "Courier New" (bold))(invisible))
-		(text "OUT" (rect 48 31 62 43)(font "Courier New" (bold))(invisible))
+		(text "OUT" (rect 48 31 65 43)(font "Courier New" (bold))(invisible))
 		(line (pt 48 40)(pt 64 40))
 	)
 	(drawing
@@ -606,6 +589,21 @@ https://fpgasoftware.intel.com/eula.
 		(arc (pt 7 45)(pt 7 35)(rect -14 24 19 57))
 		(arc (pt 49 40)(pt 25 29)(rect -6 29 57 92))
 		(arc (pt 25 51)(pt 49 40)(rect -6 -11 57 52))
+	)
+)
+(symbol
+	(rect -24 400 8 416)
+	(text "VCC" (rect 7 0 27 10)(font "Arial" (font_size 6)))
+	(text "inst2" (rect 3 5 25 22)(font "Intel Clear" )(invisible))
+	(port
+		(pt 16 16)
+		(output)
+		(text "1" (rect 19 7 24 19)(font "Courier New" (bold))(invisible))
+		(text "1" (rect 19 7 24 19)(font "Courier New" (bold))(invisible))
+		(line (pt 16 16)(pt 16 8))
+	)
+	(drawing
+		(line (pt 8 8)(pt 24 8))
 	)
 )
 (connector
@@ -1071,6 +1069,11 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 1592 744)
 	(pt 1672 744)
+)
+(connector
+	(pt 24 416)
+	(pt -8 416)
+	(bus)
 )
 (junction (pt 64 592))
 (junction (pt 72 624))

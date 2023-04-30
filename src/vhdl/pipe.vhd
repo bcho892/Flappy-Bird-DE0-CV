@@ -50,8 +50,8 @@ and pixel_column > pipe_x_pos - pipe_width
 and pixel_row < pipe_height) 
 ) else	'0';
 
-green <= temp_pipe_on;
 pipe_on <= temp_pipe_on;
+green <= temp_pipe_on;
 current_index <= numeric_std.to_integer(numeric_std.unsigned(random_index));
 
 
