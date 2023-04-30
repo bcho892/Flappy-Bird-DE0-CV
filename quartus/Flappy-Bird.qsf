@@ -77,6 +77,7 @@ set_location_assignment PIN_G8 -to vert_sync_out
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name VHDL_FILE ../src/vhdl/cursor.vhd
 set_global_assignment -name VHDL_FILE ../src/vhdl/background.vhd
 set_global_assignment -name VHDL_FILE ../src/vhdl/score.vhd
 set_global_assignment -name VHDL_FILE ../src/vhdl/display_text.vhd
