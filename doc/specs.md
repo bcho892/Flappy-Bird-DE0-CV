@@ -291,3 +291,9 @@ Ground is on when pixel_row >= top of ground
 #### Requirements
 
 Display the very bottom layer of the game, could be solid color or more complex graphics.
+
+### Cursor
+
+#### Requirements
+
+Give the user visual feedback of where the mouse is on the screen, and also when the mouse is clicked (by changing colour).
