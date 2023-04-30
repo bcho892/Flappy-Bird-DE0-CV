@@ -18,8 +18,8 @@ SIGNAL temp_background_on : STD_LOGIC;
 begin
 temp_background_on <= '1' when pixel_row <= ground_top_y else '0';
 background_on <= temp_background_on;
-green <= '1';
-blue <= '1';
+green <= temp_background_on;
+blue <= temp_background_on;
 process(vert_sync)
 begin
 	if Rising_Edge(vert_sync) then
