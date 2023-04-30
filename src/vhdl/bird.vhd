@@ -6,7 +6,7 @@ USE  IEEE.STD_LOGIC_SIGNED.all;
 
 ENTITY bird IS
 	PORT
-		(clk, vert_sync, left_click	: IN std_logic;
+		(vert_sync, left_click	: IN std_logic;
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		  game_state : IN std_logic_vector(1 downto 0); -- 00 game over, 01 game start, 10 gameplay
 		  bird_on, red, green, blue 			: OUT std_logic);		
@@ -21,10 +21,10 @@ SIGNAL bird_x_pos				: std_logic_vector(10 DOWNTO 0);
 SIGNAL bird_y_motion			: std_logic_vector(9 DOWNTO 0);
 
 -- CONSTANTS
-CONSTANT ACCELERATION_RATE_DOWN : Integer := 1;
-CONSTANT UPWARDS_SPEED : Integer := 8;
-CONSTANT MAX_FALL_SPEED : Integer := 12;
-CONSTANT GROUND_Y_PIXEL : Integer := 420;
+CONSTANT ACCELERATION_RATE_DOWN : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(1,10);
+CONSTANT UPWARDS_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(8, 10);
+CONSTANT MAX_FALL_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(11, 10);
+CONSTANT GROUND_Y_PIXEL : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(420,10);
 BEGIN           
 
 size <= CONV_STD_LOGIC_VECTOR(8,10);
@@ -46,22 +46,22 @@ begin
 		if left_click = '1' then
 			-- Go up
 			if bird_y_pos > 0 then -- Check if ball is not at the top of the screen
-				bird_y_motion <= -CONV_STD_LOGIC_VECTOR(UPWARDS_SPEED, 10); -- Set upward motion
+				bird_y_motion <= -UPWARDS_SPEED; -- Set upward motion
 			else
 				bird_y_motion <= (others => '0'); -- Dont move
 			end if;
 		else
 			-- Apply gravity
-			if bird_y_pos < (CONV_STD_LOGIC_VECTOR(GROUND_Y_PIXEL,10) - size) then -- Check if ball is not at the bottom of the screen
-				if bird_y_motion < CONV_STD_LOGIC_VECTOR(MAX_FALL_SPEED, 10) then -- Limit fall speed
-					bird_y_motion <= bird_y_motion + conv_std_logic_vector(ACCELERATION_RATE_DOWN, 10); -- Make it fall faster
+			if bird_y_pos < (GROUND_Y_PIXEL - size) then -- Check if ball is not at the bottom of the screen
+				if bird_y_motion < MAX_FALL_SPEED then -- Limit fall speed
+					bird_y_motion <= bird_y_motion + ACCELERATION_RATE_DOWN; -- Make it fall faster
 				end if;
 			else
 				bird_y_motion <= (others => '0'); -- Stop downward motion
 			end if;
 		end if;
-		if bird_y_pos + bird_y_motion >= (CONV_STD_LOGIC_VECTOR(GROUND_Y_PIXEL,10) - size) then
-			bird_y_pos <= CONV_STD_LOGIC_VECTOR(GROUND_Y_PIXEL,10) - size; --Make it fall to bottom gracefully
+		if bird_y_pos + bird_y_motion >= (GROUND_Y_PIXEL - size) then
+			bird_y_pos <= GROUND_Y_PIXEL - size; --Make it fall to bottom gracefully
 		else
 			bird_y_pos <= bird_y_pos + bird_y_motion; -- normal
 		end if;
