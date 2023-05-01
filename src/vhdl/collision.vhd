@@ -12,17 +12,6 @@ end entity collision;
 
 architecture behaviour of collision is
 begin  
-    process(vert_sync)
-    begin
-        if(Rising_Edge(vert_sync)) then
-            -- check collision
-            if(bird_on = '1' and pipe_on = '1') then
-                collision_detected <= '0';
-            else
-                collision_detected <= '1';
-            end if;
-        end if;
-    end process;
-
+	collision_detected <= '0' when bird_on = '1' and pipe_on = '1' else '1';
 end behaviour;
 

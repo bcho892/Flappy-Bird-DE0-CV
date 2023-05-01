@@ -6,10 +6,10 @@ USE  IEEE.STD_LOGIC_SIGNED.all;
 
 ENTITY bird IS
 	PORT
-		(vert_sync, left_click	: IN std_logic;
+		(vert_sync, left_click, pipe_on	: IN std_logic;
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		  game_state : IN std_logic_vector(1 downto 0); -- 00 game over, 01 game start, 10 gameplay
-		  bird_on, red, green, blue 			: OUT std_logic);		
+		  bird_on, collision, red, green, blue 			: OUT std_logic);		
 END bird;
 
 architecture behavior of bird is
@@ -35,6 +35,7 @@ temp_bird_on <= '1' when ( ('0' & bird_x_pos <= '0' & pixel_column + size) and (
 					and ('0' & bird_y_pos <= pixel_row + size) and ('0' & pixel_row <= bird_y_pos + size) )  else	-- y_pos - size <= pixel_row <= y_pos + size
 			'0';
 
+collision <= '1' when temp_bird_on = '1' and pipe_on = '1' else '0';
 
 Blue <= temp_bird_on;
 bird_on <= temp_bird_on;
