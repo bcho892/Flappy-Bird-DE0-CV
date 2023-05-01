@@ -6,6 +6,28 @@ This document is to be used for planning and documenting the implementaion detai
 
 ## Entities
 
+### FSM
+
+#### Requirements
+
+Outputs states corresponding to the relevant game mode. Requires the following:
+
+-   Game Start <- Prompts the user to click and start the game
+-   Game Mode
+    -   Training <- Constant scrolling speed of pipes
+    -   Normal <- Increasing scrolling speed with score
+-   Game Over <- On death, stops scrolling and prompts user to return to Game Start.
+
+#### Important Signals
+
+-   **Mouse Click**: Will be the primary driver for state changes
+-   **Collision Detected**: Causes shift from a game mode to game over
+-   **Peripheral signals(?)**: Switches, pushbuttons could be used to reset or influence state.
+
+#### Implementation Details
+
+Should be treated as a Moore FSM
+
 ### Bird
 
 #### Requirements
@@ -16,9 +38,19 @@ The _Bird_ is a sprite that is fixed horizontally on the screen, and travels up 
 
 -   **Acceleration**: To be added to fall speed
 
+=======
+
+-   **Max fall speed** caps the rate at which the bird can fall
+
+-   **Acceleration**: To be added to fall speed
+
+> > > > > > > parent of 47da755 (Revert "Merge branch 'main' of https://github.com/bcho892/Flappy-Bird-DE0-CV into FSM2")
+
 -   **Up speed**: To be added while ascending
 
 #### Important Signals
+
+<<<<<<< HEAD
 
 -   **Counter** Used to track how long the bird will be travelling up for
 
@@ -29,6 +61,18 @@ The _Bird_ is a sprite that is fixed horizontally on the screen, and travels up 
 -   **Size**: (_Constant_) determines how much space the bird will take up relative to its center.
 
 -   **Y Motion**: Acts as fall speed, can be positive or negative.
+
+=======
+
+-   **Ascending**: (_Flag_) Set to 1 if the bird is currently ascending
+
+-   **Bird on**: Outputs 1 if the bird sprite is present in the current vsync pixel (x,y).
+
+-   **Size**: (_Constant_) determines how much space the bird will take up relative to its center.
+
+-   **Y Motion**: Acts as fall speed, can be positive or negative.
+
+> > > > > > > parent of 47da755 (Revert "Merge branch 'main' of https://github.com/bcho892/Flappy-Bird-DE0-CV into FSM2")
 
 -   **Mouse In**: 1 or 0, comes from PS/2 mouse module
 
@@ -47,29 +91,12 @@ The _Bird_ is a sprite that is fixed horizontally on the screen, and travels up 
 
 **On:**
 
-Mouse in
-
-```
-IF HIGH:
-- Check if bird is already ascending
-    IF NO
-    - Set ascending flag to TRUE
-    - Set counter to zero
-    ELSE
-    - Do nothing
-```
-
 VGA_SYNC (Normal Operation)
 
 ```
-IF ascending flag is set
-    IF counter < MAX
-    - Increment y position by CONST
-    - Increment counter
-    ELSE IF counter = MAX
-    - Set ascending flag to FALSE
-    - Set fall speed to 0
-ELSE IF ascending flag is NOT set (bird is falling)
+IF mouse is pressed
+    - Set fall speed to go up
+ELSE IF mouse is NOT pressed (bird is falling)
     - Minus CONST from fall speed
     - Add fall speed (negative) to y position
 ```
@@ -80,10 +107,8 @@ VGA_SYNC (Edge cases)
 IF at ground
     - Set fall speed to 0
 Else if at top
-    - Do not increment y pos
+    - Set Rise speed to 0
 ```
-
-# <<<<<<< HEAD
 
 ### Pipe
 
@@ -288,3 +313,9 @@ Ground is on when pixel_row >= top of ground
 #### Requirements
 
 Display the very bottom layer of the game, could be solid color or more complex graphics.
+
+### Cursor
+
+#### Requirements
+
+Give the user visual feedback of where the mouse is on the screen, and also when the mouse is clicked (by changing colour).
