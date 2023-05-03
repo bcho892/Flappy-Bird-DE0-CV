@@ -21,9 +21,9 @@ https://fpgasoftware.intel.com/eula.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 216 128)
+	(rect 16 16 216 160)
 	(text "display_text" (rect 5 0 52 12)(font "Arial" ))
-	(text "inst" (rect 8 96 20 108)(font "Arial" ))
+	(text "inst" (rect 8 128 20 140)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -34,23 +34,30 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 0 48)
 		(input)
-		(text "score[11..0]" (rect 0 0 44 12)(font "Arial" ))
-		(text "score[11..0]" (rect 21 43 65 55)(font "Arial" ))
-		(line (pt 0 48)(pt 16 48)(line_width 3))
+		(text "horiz_sync" (rect 0 0 43 12)(font "Arial" ))
+		(text "horiz_sync" (rect 21 43 64 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 1))
 	)
 	(port
 		(pt 0 64)
 		(input)
-		(text "pixel_row[9..0]" (rect 0 0 56 12)(font "Arial" ))
-		(text "pixel_row[9..0]" (rect 21 59 77 71)(font "Arial" ))
+		(text "score[11..0]" (rect 0 0 44 12)(font "Arial" ))
+		(text "score[11..0]" (rect 21 59 65 71)(font "Arial" ))
 		(line (pt 0 64)(pt 16 64)(line_width 3))
 	)
 	(port
 		(pt 0 80)
 		(input)
-		(text "pixel_column[9..0]" (rect 0 0 70 12)(font "Arial" ))
-		(text "pixel_column[9..0]" (rect 21 75 91 87)(font "Arial" ))
+		(text "pixel_row[9..0]" (rect 0 0 56 12)(font "Arial" ))
+		(text "pixel_row[9..0]" (rect 21 75 77 87)(font "Arial" ))
 		(line (pt 0 80)(pt 16 80)(line_width 3))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "pixel_column[9..0]" (rect 0 0 70 12)(font "Arial" ))
+		(text "pixel_column[9..0]" (rect 21 91 91 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96)(line_width 3))
 	)
 	(port
 		(pt 200 32)
@@ -81,6 +88,6 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 200 80)(pt 184 80)(line_width 1))
 	)
 	(drawing
-		(rectangle (rect 16 16 184 96)(line_width 1))
+		(rectangle (rect 16 16 184 128)(line_width 1))
 	)
 )
