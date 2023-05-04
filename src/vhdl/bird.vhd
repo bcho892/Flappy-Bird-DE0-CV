@@ -53,9 +53,14 @@ begin
 			if(RISING_EDGE(vert_sync) then
 				bird_y_pos <= CENTRE;
 			end if;
-			
+
 		when others => -- normal operation and training- bird behaviour is the same
 		if Rising_Edge(vert_sync) then
+			-- ground collision
+			if(bird_y_pos = GROUND_Y_PIXEL) then
+				collision <= '1';
+			end if;
+			
 			if left_click = '1' then
 				-- Go up
 				if bird_y_pos > 0 then -- Check if ball is not at the top of the screen
@@ -78,7 +83,6 @@ begin
 			else
 				bird_y_pos <= bird_y_pos + bird_y_motion; -- normal
 			end if;
-	
 		end if;
 	end case;
 
