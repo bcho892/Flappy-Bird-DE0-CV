@@ -2,7 +2,7 @@ LIBRARY IEEE;
 USE iee.std_logic_1164.ALL;
 
 -- CUSTOM STATE TYPE
-TYPE state_types IS (menu, normal_game, game_over, training);
+TYPE state_types IS (menu, normal_game, training_mode, game_over);
 
 ENTITY FSM IS
 
