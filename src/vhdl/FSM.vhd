@@ -37,8 +37,9 @@ BEGIN
          WHEN game_start =>
             if mode = '1' then
                next_state <= normal_mode;
-            else
-               next_state <= training_mode;
+            -- training mode to be implemented later. currently, launches start screen and click to start normal operation
+            --else
+               --next_state <= training_mode;
             end if;
          WHEN normal_game =>
             if collision = '1' then
@@ -49,8 +50,8 @@ BEGIN
          WHEN game_over =>
             if(mode = '1') then
                next_state <= normal_mode;
-            else
-               next_state <= training_mode;
+            --else
+               --next_state <= training_mode; training mode to be implemented later
             end if;
          WHEN training =>
             if collision = '1' then

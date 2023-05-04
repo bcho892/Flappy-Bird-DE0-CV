@@ -9,7 +9,7 @@ ENTITY bird IS
 		(vert_sync, left_click, pipe_on	: IN std_logic;
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		  game_state : IN std_logic_vector(1 downto 0); -- 00 game over, 01 game start, 10 gameplay
-		  bird_on, collision, red, green, blue 			: OUT std_logic);		-- collision is also connected to the FSM
+		  bird_on, collision, red, green, blue, mode 			: OUT std_logic);		-- collision and mode are connected to the FSM
 END bird;
 
 architecture behavior of bird is
@@ -49,6 +49,9 @@ begin
 			if(RISING_EDGE(vert_sync) then
 				bird_y_pos <= CENTRE;
 			end if;
+			if(left_click = '1') then
+				mode = '1';
+			end if;
 		when "11" => -- game over
 			if(RISING_EDGE(vert_sync) then
 				bird_y_pos <= CENTRE;
@@ -60,7 +63,7 @@ begin
 			if(bird_y_pos = GROUND_Y_PIXEL) then
 				collision <= '1';
 			end if;
-			
+
 			if left_click = '1' then
 				-- Go up
 				if bird_y_pos > 0 then -- Check if ball is not at the top of the screen
