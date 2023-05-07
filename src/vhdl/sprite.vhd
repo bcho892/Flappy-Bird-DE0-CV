@@ -18,12 +18,14 @@ CONSTANT sprite_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,
 CONSTANT sprite_height : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,10); 
 CONSTANT screen_max_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(639, 10);
 CONSTANT delay : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(2, 10);
+CONSTANT scale : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(3, 10); 
 TYPE state_type is (IDLE, DRAW_SPRITE, WAIT_SPRITE);
 
 SIGNAL state : state_type := IDLE;
 SIGNAL bmap_column, bmap_row : STD_LOGIC_VECTOR(2 downto 0);
 SIGNAL new_sprite_row, new_sprite_column: STD_LOGIC_VECTOR(9 downto 0);
 SIGNAL t_sprite_on : STD_LOGIC;
+ 
 component char_rom 
 PORT 
 (
@@ -46,12 +48,13 @@ port map(
 
 
 process (clk)
+variable count : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(0,10);
 begin
 	if rising_edge(clk) then
 		case state is
 			when IDLE =>
-				if pixel_row > sprite_row and pixel_row <= sprite_row + sprite_height 
-				and pixel_column > sprite_column and pixel_column < sprite_column + sprite_width  
+				if pixel_row > sprite_row and pixel_row <= sprite_row + (sprite_height * scale) 
+				and pixel_column > sprite_column and pixel_column < sprite_column + (sprite_width * scale)  
 				then
 					state <= DRAW_SPRITE;
 					new_sprite_row <= pixel_row - sprite_row;
@@ -64,11 +67,16 @@ begin
 				state <= WAIT_SPRITE;
 
 			when WAIT_SPRITE =>
-				if "0000000" & bmap_column = sprite_width - CONV_STD_LOGIC_VECTOR(1,10) then
+				if "0000000" & bmap_column >= (sprite_width ) - CONV_STD_LOGIC_VECTOR(1,10) then
 					state <= IDLE;
 				else
 					state <= DRAW_SPRITE;
-					bmap_column <= bmap_column + "001";
+					if (count > scale - CONV_STD_LOGIC_VECTOR(1,10)) then
+						count := CONV_STD_LOGIC_VECTOR(0,10);
+						bmap_column <= bmap_column + "001";
+					else 
+						count := count + CONV_STD_LOGIC_VECTOR(1, 10);
+					end if;
 				end if;
 
 			when others =>
