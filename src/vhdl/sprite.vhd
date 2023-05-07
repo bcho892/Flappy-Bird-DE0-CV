@@ -50,7 +50,7 @@ begin
 	if rising_edge(clk) then
 		case state is
 			when IDLE =>
-				if pixel_row >= sprite_row and pixel_row < sprite_row + sprite_height 
+				if pixel_row > sprite_row and pixel_row <= sprite_row + sprite_height 
 				and pixel_column > sprite_column and pixel_column < sprite_column + sprite_width  
 				then
 					state <= DRAW_SPRITE;
