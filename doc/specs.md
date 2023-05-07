@@ -28,6 +28,12 @@ Outputs states corresponding to the relevant game mode. Requires the following:
 
 Should be treated as a Moore FSM
 
+### Sprite
+
+#### Requirements
+
+Needs to draw sprites based on data from an external synchronous ROM. The sprite can be scaled based on a generic, and should be drawn given a cooridinate on the screen.
+
 ### Bird
 
 #### Requirements
