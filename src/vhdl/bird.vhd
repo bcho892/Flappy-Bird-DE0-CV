@@ -13,20 +13,24 @@ ENTITY bird IS
 END bird;
 
 architecture behavior of bird is
+	-- CONSTANTS
+	CONSTANT ACCELERATION_RATE_DOWN : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(1,10);
+	CONSTANT UPWARDS_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(8, 10);
+	CONSTANT MAX_FALL_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(11, 10);
+	CONSTANT BIRD_SCALE : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(3, 10);
+	CONSTANT GROUND_Y_PIXEL : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(420,10);
 
 SIGNAL temp_bird_on					: std_logic;
-SIGNAL size 					: std_logic_vector(9 DOWNTO 0);  
+SIGNAL size 					: std_logic_vector(9 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(24,10);
 SIGNAL bird_y_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_x_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_y_motion			: std_logic_vector(9 DOWNTO 0);
 
--- CONSTANTS
-CONSTANT ACCELERATION_RATE_DOWN : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(1,10);
-CONSTANT UPWARDS_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(8, 10);
-CONSTANT MAX_FALL_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(11, 10);
-CONSTANT GROUND_Y_PIXEL : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(420,10);
 
 component sprite 
+	generic (
+			scale : STD_LOGIC_VECTOR	
+			);
 	port (
 			clk, reset, horiz_sync : IN STD_LOGIC;
 			rom_address : IN STD_LOGIC_VECTOR(5 downto 0);
@@ -38,12 +42,12 @@ end component;
 
 BEGIN           
 
-size <= CONV_STD_LOGIC_VECTOR(8,10);
--- bird_x_pos and bird_y_pos show the (x,y) for the centre of ball
 bird_x_pos <= CONV_STD_LOGIC_VECTOR(300,10);
 
-
 sprite_component : sprite 
+generic map(
+			BIRD_SCALE
+		   )
 port map(
 		clk, '0', vert_sync,CONV_STD_LOGIC_VECTOR(27,6),bird_y_pos,bird_x_pos, pixel_row, pixel_column, temp_bird_on
 		);
