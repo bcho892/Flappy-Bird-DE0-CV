@@ -4,6 +4,12 @@ USE IEEE.STD_LOGIC_ARITH.all;
 USE IEEE.STD_LOGIC_UNSIGNED.all;
 
 entity sprite is 
+	generic ( 
+			sprite_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,10); 
+		  	sprite_height : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,10); 
+		  	scale : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(3, 10);
+			bits : Integer := 3
+		);
 	port (
 			clk, reset, horiz_sync : IN STD_LOGIC;
 			rom_address : IN STD_LOGIC_VECTOR(5 downto 0);
@@ -14,13 +20,10 @@ entity sprite is
 end sprite;
 
 architecture behaviour of sprite is
-CONSTANT sprite_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,10); 
-CONSTANT sprite_height : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,10); 
-CONSTANT scale : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(3, 10); 
 TYPE state_type is (IDLE, DRAW_SPRITE, WAIT_SPRITE);
 
 SIGNAL state : state_type := IDLE;
-SIGNAL bmap_column, bmap_row : STD_LOGIC_VECTOR(2 downto 0);
+SIGNAL bmap_column, bmap_row : STD_LOGIC_VECTOR(bits-1 downto 0);
 SIGNAL new_sprite_row, new_sprite_column: STD_LOGIC_VECTOR(9 downto 0);
 SIGNAL t_sprite_on : STD_LOGIC;
  
