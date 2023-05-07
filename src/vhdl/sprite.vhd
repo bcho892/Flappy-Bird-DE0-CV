@@ -49,6 +49,7 @@ port map(
 
 process (clk)
 variable count : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(0,10);
+variable count_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(0,10);
 begin
 	if rising_edge(clk) then
 		case state is
@@ -57,9 +58,13 @@ begin
 				and pixel_column > sprite_column and pixel_column < sprite_column + (sprite_width * scale)  
 				then
 					state <= DRAW_SPRITE;
-					new_sprite_row <= pixel_row - sprite_row;
+
+					if (count_y > scale - CONV_STD_LOGIC_VECTOR(1,10)) then
+						count_y := CONV_STD_LOGIC_VECTOR(0,10);
+						bmap_row <= bmap_row + "001";
+					end if;
+
 					new_sprite_column <= CONV_STD_LOGIC_VECTOR(0,10);
-					bmap_row <= new_sprite_row(2 downto 0);
 					bmap_column <= new_sprite_column(2 downto 0);
 				end if;
 
@@ -67,8 +72,9 @@ begin
 				state <= WAIT_SPRITE;
 
 			when WAIT_SPRITE =>
-				if "0000000" & bmap_column >= (sprite_width ) - CONV_STD_LOGIC_VECTOR(1,10) then
+				if "0000000" & bmap_column >= sprite_width - CONV_STD_LOGIC_VECTOR(1,10) then
 					state <= IDLE;
+					count_y := count_y + CONV_STD_LOGIC_VECTOR(1, 10);
 				else
 					state <= DRAW_SPRITE;
 					if (count > scale - CONV_STD_LOGIC_VECTOR(1,10)) then
