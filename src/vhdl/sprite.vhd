@@ -13,6 +13,10 @@ entity sprite is
 end sprite;
 
 architecture behaviour of sprite is
+CONSTANT sprite_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,10); 
+CONSTANT sprite_height : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,10); 
+CONSTANT screen_max_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(639, 10);
+CONSTANT delay : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(2, 10);
 TYPE state_type is (IDLE, DRAW_SPRITE, WAIT_SPRITE);
 
 SIGNAL state : state_type := IDLE;
@@ -45,8 +49,9 @@ begin
 	if rising_edge(clk) then
 		case state is
 			when IDLE =>
-				if pixel_row >= sprite_row and pixel_row < sprite_row + CONV_STD_LOGIC_VECTOR(8,10) 
-					and pixel_column >= sprite_column and pixel_column < sprite_column + CONV_STD_LOGIC_VECTOR(8,10) then
+				if pixel_row >= sprite_row and pixel_row < sprite_row + sprite_height 
+				and pixel_column >= sprite_column and pixel_column < sprite_column + sprite_width  
+				then
 					state <= DRAW_SPRITE;
 					new_sprite_row <= pixel_row - sprite_row;
 					new_sprite_column <= pixel_column - sprite_column;
@@ -58,11 +63,11 @@ begin
 				state <= WAIT_SPRITE;
 
 			when WAIT_SPRITE =>
-				if pixel_column = sprite_column + CONV_STD_LOGIC_VECTOR(8,10) then
+				if "0000000" & bmap_column = sprite_width - 1 then
 					state <= IDLE;
 				else
+					bmap_column <= bmap_column + "001";
 					state <= DRAW_SPRITE;
-					bmap_column <= bmap_column + CONV_STD_LOGIC_VECTOR(1,3);
 				end if;
 
 			when others =>
@@ -76,7 +81,8 @@ begin
 	case state is
 		when DRAW_SPRITE =>
 			sprite_on <= t_sprite_on;
-
+		when WAIT_SPRITE =>
+			sprite_on <= t_sprite_on;
 		when others =>
 			sprite_on <= '0';
 	end case;
