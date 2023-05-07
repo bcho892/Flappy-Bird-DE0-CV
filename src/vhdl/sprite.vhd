@@ -6,6 +6,7 @@ USE IEEE.STD_LOGIC_UNSIGNED.all;
 entity sprite is 
 	port (
 			clk, reset, horiz_sync : IN STD_LOGIC;
+			rom_address : IN STD_LOGIC_VECTOR(5 downto 0);
 			sprite_row, sprite_column, 
 			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
 			sprite_on: OUT STD_LOGIC
@@ -36,7 +37,7 @@ begin
 
 char_rom_component : char_rom
 port map(
-			character_address => CONV_STD_LOGIC_VECTOR(23,6),
+			character_address => rom_address,
 			font_row => bmap_row,
 			font_col => bmap_column,
 			clock => clk,
@@ -50,11 +51,11 @@ begin
 		case state is
 			when IDLE =>
 				if pixel_row >= sprite_row and pixel_row < sprite_row + sprite_height 
-				and pixel_column >= sprite_column and pixel_column < sprite_column + sprite_width  
+				and pixel_column > sprite_column and pixel_column < sprite_column + sprite_width  
 				then
 					state <= DRAW_SPRITE;
 					new_sprite_row <= pixel_row - sprite_row;
-					new_sprite_column <= pixel_column - sprite_column;
+					new_sprite_column <= CONV_STD_LOGIC_VECTOR(0,10);
 					bmap_row <= new_sprite_row(2 downto 0);
 					bmap_column <= new_sprite_column(2 downto 0);
 				end if;
@@ -63,11 +64,11 @@ begin
 				state <= WAIT_SPRITE;
 
 			when WAIT_SPRITE =>
-				if "0000000" & bmap_column = sprite_width - 1 then
+				if "0000000" & bmap_column = sprite_width - CONV_STD_LOGIC_VECTOR(1,10) then
 					state <= IDLE;
 				else
-					bmap_column <= bmap_column + "001";
 					state <= DRAW_SPRITE;
+					bmap_column <= bmap_column + "001";
 				end if;
 
 			when others =>

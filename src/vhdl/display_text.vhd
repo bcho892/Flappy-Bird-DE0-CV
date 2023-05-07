@@ -28,6 +28,7 @@ SIGNAL current_row, current_col : STD_LOGIC_VECTOR(2 downto 0) := CONV_STD_LOGIC
 component sprite 
 	port (
 			clk, reset, horiz_sync : IN STD_LOGIC;
+			rom_address : IN STD_LOGIC_VECTOR(5 downto 0);
 			sprite_row, sprite_column, 
 			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
 			sprite_on: OUT STD_LOGIC
@@ -37,7 +38,7 @@ begin
 
 sprite_component : sprite 
 port map(
-		clk, '0', horiz_sync,score_start_y,score_rad_10_start_x, pixel_row, pixel_column, temp_text_on
+		clk, '0', horiz_sync,CONV_STD_LOGIC_VECTOR(22,6),score_start_y,score_rad_10_start_x, pixel_row, pixel_column, temp_text_on
 		);
 
 red <= temp_text_on;  
