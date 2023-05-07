@@ -16,8 +16,6 @@ end sprite;
 architecture behaviour of sprite is
 CONSTANT sprite_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,10); 
 CONSTANT sprite_height : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,10); 
-CONSTANT screen_max_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(639, 10);
-CONSTANT delay : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(2, 10);
 CONSTANT scale : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(3, 10); 
 TYPE state_type is (IDLE, DRAW_SPRITE, WAIT_SPRITE);
 
