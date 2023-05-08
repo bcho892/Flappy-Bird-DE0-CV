@@ -6,35 +6,55 @@ USE  IEEE.STD_LOGIC_SIGNED.all;
 
 ENTITY bird IS
 	PORT
-		(vert_sync, left_click, pipe_on	: IN std_logic;
+		(clk, vert_sync, left_click, pipe_on	: IN std_logic;
+		character_select : IN STD_LOGIC_VECTOR(1 downto 0);
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		  game_state : IN std_logic_vector(1 downto 0); -- 00 game over, 01 game start, 10 gameplay
 		  bird_on, collision, red, green, blue, mode 			: OUT std_logic);		-- collision and mode are connected to the FSM
 END bird;
 
 architecture behavior of bird is
+	-- CONSTANTS
+	CONSTANT ACCELERATION_RATE_DOWN : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(1,10);
+	CONSTANT UPWARDS_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(8, 10);
+	CONSTANT MAX_FALL_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(11, 10);
+	CONSTANT BIRD_SCALE : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(2, 10);
+	CONSTANT GROUND_Y_PIXEL : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(420,10);
 
 SIGNAL temp_bird_on					: std_logic;
-SIGNAL size 					: std_logic_vector(9 DOWNTO 0);  
+SIGNAL size 					: std_logic_vector(9 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(24,10);
 SIGNAL bird_y_pos				: std_logic_vector(9 DOWNTO 0);
-SIGNAL bird_x_pos				: std_logic_vector(10 DOWNTO 0);
+SIGNAL bird_x_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_y_motion			: std_logic_vector(9 DOWNTO 0);
+SIGNAL character_address 		: std_logic_vector(5 DOWNTO 0);
 
--- CONSTANTS
-CONSTANT ACCELERATION_RATE_DOWN : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(1,10);
-CONSTANT UPWARDS_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(8, 10);
-CONSTANT MAX_FALL_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(11, 10);
-CONSTANT GROUND_Y_PIXEL : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(420,10);
-CONSTANT CENTRE : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(420,10);
+component sprite 
+	generic (
+			scale : STD_LOGIC_VECTOR	
+			);
+	port (
+			clk, reset, horiz_sync : IN STD_LOGIC;
+			rom_address : IN STD_LOGIC_VECTOR(5 downto 0);
+			sprite_row, sprite_column, 
+			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
+			sprite_on: OUT STD_LOGIC
+		 );
+end component;
+
 BEGIN           
 
-size <= CONV_STD_LOGIC_VECTOR(8,10);
--- bird_x_pos and bird_y_pos show the (x,y) for the centre of ball
-bird_x_pos <= CONV_STD_LOGIC_VECTOR(300,11);
+bird_x_pos <= CONV_STD_LOGIC_VECTOR(300,10);
+with character_select select character_address <=
+	CONV_STD_LOGIC_VECTOR(27,6) when "00",
+	CONV_STD_LOGIC_VECTOR(0, 6) when "01",
+	CONV_STD_LOGIC_VECTOR(7, 6) when "10",
+	CONV_STD_LOGIC_VECTOR(9, 6) when others;
 
-temp_bird_on <= '1' when ( ('0' & bird_x_pos <= '0' & pixel_column + size) and ('0' & pixel_column <= '0' & bird_x_pos + size) 	-- x_pos - size <= pixel_column <= x_pos + size
-					and ('0' & bird_y_pos <= pixel_row + size) and ('0' & pixel_row <= bird_y_pos + size) )  else	-- y_pos - size <= pixel_row <= y_pos + size
-			'0';
+sprite_component : sprite 
+generic map(
+			BIRD_SCALE
+		   ) port map( clk, '0', vert_sync, character_address,bird_y_pos,bird_x_pos, pixel_row, pixel_column, temp_bird_on
+		);
 
 collision <= '1' when temp_bird_on = '1' and pipe_on = '1' else '0';
 
