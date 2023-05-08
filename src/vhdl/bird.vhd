@@ -7,6 +7,7 @@ USE  IEEE.STD_LOGIC_SIGNED.all;
 ENTITY bird IS
 	PORT
 		(clk, vert_sync, left_click, pipe_on	: IN std_logic;
+		character_select : IN STD_LOGIC_VECTOR(1 downto 0);
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		  game_state : IN std_logic_vector(1 downto 0); -- 00 game over, 01 game start, 10 gameplay
 		  bird_on, collision, red, green, blue 			: OUT std_logic);		
@@ -17,7 +18,7 @@ architecture behavior of bird is
 	CONSTANT ACCELERATION_RATE_DOWN : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(1,10);
 	CONSTANT UPWARDS_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(8, 10);
 	CONSTANT MAX_FALL_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(11, 10);
-	CONSTANT BIRD_SCALE : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(3, 10);
+	CONSTANT BIRD_SCALE : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(2, 10);
 	CONSTANT GROUND_Y_PIXEL : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(420,10);
 
 SIGNAL temp_bird_on					: std_logic;
@@ -25,7 +26,7 @@ SIGNAL size 					: std_logic_vector(9 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(24,10);
 SIGNAL bird_y_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_x_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_y_motion			: std_logic_vector(9 DOWNTO 0);
-
+SIGNAL character_address 		: std_logic_vector(5 DOWNTO 0);
 
 component sprite 
 	generic (
@@ -43,13 +44,16 @@ end component;
 BEGIN           
 
 bird_x_pos <= CONV_STD_LOGIC_VECTOR(300,10);
+with character_select select character_address <=
+	CONV_STD_LOGIC_VECTOR(27,6) when "00",
+	CONV_STD_LOGIC_VECTOR(0, 6) when "01",
+	CONV_STD_LOGIC_VECTOR(7, 6) when "10",
+	CONV_STD_LOGIC_VECTOR(9, 6) when others;
 
 sprite_component : sprite 
 generic map(
 			BIRD_SCALE
-		   )
-port map(
-		clk, '0', vert_sync,CONV_STD_LOGIC_VECTOR(27,6),bird_y_pos,bird_x_pos, pixel_row, pixel_column, temp_bird_on
+		   ) port map( clk, '0', vert_sync, character_address,bird_y_pos,bird_x_pos, pixel_row, pixel_column, temp_bird_on
 		);
 
 collision <= '1' when temp_bird_on = '1' and pipe_on = '1' else '0';
