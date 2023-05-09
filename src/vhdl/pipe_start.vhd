@@ -17,7 +17,9 @@ begin
 process (clk)
 begin
 	if Rising_Edge(clk) then
-		if game_state = "10" or game_state = "01" then
+		if game_state = "00" or game_state = "11" then
+			state <= '0';
+		elsif game_state = "10" or game_state = "01" then
 			case state is
 				when '0' => 
 					pulse <= '1';
