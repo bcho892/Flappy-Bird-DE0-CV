@@ -71,6 +71,7 @@ begin
 			end if;
 			-- reset the pipe
 			if ('0' & pipe_x_pos > '0' & screen_max_x + pipe_width) or game_state = "00" then
+				enable <= '0';
 				pipe_x_pos <= screen_max_x + pipe_width;
 				pipe_x_motion <= CONV_STD_LOGIC_VECTOR(0,10);
 				pipe_height <= CONV_STD_LOGIC_VECTOR(preset_pipe_heights(current_index), 10);
