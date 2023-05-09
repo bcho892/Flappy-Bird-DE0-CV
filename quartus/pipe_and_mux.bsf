@@ -62,9 +62,16 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 0 112)
 		(input)
-		(text "random_index[3..0]" (rect 0 0 115 19)(font "Intel Clear" (font_size 8)))
-		(text "random_index[3..0]" (rect 21 107 136 126)(font "Intel Clear" (font_size 8)))
+		(text "game_state[1..0]" (rect 0 0 100 19)(font "Intel Clear" (font_size 8)))
+		(text "game_state[1..0]" (rect 21 107 121 126)(font "Intel Clear" (font_size 8)))
 		(line (pt 0 112)(pt 16 112)(line_width 3))
+	)
+	(port
+		(pt 0 128)
+		(input)
+		(text "random_index[3..0]" (rect 0 0 115 19)(font "Intel Clear" (font_size 8)))
+		(text "random_index[3..0]" (rect 21 123 136 142)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 128)(pt 16 128)(line_width 3))
 	)
 	(port
 		(pt 248 32)

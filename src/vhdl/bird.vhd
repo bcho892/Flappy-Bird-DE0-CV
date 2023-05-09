@@ -14,12 +14,13 @@ ENTITY bird IS
 END bird;
 
 architecture behavior of bird is
-	-- CONSTANTS
-	CONSTANT ACCELERATION_RATE_DOWN : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(1,10);
-	CONSTANT UPWARDS_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(8, 10);
-	CONSTANT MAX_FALL_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(11, 10);
-	CONSTANT BIRD_SCALE : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(2, 10);
-	CONSTANT GROUND_Y_PIXEL : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(420,10);
+-- CONSTANTS
+CONSTANT ACCELERATION_RATE_DOWN : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(1,10);
+CONSTANT UPWARDS_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(8, 10);
+CONSTANT MAX_FALL_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(11, 10);
+CONSTANT BIRD_SCALE : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(3, 10);
+CONSTANT GROUND_Y_PIXEL : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(420,10);
+CONSTANT CENTRE_Y : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(240, 10);
 
 SIGNAL temp_bird_on					: std_logic;
 SIGNAL size 					: std_logic_vector(9 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(24,10);
@@ -64,50 +65,37 @@ bird_on <= temp_bird_on;
 
 Move_Bird: process (vert_sync) -- Add left_click to sensitivity list
 begin
-	case state_in IS
-		when "00" => -- start menu
-			if(RISING_EDGE(vert_sync) then
-				bird_y_pos <= CENTRE;
-			end if;
-			if(left_click = '1') then
-				mode = '1';
-			end if;
-		when "11" => -- game over
-			if(RISING_EDGE(vert_sync) then
-				bird_y_pos <= CENTRE;
-			end if;
+	if Rising_Edge(vert_sync) then
 
-		when others => -- normal operation and training- bird behaviour is the same
-		if Rising_Edge(vert_sync) then
-			-- ground collision
-			if(bird_y_pos = GROUND_Y_PIXEL) then
-				collision <= '1';
-			end if;
-
-			if left_click = '1' then
+		if left_click = '1' then
+			if game_state /= "11" then 
 				-- Go up
 				if bird_y_pos > 0 then -- Check if ball is not at the top of the screen
 					bird_y_motion <= -UPWARDS_SPEED; -- Set upward motion
 				else
 					bird_y_motion <= (others => '0'); -- Dont move
 				end if;
-			else
-				-- Apply gravity
-				if bird_y_pos < (GROUND_Y_PIXEL - size) then -- Check if ball is not at the bottom of the screen
-					if bird_y_motion < MAX_FALL_SPEED then -- Limit fall speed
-						bird_y_motion <= bird_y_motion + ACCELERATION_RATE_DOWN; -- Make it fall faster
-					end if;
-				else
-					bird_y_motion <= (others => '0'); -- Stop downward motion
-				end if;
 			end if;
-			if bird_y_pos + bird_y_motion >= (GROUND_Y_PIXEL - size) then
-				bird_y_pos <= GROUND_Y_PIXEL - size; --Make it fall to bottom gracefully
+		else
+			-- Apply gravity
+			if bird_y_pos < (GROUND_Y_PIXEL - size) then -- Check if ball is not at the bottom of the screen
+				if bird_y_motion < MAX_FALL_SPEED then -- Limit fall speed
+					bird_y_motion <= bird_y_motion + ACCELERATION_RATE_DOWN; -- Make it fall faster
+				end if;
 			else
-				bird_y_pos <= bird_y_pos + bird_y_motion; -- normal
+				bird_y_motion <= (others => '0'); -- Stop downward motion
 			end if;
 		end if;
-	end case;
+
+		if game_state = "00" then
+			bird_y_pos <= CENTRE_Y;
+		elsif bird_y_pos + bird_y_motion >= (GROUND_Y_PIXEL - size) then
+			bird_y_pos <= GROUND_Y_PIXEL - size; --Make it fall to bottom gracefully
+		else
+			bird_y_pos <= bird_y_pos + bird_y_motion; -- normal
+		end if;
+
+	end if;
 
 end process Move_Bird;
 

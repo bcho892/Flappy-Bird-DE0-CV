@@ -5,27 +5,27 @@ USE  IEEE.STD_LOGIC_SIGNED.all;
 
 entity pipe_start is
 	port(
-			clk, reset : IN STD_LOGIC;
+			clk: IN STD_LOGIC;
+			game_state : IN STD_LOGIC_VECTOR(1 downto 0);
 			pulse : OUT STD_LOGIC
 		);
 end entity pipe_start;
 
 architecture behaviour of pipe_start is 
-SIGNAL state : STD_LOGIC := '0';
+signal state : std_logic := '0';
 begin
-process (clk, reset)
+process (clk)
 begin
 	if Rising_Edge(clk) then
-		if reset = '1' then 
-			state <= '0';
+		if game_state = "10" or game_state = "01" then
+			case state is
+				when '0' => 
+					pulse <= '1';
+					state <= '1';
+				when '1'  =>
+					pulse <= '0';
+			end case;
 		end if;
-		case state is
-			when '0' => 
-				pulse <= '1';
-				state <= '1';
-			when '1'  =>
-				pulse <= '0';
-		end case;
 	end if;
 end process;
 end architecture;
