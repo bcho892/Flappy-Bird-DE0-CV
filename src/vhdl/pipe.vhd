@@ -58,7 +58,7 @@ move_pipe : process(vert_sync)
 begin
 		if Rising_Edge(vert_sync) then
 			--allow movement of current pipe
-			if game_state = "11" then 
+			if game_state = "11" or game_state = "00" then 
 				enable <= '0';
 			elsif init = '1' then
 				enable <= '1';
@@ -70,8 +70,7 @@ begin
 				init_next <= '0';
 			end if;
 			-- reset the pipe
-			if '0' & pipe_x_pos > '0' & screen_max_x + pipe_width then
-				enable <= '0';
+			if ('0' & pipe_x_pos > '0' & screen_max_x + pipe_width) or game_state = "00" then
 				pipe_x_pos <= screen_max_x + pipe_width;
 				pipe_x_motion <= CONV_STD_LOGIC_VECTOR(0,10);
 				pipe_height <= CONV_STD_LOGIC_VECTOR(preset_pipe_heights(current_index), 10);

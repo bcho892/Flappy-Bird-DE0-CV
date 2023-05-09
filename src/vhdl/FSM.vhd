@@ -13,53 +13,58 @@ ENTITY FSM IS
 END ENTITY FSM;
 
 ARCHITECTURE Moore OF FSM IS
+	CONSTANT debounce_time : Integer := 3000000;
    -- define states
    type state_type is (game_start, normal_mode, training_mode, game_over);
    SIGNAL current_state, next_state : state_type := game_start;
+   SIGNAL count : Integer range 0 to 25000000;
 
 BEGIN
-   -- Process used to update the next state of game every clock cycle
-   state_sync : PROCESS (clk_in)
-   BEGIN
-	if Rising_Edge(clk_in) then
-		current_state <= next_state;
-    end if;
-   END PROCESS state_sync;
-
    -- process to describe state transitions
-   transition : process (current_state, collision, mouse_click)
+   transition : process (clk_in, current_state, collision, mouse_click)
    BEGIN
-      CASE (current_state) IS
-         WHEN game_start =>
-			 state_out <= "00";
-            if mouse_click = '1' then
-               next_state <= normal_mode;
-            -- training mode to be implemented later. currently, launches start screen and click to start normal operation
-            else
-               next_state <= game_start;
-            end if;
-         WHEN normal_mode =>
-			 state_out <= "01";
-            if collision = '1' then
-               next_state <= game_over;
-            else
-               next_state <= normal_mode;
-            end if;
-         WHEN game_over =>
-			 state_out <= "11";
-            if(mouse_click = '1') then
-               next_state <= game_over;
-            else
-               next_state <= game_over; 
-            end if;
-         WHEN training_mode =>
-			 state_out <= "10";
-            if collision = '1' then
-               next_state <= game_over;
-            else
-               next_state <= training_mode;
-            end if;
-      END CASE;
+	   if Rising_Edge(clk_in) then
+		  CASE (current_state) IS
+			 WHEN game_start =>
+				 state_out <= "00";
+				if count >= debounce_time and mouse_click = '1' then
+				   next_state <= normal_mode;
+			   elsif count >= debounce_time then
+				   count <= debounce_time;
+				else
+					count <= count + 1;
+				   next_state <= game_start; 
+				end if;
+			 WHEN normal_mode =>
+				 state_out <= "01";
+				if collision = '1' then
+				   next_state <= game_over;
+				   count <= 0;
+				else
+				   next_state <= normal_mode;
+				end if;
+			 WHEN game_over =>
+				 state_out <= "11";
+
+				if count >= debounce_time and mouse_click = '1' then
+				   next_state <= game_start;
+				   count <= 0;
+			   elsif count >= debounce_time then
+				   count <= debounce_time;
+				else
+					count <= count + 1;
+				   next_state <= game_over; 
+				end if;
+			 WHEN training_mode =>
+				 state_out <= "10";
+				if collision = '1' then
+				   next_state <= game_over;
+				else
+				   next_state <= training_mode;
+				end if;
+		  END CASE;
+		current_state <= next_state;
+		end if;
 	  
    end process;
 

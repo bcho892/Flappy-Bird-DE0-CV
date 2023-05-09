@@ -2461,11 +2461,6 @@ https://fpgasoftware.intel.com/eula.
 	(bus)
 )
 (connector
-	(text "clk_25MHz" (rect 1184 1088 1237 1105)(font "Intel Clear" ))
-	(pt 1288 1104)
-	(pt 1184 1104)
-)
-(connector
 	(pt 1288 1168)
 	(pt 1288 1160)
 )
@@ -2477,6 +2472,11 @@ https://fpgasoftware.intel.com/eula.
 	(text "collision" (rect 1176 1144 1214 1161)(font "Intel Clear" ))
 	(pt 1288 1160)
 	(pt 1176 1160)
+)
+(connector
+	(text "clk_25MHz" (rect 1184 1088 1237 1105)(font "Intel Clear" ))
+	(pt 1288 1104)
+	(pt 1184 1104)
 )
 (junction (pt 856 256))
 (junction (pt 496 264))
