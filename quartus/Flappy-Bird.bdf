@@ -2406,11 +2406,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 1232 1176)
 )
 (connector
-	(text "collision" (rect 1264 1152 1302 1169)(font "Intel Clear" ))
-	(pt 1296 1168)
-	(pt 1264 1168)
-)
-(connector
 	(pt 1296 1184)
 	(pt 1272 1184)
 )
@@ -2426,11 +2421,6 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 1296 1136)
 	(pt 1288 1136)
-)
-(connector
-	(text "vert_sync" (rect 1184 1088 1230 1105)(font "Intel Clear" ))
-	(pt 1288 1104)
-	(pt 1184 1104)
 )
 (connector
 	(text "game_state[1..0]" (rect 1504 1120 1584 1137)(font "Intel Clear" ))
@@ -2469,6 +2459,24 @@ https://fpgasoftware.intel.com/eula.
 	(pt 1880 824)
 	(pt 1808 824)
 	(bus)
+)
+(connector
+	(text "clk_25MHz" (rect 1184 1088 1237 1105)(font "Intel Clear" ))
+	(pt 1288 1104)
+	(pt 1184 1104)
+)
+(connector
+	(pt 1288 1168)
+	(pt 1288 1160)
+)
+(connector
+	(pt 1296 1168)
+	(pt 1288 1168)
+)
+(connector
+	(text "collision" (rect 1176 1144 1214 1161)(font "Intel Clear" ))
+	(pt 1288 1160)
+	(pt 1176 1160)
 )
 (junction (pt 856 256))
 (junction (pt 496 264))

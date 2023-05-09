@@ -57,7 +57,7 @@ generic map(
 		   ) port map( clk, '0', vert_sync, character_address,bird_y_pos,bird_x_pos, pixel_row, pixel_column, temp_bird_on
 		);
 
-collision <= '1' when temp_bird_on = '1' and pipe_on = '1' else '0';
+collision <= '1' when ((temp_bird_on = '1' and pipe_on = '1') or bird_y_pos >= GROUND_Y_PIXEL - SIZE) else '0';
 
 Blue <= temp_bird_on;
 bird_on <= temp_bird_on;

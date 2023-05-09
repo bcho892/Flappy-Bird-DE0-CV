@@ -48,7 +48,7 @@ BEGIN
          WHEN game_over =>
 			 state_out <= "11";
             if(mouse_click = '1') then
-               next_state <= game_start;
+               next_state <= game_over;
             else
                next_state <= game_over; 
             end if;

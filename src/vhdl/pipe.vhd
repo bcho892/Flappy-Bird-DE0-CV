@@ -58,7 +58,9 @@ move_pipe : process(vert_sync)
 begin
 		if Rising_Edge(vert_sync) then
 			--allow movement of current pipe
-			if init = '1' then
+			if game_state = "11" then 
+				enable <= '0';
+			elsif init = '1' then
 				enable <= '1';
 			end if;
 			-- start the next pipe
