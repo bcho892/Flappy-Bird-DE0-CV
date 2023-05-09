@@ -78,7 +78,7 @@ begin
 			end if;
 		else
 			-- Apply gravity
-			if bird_y_pos < (GROUND_Y_PIXEL - size) then -- Check if ball is not at the bottom of the screen
+			if bird_y_pos < (GROUND_Y_PIXEL - size) and game_state /= "00" then -- Check if ball is not at the bottom of the screen
 				if bird_y_motion < MAX_FALL_SPEED then -- Limit fall speed
 					bird_y_motion <= bird_y_motion + ACCELERATION_RATE_DOWN; -- Make it fall faster
 				end if;
