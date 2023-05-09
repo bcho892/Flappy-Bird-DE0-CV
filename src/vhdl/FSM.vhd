@@ -13,7 +13,7 @@ ENTITY FSM IS
 END ENTITY FSM;
 
 ARCHITECTURE Moore OF FSM IS
-	CONSTANT debounce_time : Integer := 3000000;
+	CONSTANT debounce_time : Integer := 4000000;
    -- define states
    type state_type is (game_start, normal_mode, training_mode, game_over);
    SIGNAL current_state, next_state : state_type := game_start;

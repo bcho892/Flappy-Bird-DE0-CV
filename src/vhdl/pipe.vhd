@@ -79,7 +79,7 @@ begin
 			if enable = '1' then
 				pipe_x_motion <= CONV_STD_LOGIC_VECTOR(2,10);
 				pipe_x_pos <= pipe_x_pos - pipe_x_motion;
-			else 
+			elsif game_state /= "11" then
 				pipe_height <= CONV_STD_LOGIC_VECTOR(preset_pipe_heights(current_index), 10);
 			end if;
 			--score pulse generation
