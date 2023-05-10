@@ -48,7 +48,7 @@ BEGIN
 bird_x_pos <= CONV_STD_LOGIC_VECTOR(300,10);
 with character_select select character_address <=
 	CONV_STD_LOGIC_VECTOR(0, 9) when "00",
-	CONV_STD_LOGIC_VECTOR(0, 9) when "01",
+	CONV_STD_LOGIC_VECTOR(16, 9) when "01",
 	CONV_STD_LOGIC_VECTOR(0, 9) when "10",
 	CONV_STD_LOGIC_VECTOR(0, 9) when others;
 
