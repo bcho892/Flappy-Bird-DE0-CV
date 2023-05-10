@@ -1,0 +1,26 @@
+DEPTH = 1024; % Memory depth and width are required %
+WIDTH = 16; % Enter decimal numbers for each % 
+ADDRESS_RADIX = DEC; % Address and value radixes are optional % 
+DATA_RADIX = BIN; % Enter BIN, DEC, HEX, or OCT; unless % 
+ % otherwise specified, radixes = HEX % 
+-- Specify values for addresses, which can be single address or range 
+CONTENT 
+BEGIN 
+000  : 0000000000000000;
+001  : 0000000111000000;
+002  : 0000011001100000;
+003  : 0000110000110000;
+004  : 0001100110011100;
+005  : 0011001100110011;
+006  : 0110011001100110;
+007  : 0110011001100110;
+008  : 0011001100110011;
+009  : 0001100110011100;
+010  : 0000110000110000;
+011  : 0000011001100000;
+012  : 0000000111000000;
+013  : 0000000000000000;
+014  : 0000000000000000;
+015  : 0000000000000000;
+[16..1023] : 1110111011111111; % remaining locations are FF % 
+END ; % You must have END statement! % 

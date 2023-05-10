@@ -9,8 +9,8 @@ USE altera_mf.all;
 ENTITY hex_rom IS
 	PORT
 	(
-		character_address	:	IN STD_LOGIC_VECTOR (5 DOWNTO 0);
-		font_row, font_col	:	IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+		rom_address			:	IN STD_LOGIC_VECTOR (8 DOWNTO 0);
+		bmap_col			:	IN STD_LOGIC_VECTOR (3 DOWNTO 0);
 		clock				: 	IN STD_LOGIC ;
 		rom_mux_output		:	OUT STD_LOGIC
 	);
@@ -19,8 +19,7 @@ END hex_rom;
 
 ARCHITECTURE SYN OF hex_rom IS
 
-	SIGNAL rom_data		: STD_LOGIC_VECTOR (7 DOWNTO 0);
-	SIGNAL rom_address	: STD_LOGIC_VECTOR (8 DOWNTO 0);
+	SIGNAL rom_data		: STD_LOGIC_VECTOR (15 DOWNTO 0);
 
 	COMPONENT altsyncram
 	GENERIC (
@@ -42,7 +41,7 @@ ARCHITECTURE SYN OF hex_rom IS
 	PORT (
 		clock0		: IN STD_LOGIC ;
 		address_a	: IN STD_LOGIC_VECTOR (8 DOWNTO 0);
-		q_a			: OUT STD_LOGIC_VECTOR (7 DOWNTO 0)
+		q_a			: OUT STD_LOGIC_VECTOR (15 DOWNTO 0)
 	);
 	END COMPONENT;
 
@@ -53,7 +52,7 @@ BEGIN
 		address_aclr_a => "NONE",
 		clock_enable_input_a => "BYPASS",
 		clock_enable_output_a => "BYPASS",
-		init_file => "tcgrom.mif",
+		init_file => "16bitrom.mif",
 		intended_device_family => "Cyclone III",
 		lpm_hint => "ENABLE_RUNTIME_MOD=NO",
 		lpm_type => "altsyncram",
@@ -71,7 +70,6 @@ BEGIN
 		q_a => rom_data
 	);
 
-	rom_address <= character_address & font_row;
-	rom_mux_output <= rom_data (CONV_INTEGER(NOT font_col(2 DOWNTO 0)));
+	rom_mux_output <= rom_data (CONV_INTEGER(NOT bmap_col(3 DOWNTO 0)));
 
 END SYN;

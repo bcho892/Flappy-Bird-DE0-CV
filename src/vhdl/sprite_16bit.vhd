@@ -5,14 +5,14 @@ USE IEEE.STD_LOGIC_UNSIGNED.all;
 
 entity sprite_16bit is 
 	generic ( 
-			sprite_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,10); 
-		  	sprite_height : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,10); 
+			sprite_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(16,10); 
+		  	sprite_height : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(16,10); 
 		  	scale : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(3, 10);
-			bits : Integer := 3
+			bits : Integer := 4
 		);
 	port (
 			clk, reset, horiz_sync : IN STD_LOGIC;
-			rom_address : IN STD_LOGIC_VECTOR(5 downto 0);
+			rom_address : IN STD_LOGIC_VECTOR(8 downto 0);
 			sprite_row, sprite_column, 
 			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
 			sprite_on: OUT STD_LOGIC
@@ -24,30 +24,31 @@ TYPE state_type is (IDLE, DRAW_SPRITE, WAIT_SPRITE);
 
 SIGNAL state : state_type := IDLE;
 SIGNAL bmap_column, bmap_row : STD_LOGIC_VECTOR(bits-1 downto 0);
-SIGNAL new_sprite_row, new_sprite_column: STD_LOGIC_VECTOR(9 downto 0);
+SIGNAL new_sprite_column: STD_LOGIC_VECTOR(9 downto 0);
 SIGNAL t_sprite_on : STD_LOGIC;
+SIGNAL t_rom_address : STD_LOGIC_VECTOR(8 downto 0);
  
-component char_rom 
+component hex_rom
 PORT 
 (
-	character_address	:	IN STD_LOGIC_VECTOR (5 DOWNTO 0);
-	font_row, font_col	:	IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+	rom_address			:	IN STD_LOGIC_VECTOR (8 DOWNTO 0);
+	bmap_col			:	IN STD_LOGIC_VECTOR (3 DOWNTO 0);
 	clock				: 	IN STD_LOGIC;
 	rom_mux_output		:	OUT STD_LOGIC
 );
 end component;
 begin
 
-char_rom_component : char_rom
+char_rom_component : hex_rom
 port map(
-			character_address => rom_address,
-			font_row => bmap_row,
-			font_col => bmap_column,
+			rom_address => t_rom_address,
+			bmap_col => bmap_column,
 			clock => clk,
 			rom_mux_output => t_sprite_on  
 	 	);
 
 
+t_rom_address <= rom_address + bmap_row;
 process (clk)
 variable count : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(0,10);
 variable count_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(0,10);
@@ -59,21 +60,21 @@ begin
 				and pixel_column > sprite_column and pixel_column < sprite_column + (sprite_width * scale)  
 				then
 					state <= DRAW_SPRITE;
-
+ 
 					if (count_y > scale - CONV_STD_LOGIC_VECTOR(1,10)) then
 						count_y := CONV_STD_LOGIC_VECTOR(0,10);
-						bmap_row <= bmap_row + "001";
+						bmap_row <= bmap_row + "0001";
 					end if;
 
 					new_sprite_column <= CONV_STD_LOGIC_VECTOR(0,10);
-					bmap_column <= new_sprite_column(2 downto 0);
+					bmap_column <= new_sprite_column(3 downto 0);
 				end if;
 
 			when DRAW_SPRITE =>
 				state <= WAIT_SPRITE;
 
 			when WAIT_SPRITE =>
-				if "0000000" & bmap_column >= sprite_width - CONV_STD_LOGIC_VECTOR(1,10) then
+				if "000000" & bmap_column >= sprite_width - CONV_STD_LOGIC_VECTOR(1,10) then
 					state <= IDLE;
 					count_y := count_y + CONV_STD_LOGIC_VECTOR(1, 10);
 				else

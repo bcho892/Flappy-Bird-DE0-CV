@@ -80,6 +80,8 @@ set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_location_assignment PIN_L1 -to LEDR9
 set_location_assignment PIN_U13 -to SW0
 set_location_assignment PIN_V13 -to SW1
+set_global_assignment -name VHDL_FILE ../src/vhdl/hex_rom.vhd
+set_global_assignment -name VHDL_FILE ../src/vhdl/sprite_16bit.vhd
 set_global_assignment -name VHDL_FILE ../src/vhdl/sprite_8bit.vhd
 set_global_assignment -name VHDL_FILE ../src/vhdl/FSM.vhd
 set_global_assignment -name VHDL_FILE ../src/vhdl/collision.vhd

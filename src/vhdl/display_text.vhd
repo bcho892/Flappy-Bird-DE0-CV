@@ -61,6 +61,7 @@ port map(
 		clk, '0', horiz_sync,radix_100_score_add,score_start_y,score_rad_100_start_x, pixel_row, pixel_column, temp_text_on_100
 		);
 
+
 temp_text_on <= '1' when (temp_text_on_1 = '1' or temp_text_on_10 = '1' or temp_text_on_100 = '1') else '0';
 red <= temp_text_on;  
 green <= temp_text_on;
