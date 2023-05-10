@@ -29,7 +29,7 @@ SIGNAL bird_x_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_y_motion			: std_logic_vector(9 DOWNTO 0);
 SIGNAL character_address 		: std_logic_vector(5 DOWNTO 0);
 
-component sprite 
+component sprite_8bit 
 	generic (
 			scale : STD_LOGIC_VECTOR	
 			);
@@ -51,7 +51,7 @@ with character_select select character_address <=
 	CONV_STD_LOGIC_VECTOR(7, 6) when "10",
 	CONV_STD_LOGIC_VECTOR(9, 6) when others;
 
-sprite_component : sprite 
+sprite_component : sprite_8bit 
 generic map(
 			BIRD_SCALE
 		   ) port map( clk, '0', vert_sync, character_address,bird_y_pos,bird_x_pos, pixel_row, pixel_column, temp_bird_on

@@ -27,7 +27,7 @@ CONSTANT number_rom_offset : STD_LOGIC_VECTOR(5 downto 0) := CONV_STD_LOGIC_VECT
 SIGNAL temp_text_on, temp_text_on_1,temp_text_on_10,temp_text_on_100 : STD_LOGIC;
 SIGNAL radix_100_score, radix_10_score, radix_1_score : STD_LOGIC_VECTOR(3 downto 0);
 SIGNAL radix_100_score_add, radix_10_score_add, radix_1_score_add : STD_LOGIC_VECTOR(5 downto 0);
-component sprite 
+component sprite_8bit 
 	port (
 			clk, reset, horiz_sync : IN STD_LOGIC;
 			rom_address : IN STD_LOGIC_VECTOR(5 downto 0);
@@ -46,17 +46,17 @@ radix_1_score_add <= "00" & radix_1_score + number_rom_offset;
 radix_10_score_add <= "00" & radix_10_score + number_rom_offset; 
 radix_100_score_add <= "00" & radix_100_score + number_rom_offset; 
 
-radix_1_score_text : sprite 
+radix_1_score_text : sprite_8bit 
 port map(
 		clk, '0', horiz_sync,radix_1_score_add,score_start_y,score_rad_1_start_x, pixel_row, pixel_column, temp_text_on_1
 		);
 
-radix_10_score_text : sprite 
+radix_10_score_text : sprite_8bit 
 port map(
 		clk, '0', horiz_sync,radix_10_score_add,score_start_y,score_rad_10_start_x, pixel_row, pixel_column, temp_text_on_10
 		);
 
-radix_100_score_text : sprite 
+radix_100_score_text : sprite_8bit 
 port map(
 		clk, '0', horiz_sync,radix_100_score_add,score_start_y,score_rad_100_start_x, pixel_row, pixel_column, temp_text_on_100
 		);

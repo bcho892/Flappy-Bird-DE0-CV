@@ -34,20 +34,20 @@ CONSTANT score_pulse_debounce : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_V
 SIGNAL pipe_x_pos : STD_LOGIC_VECTOR(9 downto 0) := screen_max_x + pipe_width;
 SIGNAL pipe_x_motion : STD_LOGIC_VECTOR(9 downto 0);
 SIGNAL pipe_height : STD_LOGIC_VECTOR(9 downto 0);
-SIGNAL temp_pipe_on : STD_LOGIC; 
+SIGNAL temp_pipe_on, top_pipe_on, bottom_pipe_on : STD_LOGIC; 
 SIGNAL enable : STD_LOGIC;
 SIGNAL current_index : Integer;
 
 begin
-temp_pipe_on <= '1' when ( 
-(pipe_x_pos > pixel_column 
+bottom_pipe_on <= '1' when (pipe_x_pos > pixel_column 
 and pixel_column > pipe_x_pos - pipe_width 
-and pipe_height + pipe_gap < pixel_row) 
-or 
-(pipe_x_pos > pixel_column 
+and pipe_height + pipe_gap < pixel_row) else '0'; 
+
+top_pipe_on <= '1' when (pipe_x_pos > pixel_column 
 and pixel_column > pipe_x_pos - pipe_width 
-and pixel_row < pipe_height) 
-) else	'0';
+and pixel_row < pipe_height) else '0'; 
+
+temp_pipe_on <= '1' when ( top_pipe_on = '1' or bottom_pipe_on = '1' ) else	'0';
 
 pipe_on <= temp_pipe_on;
 green <= temp_pipe_on;

@@ -19,7 +19,7 @@ SIGNAL temp_cursor_on : STD_LOGIC;
 
 SIGNAL t_mouse_row, t_mouse_column : STD_LOGIC_VECTOR(9 downto 0);
 
-component sprite 
+component sprite_8bit 
 	generic (
 			scale : STD_LOGIC_VECTOR	
 			);
@@ -33,7 +33,7 @@ component sprite
 end component;
 begin
 
-sprite_component : sprite 
+sprite_component : sprite_8bit 
 generic map(
 			scale => CONV_STD_LOGIC_VECTOR(2,10)
 		   )

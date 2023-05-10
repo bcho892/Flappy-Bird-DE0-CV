@@ -3,7 +3,7 @@ USE ieee.std_logic_1164.all;
 USE IEEE.STD_LOGIC_ARITH.all;
 USE IEEE.STD_LOGIC_UNSIGNED.all;
 
-entity sprite is 
+entity sprite_16bit is 
 	generic ( 
 			sprite_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,10); 
 		  	sprite_height : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(8,10); 
@@ -17,9 +17,9 @@ entity sprite is
 			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
 			sprite_on: OUT STD_LOGIC
 		 );
-end sprite;
+end sprite_16bit;
 
-architecture behaviour of sprite is
+architecture behaviour of sprite_16bit is
 TYPE state_type is (IDLE, DRAW_SPRITE, WAIT_SPRITE);
 
 SIGNAL state : state_type := IDLE;
