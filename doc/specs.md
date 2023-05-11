@@ -325,3 +325,13 @@ Display the very bottom layer of the game, could be solid color or more complex 
 #### Requirements
 
 Give the user visual feedback of where the mouse is on the screen, and also when the mouse is clicked (by changing colour).
+
+# Power Ups
+## Health Pick Up
+Bird has three lives. If it collides with a pipe, or the ground, one life is lost. On pick up, one of these lives is replenished. If bird is at full health, life total increases to four. 
+
+## Invincibility
+Bird is invincible. Pipe collisions don't count and can't lose life. Screen can go faster to increase points?
+
+## Instant Death
+Skull pick up. Increases bird scale and so it instantly collides with a pipe and you lose. Changes bird scale constant- change to penis?
