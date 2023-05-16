@@ -15,10 +15,13 @@ END ENTITY FSM;
 
 ARCHITECTURE Moore OF FSM IS
 	CONSTANT debounce_time : Integer := 4000000;
+	CONSTANT pipe_collision_debounce_time :Integer := 24000000;
+	CONSTANT max_collisions : INTEGER range 0 to 1000000:= 30000;
    -- define states
    type state_type is (game_start, normal_mode, training_mode, game_over);
    SIGNAL current_state, next_state : state_type := game_start;
    SIGNAL count : Integer range 0 to 25000000;
+   SIGNAL collision_count : Integer range 0 to 1000000 := 0;
 
 BEGIN
    -- process to describe state transitions
@@ -41,13 +44,19 @@ BEGIN
 				 case collision is 
 					 when "000" => next_state <= normal_mode;
 					 when "001" => 
-						 next_state <= game_over;
-						 count <= 0;
+						if (collision_count > max_collisions) then
+						  next_state <= game_over;
+						  count <= 0;
+						  collision_count <= 0;
+						else
+							collision_count <= collision_count + 1;
+						end if;
 
 					 when "010" => 
 						 next_state <= game_over;
 						 count <= 0;
-					 when others => next_state <= normal_mode;
+					 when others => 
+						 next_state <= normal_mode;
 				end case;
 			 WHEN game_over =>
 				 state_out <= "11";
