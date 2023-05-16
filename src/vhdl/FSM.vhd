@@ -7,7 +7,8 @@ USE IEEE.STD_LOGIC_UNSIGNED.all;
 ENTITY FSM IS
 
    PORT (
-      clk_in, reset, collision, mouse_click : IN STD_LOGIC;
+      clk_in, reset, mouse_click : IN STD_LOGIC;
+   		collision : IN STD_LOGIC_VECTOR(2 downto 0);
       state_out : OUT STD_LOGIC_VECTOR(1 downto 0) := "00"-- Output of FSM is game state (menu, NORMAL GAME, GAME OVER, training)
    );
 END ENTITY FSM;
@@ -37,12 +38,17 @@ BEGIN
 				end if;
 			 WHEN normal_mode =>
 				 state_out <= "01";
-				if collision = '1' then
-				   next_state <= game_over;
-				   count <= 0;
-				else
-				   next_state <= normal_mode;
-				end if;
+				 case collision is 
+					 when "000" => next_state <= normal_mode;
+					 when "001" => 
+						 next_state <= game_over;
+						 count <= 0;
+
+					 when "010" => 
+						 next_state <= game_over;
+						 count <= 0;
+					 when others => next_state <= normal_mode;
+				end case;
 			 WHEN game_over =>
 				 state_out <= "11";
 
@@ -57,11 +63,17 @@ BEGIN
 				end if;
 			 WHEN training_mode =>
 				 state_out <= "10";
-				if collision = '1' then
-				   next_state <= game_over;
-				else
-				   next_state <= training_mode;
-				end if;
+				 case collision is 
+					 when "000" => next_state <= normal_mode;
+					 when "001" => 
+						 next_state <= game_over;
+						 count <= 0;
+
+					 when "010" => 
+						 next_state <= game_over;
+						 count <= 0;
+					 when others => next_state <= normal_mode;
+				end case;
 		  END CASE;
 		current_state <= next_state;
 		end if;

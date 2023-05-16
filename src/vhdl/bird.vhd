@@ -6,11 +6,12 @@ USE  IEEE.STD_LOGIC_SIGNED.all;
 
 ENTITY bird IS
 	PORT
-		(clk, vert_sync, left_click, pipe_on	: IN std_logic;
+		(clk, vert_sync, left_click, pipe_on, health_pickup_on, invincibility_pickup_on, death_pickup_on : IN std_logic;
 		character_select : IN STD_LOGIC_VECTOR(1 downto 0);
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		  game_state : IN std_logic_vector(1 downto 0); -- 00 game over, 01 game start, 10 gameplay
-		  bird_on, collision, red, green, blue, mode 			: OUT std_logic);		-- collision and mode are connected to the FSM
+		  collision : OUT STD_LOGIC_VECTOR(2 downto 0);
+		  bird_on, red, green, blue 			: OUT std_logic);		-- collision and mode are connected to the FSM
 END bird;
 
 architecture behavior of bird is
@@ -59,7 +60,14 @@ generic map(
 port map( clk, '0', vert_sync, character_address,bird_y_pos,bird_x_pos, pixel_row, pixel_column, temp_bird_on
 );
 
-collision <= '1' when ((temp_bird_on = '1' and pipe_on = '1') or bird_y_pos >= GROUND_Y_PIXEL - SIZE) else '0';
+collision <=
+	"001" when temp_bird_on = '1' and pipe_on = '1' else
+	"010" when bird_y_pos >= GROUND_Y_PIXEL - SIZE else
+	"011" when temp_bird_on = '1' and health_pickup_on = '1' else
+	"100" when invincibility_pickup_on = '1' and temp_bird_on = '1' else
+	"101" when death_pickup_on = '1' and temp_bird_on = '1' else
+	"000"; 
+
 
 Blue <= temp_bird_on;
 bird_on <= temp_bird_on;

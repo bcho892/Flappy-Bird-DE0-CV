@@ -41,16 +41,16 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 0 64)
 		(input)
-		(text "collision" (rect 0 0 28 12)(font "Arial" ))
-		(text "collision" (rect 21 59 49 71)(font "Arial" ))
+		(text "mouse_click" (rect 0 0 49 12)(font "Arial" ))
+		(text "mouse_click" (rect 21 59 70 71)(font "Arial" ))
 		(line (pt 0 64)(pt 16 64)(line_width 1))
 	)
 	(port
 		(pt 0 80)
 		(input)
-		(text "mouse_click" (rect 0 0 49 12)(font "Arial" ))
-		(text "mouse_click" (rect 21 75 70 87)(font "Arial" ))
-		(line (pt 0 80)(pt 16 80)(line_width 1))
+		(text "collision[2..0]" (rect 0 0 48 12)(font "Arial" ))
+		(text "collision[2..0]" (rect 21 75 69 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
 	)
 	(port
 		(pt 208 32)
