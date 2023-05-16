@@ -8,10 +8,12 @@ ENTITY FSM IS
 
    PORT (
       clk_in, reset, mouse_click : IN STD_LOGIC;
-   		collision : IN STD_LOGIC_VECTOR(2 downto 0);
-      state_out : OUT STD_LOGIC_VECTOR(1 downto 0) := "00"-- Output of FSM is game state (menu, NORMAL GAME, GAME OVER, training)
-   );
+   	collision : IN STD_LOGIC_VECTOR(2 downto 0);
+      state_out : OUT STD_LOGIC_VECTOR(1 downto 0) := "00";	  
+	  health : OUT STD_LOGIC_VECTOR(6 downto 0));
 END ENTITY FSM;
+-- Output of FSM is game state (menu, NORMAL GAME, GAME OVER, training)
+
 
 ARCHITECTURE Moore OF FSM IS
 	CONSTANT debounce_time : Integer := 4000000;
@@ -22,8 +24,11 @@ ARCHITECTURE Moore OF FSM IS
    SIGNAL current_state, next_state : state_type := game_start;
    SIGNAL count : Integer range 0 to 25000000;
    SIGNAL collision_count : Integer range 0 to 1000000 := 0;
+   SIGNAL health_percentage : Integer := 100;
 
 BEGIN
+	health_percentage <= 100 - ((collision_count/max_collisions)*100);
+	health <= CONV_STD_LOGIC_VECTOR(health_percentage, 7);
    -- process to describe state transitions
    transition : process (clk_in, current_state, collision, mouse_click)
    BEGIN

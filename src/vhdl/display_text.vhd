@@ -8,6 +8,7 @@ entity display_text is
 			clk : IN STD_LOGIC;
 			horiz_sync : IN STD_LOGIC;
 			score : IN STD_LOGIC_VECTOR(11 downto 0);
+			health_percentage : IN STD_LOGIC_VECTOR(6 downto 0);
 			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
 			text_on, red, green, blue : OUT STD_LOGIC 
 		);
@@ -68,13 +69,13 @@ port map(
 
 radix_1_health_text : sprite_8bit 
 port map(
-		clk, '0', horiz_sync,radix_100_score_add,score_start_y,health_rad_10_start_x, pixel_row, pixel_column, temp_percent_on_1
+		clk, '0', horiz_sync,radix_100_score_add,score_start_y,health_rad_1_start_x, pixel_row, pixel_column, temp_percent_on_1
 
 		);
 
 radix_10_health_text : sprite_8bit 
 port map(
-		clk, '0', horiz_sync,radix_100_score_add,score_start_y,health_rad_10_start_x, pixel_row, pixel_column, temp_percent_on_10
+		clk, '0', horiz_sync,health_percentage(5 downto 0),score_start_y,health_rad_10_start_x, pixel_row, pixel_column, temp_percent_on_10
 		);
 
 radix_100_health_text : sprite_8bit 
