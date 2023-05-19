@@ -75,6 +75,7 @@ BEGIN
 
 					 when "010" => 
 						 next_state <= game_over;
+						 collision_count <= 0;
 						 count <= 0;
 					 when others => 
 						 next_state <= normal_mode;
