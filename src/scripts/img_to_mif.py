@@ -10,9 +10,9 @@ header = """
 DEPTH =  """
 
 header_2 = """;
-WIDTH = 15;
+WIDTH = 12;
 ADDRESS_RADIX = HEX;
-DATA_RADIX = HEX;
+DATA_RADIX = BIN;
 CONTENT
 BEGIN\n"""
 
@@ -21,6 +21,7 @@ if (len(sys.argv) > 2):
     output_filename = sys.argv[2]
 
     im = Image.open(input_filename)
+    im = im.crop(im.getbbox())
     im = im.resize((32, 32))  # Resize the image to 32x32
     im.show()
 
@@ -41,21 +42,20 @@ if (len(sys.argv) > 2):
     index = 0;
 
 
-    for x in range(0, w):
-        for y in range(0, h):
-            r = im.getpixel((x,y))[0] & 248
-            g = im.getpixel((x,y))[1] & 248
-            b = im.getpixel((x,y))[2] & 248
+    for y in range(0, h):
+        for x in range(0, w):
+            r = im.getpixel((x, y))[0] & 240
+            g = im.getpixel((x, y))[1] & 240
+            b = im.getpixel((x, y))[2] & 240
 
-            total = r<<7 | g << 2 | b >> 3;
+            total = (r << 4) | g | (b >> 4)
 
+            binary = bin(total)[2:].zfill(12)  # Convert to binary format
 
-            hexa = hex(total)
+            if total == 0:
+                binary = "000000000000"  # Handle the special case when total is 0
 
-            if (total == 0):
-                hexa = "0x0000"
-
-            f.write(hex(index)[2:] + ":\t"+hexa[2:]+";\n")
+            f.write(hex(index)[2:] + ":\t" + binary + ";\n")  # Write binary data
 
             index += 1
 

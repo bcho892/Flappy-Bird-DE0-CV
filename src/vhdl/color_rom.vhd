@@ -12,14 +12,14 @@ ENTITY hex_rom IS
 		rom_address			:	IN STD_LOGIC_VECTOR (8 DOWNTO 0);
 		bmap_col			:	IN STD_LOGIC_VECTOR (3 DOWNTO 0);
 		clock				: 	IN STD_LOGIC ;
-		rom_mux_output		:	OUT STD_LOGIC
+		rom_output		:	STD_LOGIC_VECTOR (16 DOWNTO 0);
 	);
 END hex_rom;
 
 
 ARCHITECTURE SYN OF hex_rom IS
 
-	SIGNAL rom_data		: STD_LOGIC_VECTOR (15 DOWNTO 0);
+	SIGNAL rom_data		: STD_LOGIC_VECTOR (16 DOWNTO 0);
 
 	COMPONENT altsyncram
 	GENERIC (
@@ -40,7 +40,7 @@ ARCHITECTURE SYN OF hex_rom IS
 	);
 	PORT (
 		clock0		: IN STD_LOGIC ;
-		address_a	: IN STD_LOGIC_VECTOR (8 DOWNTO 0);
+		address_a	: IN STD_LOGIC_VECTOR (15 DOWNTO 0);
 		q_a			: OUT STD_LOGIC_VECTOR (15 DOWNTO 0)
 	);
 	END COMPONENT;
@@ -56,11 +56,11 @@ BEGIN
 		intended_device_family => "Cyclone III",
 		lpm_hint => "ENABLE_RUNTIME_MOD=NO",
 		lpm_type => "altsyncram",
-		numwords_a => 512,
+		numwords_a => 1024,
 		operation_mode => "ROM",
 		outdata_aclr_a => "NONE",
 		outdata_reg_a => "UNREGISTERED",
-		widthad_a => 9,
+		widthad_a => 16,
 		width_a => 16,
 		width_byteena_a => 1
 	)

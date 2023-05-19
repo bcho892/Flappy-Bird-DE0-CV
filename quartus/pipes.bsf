@@ -21,7 +21,7 @@ https://fpgasoftware.intel.com/eula.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 16 16 264 176)
+	(rect 16 16 272 176)
 	(text "pipes" (rect 5 0 28 17)(font "Intel Clear" (font_size 6)))
 	(text "inst" (rect 8 139 24 156)(font "Intel Clear" ))
 	(port
@@ -67,27 +67,27 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
-		(pt 248 32)
+		(pt 256 32)
 		(output)
 		(text "pipe_on" (rect 0 0 48 19)(font "Intel Clear" (font_size 8)))
-		(text "pipe_on" (rect 179 27 227 46)(font "Intel Clear" (font_size 8)))
-		(line (pt 248 32)(pt 232 32))
+		(text "pipe_on" (rect 187 27 235 46)(font "Intel Clear" (font_size 8)))
+		(line (pt 256 32)(pt 240 32))
 	)
 	(port
-		(pt 248 48)
+		(pt 256 48)
 		(output)
-		(text "rgb_out[2..0]" (rect 0 0 76 19)(font "Intel Clear" (font_size 8)))
-		(text "rgb_out[2..0]" (rect 151 43 227 62)(font "Intel Clear" (font_size 8)))
-		(line (pt 248 48)(pt 232 48)(line_width 3))
+		(text "rgb_out[11..0]" (rect 0 0 84 19)(font "Intel Clear" (font_size 8)))
+		(text "rgb_out[11..0]" (rect 151 43 235 62)(font "Intel Clear" (font_size 8)))
+		(line (pt 256 48)(pt 240 48)(line_width 3))
 	)
 	(port
-		(pt 248 64)
+		(pt 256 64)
 		(output)
 		(text "score_pulse" (rect 0 0 69 19)(font "Intel Clear" (font_size 8)))
-		(text "score_pulse" (rect 158 59 227 78)(font "Intel Clear" (font_size 8)))
-		(line (pt 248 64)(pt 232 64))
+		(text "score_pulse" (rect 166 59 235 78)(font "Intel Clear" (font_size 8)))
+		(line (pt 256 64)(pt 240 64))
 	)
 	(drawing
-		(rectangle (rect 16 16 232 144))
+		(rectangle (rect 16 16 240 144))
 	)
 )

@@ -6,8 +6,8 @@ USE  IEEE.STD_LOGIC_SIGNED.all;
 entity rgb_mux is
 	port(
 			select_bit : IN STD_LOGIC; 
-			rgb_in_0, rgb_in_1: IN STD_LOGIC_VECTOR(2 downto 0);
-			rgb_out : OUT STD_LOGIC_VECTOR(2 downto 0)
+			rgb_in_0, rgb_in_1: IN STD_LOGIC_VECTOR(11 downto 0);
+			rgb_out : OUT STD_LOGIC_VECTOR(11 downto 0)
 		);
 end rgb_mux; 
 
