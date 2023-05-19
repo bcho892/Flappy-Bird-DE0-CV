@@ -27,11 +27,15 @@ ARCHITECTURE Moore OF FSM IS
    SIGNAL health_percentage : unsigned(6 downto 0);
 
 BEGIN
-  process(collision_count, max_collisions)
+  calculate_percentage : process(collision_count, max_collisions)
     variable temp : integer;
   begin
     if max_collisions = 0 then
       temp := 100;
+	elsif current_state = game_over then
+		temp:= 100;
+	elsif current_state = game_start then
+		temp:= 0;
     else
       temp := (collision_count * 100) / max_collisions;
     end if;
@@ -40,7 +44,7 @@ BEGIN
    health <= std_logic_vector(to_unsigned(to_integer(health_percentage)/100, 4))
               & std_logic_vector(to_unsigned((to_integer(health_percentage) mod 100)/10, 4))
               & std_logic_vector(to_unsigned(to_integer(health_percentage) mod 10, 4));
-  end process;
+  end process calculate_percentage;
    -- process to describe state transitions
    transition : process (clk_in, current_state, collision, mouse_click)
    BEGIN
