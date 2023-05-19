@@ -1426,35 +1426,35 @@ https://fpgasoftware.intel.com/eula.
 		(pt 240 32)
 		(output)
 		(text "collision[2..0]" (rect 0 0 64 12)(font "Arial" ))
-		(text "collision[2..0]" (rect 165 27 219 39)(font "Arial" ))
+		(text "collision[2..0]" (rect 165 27 229 39)(font "Arial" ))
 		(line (pt 240 32)(pt 224 32)(line_width 3))
 	)
 	(port
 		(pt 240 48)
 		(output)
 		(text "bird_on" (rect 0 0 35 12)(font "Arial" ))
-		(text "bird_on" (rect 190 43 219 55)(font "Arial" ))
+		(text "bird_on" (rect 190 43 225 55)(font "Arial" ))
 		(line (pt 240 48)(pt 224 48))
 	)
 	(port
 		(pt 240 64)
 		(output)
 		(text "red" (rect 0 0 15 12)(font "Arial" ))
-		(text "red" (rect 207 59 219 71)(font "Arial" ))
+		(text "red" (rect 207 59 222 71)(font "Arial" ))
 		(line (pt 240 64)(pt 224 64))
 	)
 	(port
 		(pt 240 80)
 		(output)
 		(text "green" (rect 0 0 27 12)(font "Arial" ))
-		(text "green" (rect 197 75 219 87)(font "Arial" ))
+		(text "green" (rect 197 75 224 87)(font "Arial" ))
 		(line (pt 240 80)(pt 224 80))
 	)
 	(port
 		(pt 240 96)
 		(output)
 		(text "blue" (rect 0 0 20 12)(font "Arial" ))
-		(text "blue" (rect 203 91 219 103)(font "Arial" ))
+		(text "blue" (rect 203 91 223 103)(font "Arial" ))
 		(line (pt 240 96)(pt 224 96))
 	)
 	(drawing
@@ -1503,8 +1503,8 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 208 48)
 		(output)
-		(text "health[6..0]" (rect 0 0 55 12)(font "Arial" ))
-		(text "health[6..0]" (rect 141 43 187 55)(font "Arial" ))
+		(text "health[11..0]" (rect 0 0 61 12)(font "Arial" ))
+		(text "health[11..0]" (rect 136 43 187 55)(font "Arial" ))
 		(line (pt 208 48)(pt 192 48)(line_width 3))
 	)
 	(drawing
@@ -1539,8 +1539,8 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 0 80)
 		(input)
-		(text "health_percentage[6..0]" (rect 0 0 115 12)(font "Arial" ))
-		(text "health_percentage[6..0]" (rect 21 75 136 87)(font "Arial" ))
+		(text "health_percentage[11..0]" (rect 0 0 121 12)(font "Arial" ))
+		(text "health_percentage[11..0]" (rect 21 75 142 87)(font "Arial" ))
 		(line (pt 0 80)(pt 16 80)(line_width 3))
 	)
 	(port
@@ -2485,12 +2485,6 @@ https://fpgasoftware.intel.com/eula.
 	(bus)
 )
 (connector
-	(text "health[6..0]" (rect 1504 1136 1558 1153)(font "Intel Clear" ))
-	(pt 1504 1152)
-	(pt 1544 1152)
-	(bus)
-)
-(connector
 	(text "text_rgb[0]" (rect 2088 1312 2139 1329)(font "Intel Clear" ))
 	(pt 2112 1328)
 	(pt 2120 1328)
@@ -2541,7 +2535,13 @@ https://fpgasoftware.intel.com/eula.
 	(bus)
 )
 (connector
-	(text "health[6..0]" (rect 1864 1344 1918 1361)(font "Intel Clear" ))
+	(text "health[11..0]" (rect 1504 1136 1564 1153)(font "Intel Clear" ))
+	(pt 1504 1152)
+	(pt 1544 1152)
+	(bus)
+)
+(connector
+	(text "health[11..0]" (rect 1864 1344 1924 1361)(font "Intel Clear" ))
 	(pt 1888 1360)
 	(pt 1864 1360)
 	(bus)

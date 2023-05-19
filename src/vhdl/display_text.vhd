@@ -8,7 +8,7 @@ entity display_text is
 			clk : IN STD_LOGIC;
 			horiz_sync : IN STD_LOGIC;
 			score : IN STD_LOGIC_VECTOR(11 downto 0);
-			health_percentage : IN STD_LOGIC_VECTOR(6 downto 0);
+			health_percentage : IN STD_LOGIC_VECTOR(11 downto 0);
 			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
 			text_on, red, green, blue : OUT STD_LOGIC 
 		);
@@ -31,8 +31,8 @@ CONSTANT number_rom_offset : STD_LOGIC_VECTOR(5 downto 0) := CONV_STD_LOGIC_VECT
 --SIGNALS
 SIGNAL temp_text_on, temp_text_on_1,temp_text_on_10,temp_text_on_100, 
 	temp_percent_on_1, temp_percent_on_10, temp_percent_on_100 : STD_LOGIC;
-SIGNAL radix_100_score, radix_10_score, radix_1_score : STD_LOGIC_VECTOR(3 downto 0);
-SIGNAL radix_100_score_add, radix_10_score_add, radix_1_score_add : STD_LOGIC_VECTOR(5 downto 0);
+SIGNAL radix_100_score, radix_10_score, radix_1_score: STD_LOGIC_VECTOR(3 downto 0);
+SIGNAL radix_100_score_add, radix_10_score_add, radix_1_score_add, radix_100_health, radix_10_health, radix_1_health : STD_LOGIC_VECTOR(5 downto 0);
 component sprite_8bit 
 	port (
 			clk, reset, horiz_sync : IN STD_LOGIC;
@@ -47,6 +47,10 @@ begin
 radix_100_score <= score(11 downto 8);
 radix_10_score <= score(7 downto 4);
 radix_1_score <= score(3 downto 0);
+
+radix_100_health <= "00" & health_percentage(11 downto 8) + number_rom_offset;
+radix_10_health <= "00" & health_percentage(7 downto 4) + number_rom_offset;
+radix_1_health <= "00" & health_percentage(3 downto 0) + number_rom_offset;
 
 radix_1_score_add <= "00" & radix_1_score + number_rom_offset; 
 radix_10_score_add <= "00" & radix_10_score + number_rom_offset; 
@@ -69,18 +73,18 @@ port map(
 
 radix_1_health_text : sprite_8bit 
 port map(
-		clk, '0', horiz_sync,radix_100_score_add,score_start_y,health_rad_1_start_x, pixel_row, pixel_column, temp_percent_on_1
+		clk, '0', horiz_sync,radix_1_health,score_start_y,health_rad_1_start_x, pixel_row, pixel_column, temp_percent_on_1
 
 		);
 
 radix_10_health_text : sprite_8bit 
 port map(
-		clk, '0', horiz_sync,health_percentage(5 downto 0),score_start_y,health_rad_10_start_x, pixel_row, pixel_column, temp_percent_on_10
+		clk, '0', horiz_sync, radix_10_health,score_start_y,health_rad_10_start_x, pixel_row, pixel_column, temp_percent_on_10
 		);
 
 radix_100_health_text : sprite_8bit 
 port map(
-		clk, '0', horiz_sync,radix_100_score_add,score_start_y,health_rad_100_start_x, pixel_row, pixel_column, temp_percent_on_100
+		clk, '0', horiz_sync, radix_100_health,score_start_y,health_rad_100_start_x, pixel_row, pixel_column, temp_percent_on_100
 		);
 temp_text_on <= '1' when (temp_text_on_1 = '1' or temp_text_on_10 = '1' or temp_text_on_100 = '1' or temp_percent_on_1 = '1' or temp_percent_on_10 ='1' or temp_percent_on_100 = '1') else '0';
 red <= temp_text_on;  

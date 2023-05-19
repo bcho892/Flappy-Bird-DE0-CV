@@ -1,6 +1,6 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
-USE IEEE.STD_LOGIC_ARITH.all;
+USE IEEE.numeric_std.all;
 USE IEEE.STD_LOGIC_UNSIGNED.all;
 
 
@@ -10,7 +10,7 @@ ENTITY FSM IS
       clk_in, reset, mouse_click : IN STD_LOGIC;
    	collision : IN STD_LOGIC_VECTOR(2 downto 0);
       state_out : OUT STD_LOGIC_VECTOR(1 downto 0) := "00";	  
-	  health : OUT STD_LOGIC_VECTOR(6 downto 0));
+	  health : OUT STD_LOGIC_VECTOR(11 downto 0));
 END ENTITY FSM;
 -- Output of FSM is game state (menu, NORMAL GAME, GAME OVER, training)
 
@@ -18,17 +18,29 @@ END ENTITY FSM;
 ARCHITECTURE Moore OF FSM IS
 	CONSTANT debounce_time : Integer := 4000000;
 	CONSTANT pipe_collision_debounce_time :Integer := 24000000;
-	CONSTANT max_collisions : INTEGER range 0 to 1000000:= 30000;
+	SIGNAL max_collisions : INTEGER range 0 to 1000000:= 30000;
    -- define states
    type state_type is (game_start, normal_mode, training_mode, game_over);
    SIGNAL current_state, next_state : state_type := game_start;
    SIGNAL count : Integer range 0 to 25000000;
    SIGNAL collision_count : Integer range 0 to 1000000 := 0;
-   SIGNAL health_percentage : Integer := 100;
+   SIGNAL health_percentage : unsigned(6 downto 0);
 
 BEGIN
-	health_percentage <= 100 - ((collision_count/max_collisions)*100);
-	health <= CONV_STD_LOGIC_VECTOR(health_percentage, 7);
+  process(collision_count, max_collisions)
+    variable temp : integer;
+  begin
+    if max_collisions = 0 then
+      temp := 100;
+    else
+      temp := (collision_count * 100) / max_collisions;
+    end if;
+
+    health_percentage <= unsigned(to_signed(100 - temp, health_percentage'length));
+   health <= std_logic_vector(to_unsigned(to_integer(health_percentage)/100, 4))
+              & std_logic_vector(to_unsigned((to_integer(health_percentage) mod 100)/10, 4))
+              & std_logic_vector(to_unsigned(to_integer(health_percentage) mod 10, 4));
+  end process;
    -- process to describe state transitions
    transition : process (clk_in, current_state, collision, mouse_click)
    BEGIN
