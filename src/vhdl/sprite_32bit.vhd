@@ -24,7 +24,6 @@ TYPE state_type is (IDLE, DRAW_SPRITE, WAIT_SPRITE);
 
 SIGNAL state : state_type := IDLE;
 SIGNAL bmap_col, bmap_row : integer;
-SIGNAL pointer : STD_LOGIC_VECTOR(9 downto 0);
 SIGNAL in_region : std_logic;
 SIGNAL t_sprite_on : STD_LOGIC;
 SIGNAL t_rom_data : STD_LOGIC_VECTOR(11 downto 0);

@@ -10,7 +10,8 @@ entity display_text is
 			score : IN STD_LOGIC_VECTOR(11 downto 0);
 			health_percentage : IN STD_LOGIC_VECTOR(11 downto 0);
 			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
-			text_on, red, green, blue : OUT STD_LOGIC 
+			text_rgb : OUT STD_LOGIC_VECTOR(11 downto 0);
+			text_on : OUT STD_LOGIC 
 		);
 end display_text;
 
@@ -118,9 +119,10 @@ port map(
 		clk, '0', horiz_sync, radix_100_health,health_start_y,health_rad_100_start_x, pixel_row, pixel_column, temp_percent_on_100
 		);
 temp_text_on <= '1' when (temp_text_on_1 = '1' or temp_text_on_10 = '1' or temp_text_on_100 = '1' or heart_on = '1' or temp_percent_on_1 = '1' or temp_percent_on_10 ='1' or temp_percent_on_100 = '1') else '0';
-red <= temp_text_on;
-green <= '0' when heart_on = '1' else temp_text_on;
-blue <= '0' when heart_on = '1' else temp_text_on;
+text_rgb <= "111111111111" 
+			when temp_text_on = '1' and heart_on = '0' 
+		else "111000000000" when temp_text_on = '1' and heart_on = '1'
+		else "000000000000";
 
 text_on <= temp_text_on; --when
 

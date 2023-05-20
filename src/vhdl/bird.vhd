@@ -30,6 +30,7 @@ SIGNAL size 					: std_logic_vector(9 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(32,10);
 SIGNAL bird_y_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_x_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_y_motion			: std_logic_vector(9 DOWNTO 0);
+SIGNAL t_collision : STD_LOGIC_VECTOR(2 downto 0);
 SIGNAL character_address 		: std_logic_vector(12 DOWNTO 0);
 SIGNAL t_bird_rgb :  STD_LOGIC_VECTOR(11 downto 0);
 
@@ -63,7 +64,7 @@ generic map(
 port map( clk, '0', vert_sync, character_address,bird_y_pos,bird_x_pos, pixel_row, pixel_column, t_bird_rgb, temp_bird_on
 );
 
-collision <=
+t_collision <=
 	"001" when temp_bird_on = '1' and pipe_on = '1' else
 	"010" when bird_y_pos >= GROUND_Y_PIXEL - SIZE else
 	"011" when temp_bird_on = '1' and health_pickup_on = '1' else
@@ -71,8 +72,11 @@ collision <=
 	"101" when death_pickup_on = '1' and temp_bird_on = '1' else
 	"000"; 
 
+collision <= t_collision;
 
-bird_rgb <= t_bird_rgb when temp_bird_on = '1' else "000000000000";
+
+bird_rgb <= t_bird_rgb when temp_bird_on = '1' and t_collision /= "001" else  
+			"111100000000" when temp_bird_on = '1' and t_collision = "001" else "000000000000";
 bird_on <= temp_bird_on;
 
 
