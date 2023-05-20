@@ -6,20 +6,19 @@ USE IEEE.STD_LOGIC_UNSIGNED.all;
 LIBRARY altera_mf;
 USE altera_mf.all;
 
-ENTITY hex_rom IS
+ENTITY color_rom IS
 	PORT
 	(
-		rom_address			:	IN STD_LOGIC_VECTOR (8 DOWNTO 0);
-		bmap_col			:	IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+		rom_address			:	IN STD_LOGIC_VECTOR (9 DOWNTO 0);
 		clock				: 	IN STD_LOGIC ;
-		rom_output		:	STD_LOGIC_VECTOR (16 DOWNTO 0);
+		rom_output		:	OUT STD_LOGIC_VECTOR (11 DOWNTO 0)
 	);
-END hex_rom;
+END color_rom;
 
 
-ARCHITECTURE SYN OF hex_rom IS
+ARCHITECTURE SYN OF color_rom IS
 
-	SIGNAL rom_data		: STD_LOGIC_VECTOR (16 DOWNTO 0);
+	SIGNAL rom_data		: STD_LOGIC_VECTOR (11 DOWNTO 0);
 
 	COMPONENT altsyncram
 	GENERIC (
@@ -40,8 +39,8 @@ ARCHITECTURE SYN OF hex_rom IS
 	);
 	PORT (
 		clock0		: IN STD_LOGIC ;
-		address_a	: IN STD_LOGIC_VECTOR (15 DOWNTO 0);
-		q_a			: OUT STD_LOGIC_VECTOR (15 DOWNTO 0)
+		address_a	: IN STD_LOGIC_VECTOR (9 DOWNTO 0);
+		q_a			: OUT STD_LOGIC_VECTOR (11 DOWNTO 0)
 	);
 	END COMPONENT;
 
@@ -52,7 +51,7 @@ BEGIN
 		address_aclr_a => "NONE",
 		clock_enable_input_a => "BYPASS",
 		clock_enable_output_a => "BYPASS",
-		init_file => "16bitrom.mif",
+		init_file => "test.mif",
 		intended_device_family => "Cyclone III",
 		lpm_hint => "ENABLE_RUNTIME_MOD=NO",
 		lpm_type => "altsyncram",
@@ -60,8 +59,8 @@ BEGIN
 		operation_mode => "ROM",
 		outdata_aclr_a => "NONE",
 		outdata_reg_a => "UNREGISTERED",
-		widthad_a => 16,
-		width_a => 16,
+		widthad_a => 10,
+		width_a => 12,
 		width_byteena_a => 1
 	)
 	PORT MAP (
@@ -70,6 +69,6 @@ BEGIN
 		q_a => rom_data
 	);
 
-	rom_mux_output <= rom_data (CONV_INTEGER(NOT bmap_col(3 DOWNTO 0)));
+	rom_output <= rom_data;
 
 END SYN;
