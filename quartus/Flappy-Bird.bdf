@@ -828,23 +828,6 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 1720 1064 1752 1096)
-	(text "GND" (rect 8 16 29 26)(font "Arial" (font_size 6)))
-	(text "inst7" (rect 3 21 25 38)(font "Intel Clear" )(invisible))
-	(port
-		(pt 16 0)
-		(output)
-		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
-		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
-		(line (pt 16 8)(pt 16 0))
-	)
-	(drawing
-		(line (pt 8 8)(pt 16 16))
-		(line (pt 16 16)(pt 24 8))
-		(line (pt 8 8)(pt 24 8))
-	)
-)
-(symbol
 	(rect 1104 728 1376 984)
 	(text "rgb_output" (rect 5 0 54 17)(font "Intel Clear" (font_size 6)))
 	(text "inst9" (rect 8 235 30 252)(font "Intel Clear" ))
@@ -1299,7 +1282,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 2216 728 2456 840)
+	(rect 2392 728 2632 840)
 	(text "score" (rect 5 0 32 12)(font "Arial" ))
 	(text "inst11" (rect 8 96 37 108)(font "Arial" ))
 	(port
@@ -1484,7 +1467,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 1888 672 2144 864)
+	(rect 1888 672 2192 864)
 	(text "pipes" (rect 5 0 28 17)(font "Intel Clear" (font_size 6)))
 	(text "inst26" (rect 8 171 36 188)(font "Intel Clear" ))
 	(port
@@ -1544,28 +1527,56 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 0 144)(pt 16 144)(line_width 3))
 	)
 	(port
-		(pt 256 32)
+		(pt 304 32)
 		(output)
 		(text "pipe_on" (rect 0 0 48 19)(font "Intel Clear" (font_size 8)))
-		(text "pipe_on" (rect 187 27 235 46)(font "Intel Clear" (font_size 8)))
-		(line (pt 256 32)(pt 240 32))
+		(text "pipe_on" (rect 235 27 283 46)(font "Intel Clear" (font_size 8)))
+		(line (pt 304 32)(pt 288 32))
 	)
 	(port
-		(pt 256 48)
+		(pt 304 48)
+		(output)
+		(text "health_pickup_on" (rect 0 0 105 19)(font "Intel Clear" (font_size 8)))
+		(text "health_pickup_on" (rect 178 43 283 62)(font "Intel Clear" (font_size 8)))
+		(line (pt 304 48)(pt 288 48))
+	)
+	(port
+		(pt 304 64)
+		(output)
+		(text "invincibility_pickup_on" (rect 0 0 136 19)(font "Intel Clear" (font_size 8)))
+		(text "invincibility_pickup_on" (rect 147 59 283 78)(font "Intel Clear" (font_size 8)))
+		(line (pt 304 64)(pt 288 64))
+	)
+	(port
+		(pt 304 80)
+		(output)
+		(text "death_pickup_on" (rect 0 0 102 19)(font "Intel Clear" (font_size 8)))
+		(text "death_pickup_on" (rect 181 75 283 94)(font "Intel Clear" (font_size 8)))
+		(line (pt 304 80)(pt 288 80))
+	)
+	(port
+		(pt 304 96)
+		(output)
+		(text "pipes_powerups_on" (rect 0 0 119 19)(font "Intel Clear" (font_size 8)))
+		(text "pipes_powerups_on" (rect 164 91 283 110)(font "Intel Clear" (font_size 8)))
+		(line (pt 304 96)(pt 288 96))
+	)
+	(port
+		(pt 304 112)
 		(output)
 		(text "rgb_out[11..0]" (rect 0 0 84 19)(font "Intel Clear" (font_size 8)))
-		(text "rgb_out[11..0]" (rect 151 43 235 62)(font "Intel Clear" (font_size 8)))
-		(line (pt 256 48)(pt 240 48)(line_width 3))
+		(text "rgb_out[11..0]" (rect 199 107 283 126)(font "Intel Clear" (font_size 8)))
+		(line (pt 304 112)(pt 288 112)(line_width 3))
 	)
 	(port
-		(pt 256 64)
+		(pt 304 128)
 		(output)
 		(text "score_pulse" (rect 0 0 69 19)(font "Intel Clear" (font_size 8)))
-		(text "score_pulse" (rect 166 59 235 78)(font "Intel Clear" (font_size 8)))
-		(line (pt 256 64)(pt 240 64))
+		(text "score_pulse" (rect 214 123 283 142)(font "Intel Clear" (font_size 8)))
+		(line (pt 304 128)(pt 288 128))
 	)
 	(drawing
-		(rectangle (rect 16 16 240 176))
+		(rectangle (rect 16 16 288 176))
 	)
 )
 (connector
@@ -1868,11 +1879,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 1056 808)
 )
 (connector
-	(text "pipe_on" (rect 1066 808 1103 825)(font "Intel Clear" ))
-	(pt 1104 824)
-	(pt 1056 824)
-)
-(connector
 	(text "background_on" (rect 1056 824 1129 841)(font "Intel Clear" ))
 	(pt 1056 840)
 	(pt 1104 840)
@@ -2056,21 +2062,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 1184 1104)
 )
 (connector
-	(text "game_state[1..0]" (rect 2184 776 2264 793)(font "Intel Clear" ))
-	(pt 2216 792)
-	(pt 2184 792)
-	(bus)
-)
-(connector
-	(pt 2216 760)
-	(pt 2200 760)
-)
-(connector
-	(text "clk_25MHz" (rect 2184 705 2201 758)(font "Intel Clear" )(vertical))
-	(pt 2200 760)
-	(pt 2200 720)
-)
-(connector
 	(text "game_state[1..0]" (rect 1810 1064 1890 1081)(font "Intel Clear" ))
 	(pt 1888 1080)
 	(pt 1800 1080)
@@ -2101,34 +2092,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 1848 1064)
 	(pt 1848 1176)
 	(bus)
-)
-(connector
-	(pt 1736 1016)
-	(pt 1736 1064)
-)
-(connector
-	(pt 1888 1000)
-	(pt 1864 1000)
-)
-(connector
-	(pt 1888 1016)
-	(pt 1864 1016)
-)
-(connector
-	(pt 1864 1016)
-	(pt 1736 1016)
-)
-(connector
-	(pt 1888 984)
-	(pt 1864 984)
-)
-(connector
-	(pt 1864 984)
-	(pt 1864 1000)
-)
-(connector
-	(pt 1864 1000)
-	(pt 1864 1016)
 )
 (connector
 	(pt 2128 920)
@@ -2391,32 +2354,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 1856 736)
 )
 (connector
-	(text "score_digits[11..0]" (rect 2496 747 2513 831)(font "Intel Clear" )(vertical))
-	(pt 2512 776)
-	(pt 2512 824)
-	(bus)
-)
-(connector
-	(pt 2456 776)
-	(pt 2512 776)
-	(bus)
-)
-(connector
-	(pt 2456 760)
-	(pt 2472 760)
-	(bus)
-)
-(connector
-	(text "level[1..0]" (rect 2456 709 2473 757)(font "Intel Clear" )(vertical))
-	(pt 2472 760)
-	(pt 2472 704)
-	(bus)
-)
-(connector
-	(pt 2152 776)
-	(pt 2216 776)
-)
-(connector
 	(text "level[1..0]" (rect 1864 704 1912 721)(font "Intel Clear" ))
 	(pt 1888 720)
 	(pt 1864 720)
@@ -2541,28 +2478,109 @@ https://fpgasoftware.intel.com/eula.
 	(bus)
 )
 (connector
-	(text "pipe_on" (rect 2146 680 2183 697)(font "Intel Clear" ))
-	(pt 2144 704)
-	(pt 2168 704)
-)
-(connector
-	(text "pipe_rgb[11..0]" (rect 2136 704 2206 721)(font "Intel Clear" ))
-	(pt 2144 720)
-	(pt 2168 720)
-	(bus)
-)
-(connector
-	(pt 2152 776)
-	(pt 2152 736)
-)
-(connector
-	(pt 2152 736)
-	(pt 2144 736)
-)
-(connector
 	(text "clk_25MHz" (rect 1834 688 1887 705)(font "Intel Clear" ))
 	(pt 1888 704)
 	(pt 1824 704)
+)
+(connector
+	(text "game_state[1..0]" (rect 2360 776 2440 793)(font "Intel Clear" ))
+	(pt 2392 792)
+	(pt 2360 792)
+	(bus)
+)
+(connector
+	(pt 2392 760)
+	(pt 2376 760)
+)
+(connector
+	(text "clk_25MHz" (rect 2360 705 2377 758)(font "Intel Clear" )(vertical))
+	(pt 2376 760)
+	(pt 2376 720)
+)
+(connector
+	(text "score_digits[11..0]" (rect 2672 747 2689 831)(font "Intel Clear" )(vertical))
+	(pt 2688 776)
+	(pt 2688 824)
+	(bus)
+)
+(connector
+	(pt 2632 776)
+	(pt 2688 776)
+	(bus)
+)
+(connector
+	(pt 2632 760)
+	(pt 2648 760)
+	(bus)
+)
+(connector
+	(text "level[1..0]" (rect 2632 709 2649 757)(font "Intel Clear" )(vertical))
+	(pt 2648 760)
+	(pt 2648 704)
+	(bus)
+)
+(connector
+	(pt 2328 776)
+	(pt 2392 776)
+)
+(connector
+	(text "pipe_rgb[11..0]" (rect 2280 768 2350 785)(font "Intel Clear" ))
+	(pt 2192 784)
+	(pt 2312 784)
+	(bus)
+)
+(connector
+	(text "pipe_on" (rect 2266 680 2303 697)(font "Intel Clear" ))
+	(pt 2192 704)
+	(pt 2312 704)
+)
+(connector
+	(pt 2192 800)
+	(pt 2328 800)
+)
+(connector
+	(pt 2328 800)
+	(pt 2328 776)
+)
+(connector
+	(text "health_pickup_on" (rect 2192 704 2276 721)(font "Intel Clear" ))
+	(pt 2192 720)
+	(pt 2240 720)
+)
+(connector
+	(text "invincibility_pickup_on" (rect 2192 720 2299 737)(font "Intel Clear" ))
+	(pt 2192 736)
+	(pt 2240 736)
+)
+(connector
+	(text "death_pickup_on" (rect 2192 736 2273 753)(font "Intel Clear" ))
+	(pt 2192 752)
+	(pt 2240 752)
+)
+(connector
+	(text "pipes_powerups_on" (rect 2192 752 2286 769)(font "Intel Clear" ))
+	(pt 2192 768)
+	(pt 2240 768)
+)
+(connector
+	(text "pipes_powerups_on" (rect 1066 808 1160 825)(font "Intel Clear" ))
+	(pt 1104 824)
+	(pt 1056 824)
+)
+(connector
+	(text "death_pickup_on" (rect 1770 1000 1851 1017)(font "Intel Clear" ))
+	(pt 1760 1016)
+	(pt 1888 1016)
+)
+(connector
+	(text "health_pickup_on" (rect 1808 968 1892 985)(font "Intel Clear" ))
+	(pt 1888 984)
+	(pt 1808 984)
+)
+(connector
+	(text "invincibility_pickup_on" (rect 1808 984 1915 1001)(font "Intel Clear" ))
+	(pt 1888 1000)
+	(pt 1808 1000)
 )
 (junction (pt 856 256))
 (junction (pt 496 264))
@@ -2579,8 +2597,6 @@ https://fpgasoftware.intel.com/eula.
 (junction (pt 1768 744))
 (junction (pt 1832 1048))
 (junction (pt 1848 1064))
-(junction (pt 1864 1016))
-(junction (pt 1864 1000))
 (junction (pt 1688 472))
 (junction (pt 1832 1368))
 (junction (pt 1848 1384))

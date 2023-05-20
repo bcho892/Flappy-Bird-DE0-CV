@@ -11,7 +11,8 @@ entity pipe is
 		random_index : IN STD_LOGIC_VECTOR(3 downto 0);
 		pipe_rgb : OUT STD_LOGIC_VECTOR(11 downto 0);
 		init_next, score_pulse, pipe_on, 
-		health_pickup_on, invincibility_pickup_on, death_pickup_on: OUT STD_LOGIC 
+		health_pickup_on, invincibility_pickup_on, death_pickup_on,
+		pipes_powerups_on : OUT STD_LOGIC
 	);
 end entity;
 
@@ -19,12 +20,13 @@ architecture behaviour of pipe is
 
 -- Typedef
 type speed_vector is array (0 to 4) of integer;
-type height_vector is array (0 to 16) of integer;
+type preset_vector is array (0 to 16) of integer;
 
 --CONSTANTS
 CONSTANT preset_scroll_speeds : speed_vector := (2, 4, 8, 15, 18);
-CONSTANT preset_pipe_heights : height_vector:= (81, 242, 80, 171, 213, 99, 261, 174, 36, 151, 82, 37, 142, 264, 147, 234, 131);
-CONSTANT preset_powerups : height_vector := (0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1);
+CONSTANT preset_pipe_heights : preset_vector:= (81, 242, 80, 171, 213, 99, 261, 174, 36, 151, 82, 37, 142, 264, 147, 234, 131);
+CONSTANT preset_powerup_heights : preset_vector := (234, 273, 197, 34, 56, 190, 97, 122, 222, 94, 73, 192, 133, 267, 274, 90, 243);
+CONSTANT preset_powerups : preset_vector := (0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1);
 CONSTANT pipe_gap : Integer := 130; 
 CONSTANT pipe_width : Integer := 65; 
 CONSTANT pipe_spacing : Integer := 140;
@@ -73,13 +75,19 @@ and pixel_row < pipe_height) else '0';
 
 temp_pipe_on <= '1' when ( top_pipe_on = '1' or bottom_pipe_on = '1' ) and appear = '1' else '0';
 
-pipe_on <= '1' when temp_pipe_on = '1' or powerup_on = '1' else '0';
+pipes_powerups_on <= '1' when temp_pipe_on = '1' or powerup_on = '1' else '0';
+
 pipe_rgb <= "001001100100" when temp_pipe_on = '1' else 
 			powerup_rgb when powerup_on = '1' else 
 			"000000000000";
 current_index <= to_integer(unsigned(random_index));
 
 powerup_x_pos <= pipe_x_pos + pipe_spacing_center;
+
+pipe_on <= '1' when temp_pipe_on = '1' else '0';
+health_pickup_on <= '1' when powerup_on = '1' and current_powerup = 0 else '0';
+death_pickup_on <= '1' when powerup_on = '1' and current_powerup = 1 else '0';
+invincibility_pickup_on <= '1' when powerup_on = '1' and current_powerup = 2 else '0';
 
 
 move_pipe : process(vert_sync) 	
@@ -123,7 +131,7 @@ begin
 				pipe_x_pos <= screen_max_x + pipe_width;
 				pipe_x_motion <= 0;
 				pipe_height <= preset_pipe_heights(current_index);
-				powerup_y_pos <= preset_pipe_heights(current_index);
+				powerup_y_pos <= preset_powerup_heights(current_index);
 				current_powerup <= preset_powerups(current_index);
 				case current_powerup is
 					when 0 =>
