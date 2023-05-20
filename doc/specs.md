@@ -12,16 +12,16 @@ This document is to be used for planning and documenting the implementaion detai
 
 Outputs states corresponding to the relevant game mode. Requires the following:
 
--   Game Start <- Prompts the user to click and start the game
+-   Game Start <- Prompts the user to choose a game mode from the menu
 -   Game Mode
-    -   Training <- Constant scrolling speed of pipes
-    -   Normal <- Increasing scrolling speed with score
--   Game Over <- On death, stops scrolling and prompts user to return to Game Start.
+    -   Training <- Constant scrolling speed of pipes (no levels/power ups)
+    -   Normal <- Full game features (levels and power ups)
+-   Game Over <- On death, stops scrolling and prompts user to return to Game Start on click.
 
 #### Important Signals
 
--   **Mouse Click**: Will be the primary driver for state changes
--   **Collision Detected**: Causes shift from a game mode to game over
+-   **Mouse Click + Position**: Will be the primary driver for state changes
+-   **Collision Detected**: Performs actions based on collision type [(see bird)](#bird)
 -   **Peripheral signals(?)**: Switches, pushbuttons could be used to reset or influence state.
 
 #### Implementation Details
@@ -44,33 +44,12 @@ The _Bird_ is a sprite that is fixed horizontally on the screen, and travels up 
 
 -   **Acceleration**: To be added to fall speed
 
-=======
-
 -   **Max fall speed** caps the rate at which the bird can fall
-
--   **Acceleration**: To be added to fall speed
-
-> > > > > > > parent of 47da755 (Revert "Merge branch 'main' of https://github.com/bcho892/Flappy-Bird-DE0-CV into FSM2")
 
 -   **Up speed**: To be added while ascending
 
 #### Important Signals
 
-<<<<<<< HEAD
-
--   **Counter** Used to track how long the bird will be travelling up for
-
--   **Ascending**: (_Flag_) Set to 1 if the bird is currently ascending
-
--   **Ball on**: Outputs 1 if the bird sprite is present in the current vsync pixel (x,y).
-
--   **Size**: (_Constant_) determines how much space the bird will take up relative to its center.
-
--   **Y Motion**: Acts as fall speed, can be positive or negative.
-
-=======
-
--   **Ascending**: (_Flag_) Set to 1 if the bird is currently ascending
 
 -   **Bird on**: Outputs 1 if the bird sprite is present in the current vsync pixel (x,y).
 
@@ -78,9 +57,25 @@ The _Bird_ is a sprite that is fixed horizontally on the screen, and travels up 
 
 -   **Y Motion**: Acts as fall speed, can be positive or negative.
 
-> > > > > > > parent of 47da755 (Revert "Merge branch 'main' of https://github.com/bcho892/Flappy-Bird-DE0-CV into FSM2")
-
 -   **Mouse In**: 1 or 0, comes from PS/2 mouse module
+
+- **Collision**: 3 Bit std logic representing the collision types, can be: 
+    - **"000"** no collision
+    - **"001"** pipe collision
+    - **"010"** ground collision
+    - **"011"** health pickup collision
+    - **"100"** invincibility pickup collision
+    - **"101"** death pickup collision
+
+# Power Ups
+## Health Pick Up
+Bird has three lives. If it collides with a pipe, or the ground, one life is lost. On pick up, one of these lives is replenished. If bird is at full health, life total increases to four. 
+
+## Invincibility
+Bird is invincible. Pipe collisions don't count and can't lose life. Screen can go faster to increase points?
+
+## Instant Death
+Skull pick up. Increases bird scale and so it instantly collides with a pipe and you lose. Changes bird scale constant- change to penis?
 
 #### Game state
 
@@ -176,20 +171,20 @@ Move left by scroll speed (decrease L offset)
 ```
 PIPE_ON IF
 - Must be true
-(column >= L offset) AND (column <= L+Pipe Width)
+(column >= L offset) AND (column <= L+Pipe Width) 
 - One of these must be true
-(row =< Pipe Height) OR (row >= Pipe Height + Pipe Gap)
+(row =< Pipe Height) **Top Pipe** OR (row >= Pipe Height + Pipe Gap) **Bottom Pipe**
 ```
 
 ### Display MUX
 
 #### Requirements
 
-This multiplexer requires bus inputs for **R,G,B** for the following components:
+This multiplexer requires **12 bit wide** bus inputs for **R[3..0] & G[3..0] & B[3..0]** for the following components:
 
 -   Background x 1
 -   Bird x 1
--   Pipe x 5
+-   Pipe x 4
 -   Ground x 1
 -   Text x 1
 
@@ -215,16 +210,6 @@ The priority should be as follows:
 3. Ground
 4. Pipes
 5. Background
-
-### Collision Detection
-
-#### Requirements
-
-This will output a bit that is fed into the FSM when the bird touches the ground or pipe
-
-#### Important Signals
-
--   **Reset**: resets the output back to 0 (for game restart)
 
 ### Random Number Generator
 
@@ -284,11 +269,11 @@ Have a single component to display text on the screen based on the game state
 
 -   **Game Mode** Display score
 
--   **Game Start** Display prompt to click + score
+-   **Game Start** Display menu to click + score
 
 #### Important Signals
 
--   **Character address(es)**: Used to access the pixel data of the the characters in the rom.
+-   **Character address(es)**: Used to access the pixel data of the the sprites in the rom.
 
 -   **Score**: Input that allows the display to update
 
@@ -296,9 +281,13 @@ Have a single component to display text on the screen based on the game state
 
 -   **Text on**: Used to output the relevant RGB to the VGA
 
+- **Menu items**: To access game/train mode
+
+- **Health and level dispaly**: Updated as game goes on
+
 #### Implementation Details
 
--- TODO
+Instantialize relvant sprite modules
 
 ### Ground
 
@@ -312,6 +301,8 @@ Once a y-coordinate is determined for the top of the ground:
 
 ```
 Ground is on when pixel_row >= top of ground
+
+Create gradient by checkinng y-pos
 ```
 
 ### Background
@@ -324,14 +315,5 @@ Display the very bottom layer of the game, could be solid color or more complex 
 
 #### Requirements
 
-Give the user visual feedback of where the mouse is on the screen, and also when the mouse is clicked (by changing colour).
+Give the user visual feedback of where the mouse is on the screen, and also when the mouse is clicked (by changing colour). Also is able to interact with the menu on the start screen
 
-# Power Ups
-## Health Pick Up
-Bird has three lives. If it collides with a pipe, or the ground, one life is lost. On pick up, one of these lives is replenished. If bird is at full health, life total increases to four. 
-
-## Invincibility
-Bird is invincible. Pipe collisions don't count and can't lose life. Screen can go faster to increase points?
-
-## Instant Death
-Skull pick up. Increases bird scale and so it instantly collides with a pipe and you lose. Changes bird scale constant- change to penis?
