@@ -9,6 +9,7 @@ ENTITY FSM IS
    PORT (
       clk_in, reset, mouse_click : IN STD_LOGIC;
    	collision : IN STD_LOGIC_VECTOR(2 downto 0);
+   	mouse_row, mouse_column : IN STD_LOGIC_VECTOR(9 downto 0);
       state_out : OUT STD_LOGIC_VECTOR(1 downto 0) := "00";	  
 	  health : OUT STD_LOGIC_VECTOR(11 downto 0));
 END ENTITY FSM;
@@ -18,15 +19,34 @@ END ENTITY FSM;
 ARCHITECTURE Moore OF FSM IS
 	CONSTANT debounce_time : Integer := 4000000;
 	CONSTANT pipe_collision_debounce_time :Integer := 24000000;
+
+	CONSTANT train_button_start_y : STD_LOGIC_VECTOR(9 downto 0) := STD_LOGIC_VECTOR(to_unsigned(200, 10));
+	CONSTANT game_button_start_y : STD_LOGIC_VECTOR(9 downto 0) := STD_LOGIC_VECTOR(to_unsigned(250, 10));
+	CONSTANT button_start_x : STD_LOGIC_VECTOR(9 downto 0) := STD_LOGIC_VECTOR(to_unsigned(225,10));
+	CONSTANT button_height : STD_LOGIC_VECTOR(9 downto 0) := STD_LOGIC_VECTOR(to_unsigned(30,10));
+	CONSTANT button_width : STD_LOGIC_VECTOR(9 downto 0) := STD_LOGIC_VECTOR(to_unsigned(250, 10));
+
 	SIGNAL max_collisions : INTEGER range 0 to 1000000:= 30000;
    -- define states
    type state_type is (game_start, normal_mode, training_mode, game_over);
    SIGNAL current_state, next_state : state_type := game_start;
+   SIGNAL in_game_button, in_train_button : STD_LOGIC;
    SIGNAL count : Integer range 0 to 25000000;
    SIGNAL collision_count : Integer range 0 to 1000000 := 0;
    SIGNAL health_percentage : unsigned(6 downto 0);
 
 BEGIN
+	in_game_button <= '1' 
+					  when mouse_row >= game_button_start_y 
+					  and mouse_row <= game_button_start_y + button_height 
+					  and mouse_column >= button_start_x 
+					  and mouse_column <= button_start_x + button_width else '0';
+	in_train_button <= '1' 
+					  when mouse_row >= train_button_start_y 
+					  and mouse_row <= train_button_start_y + button_height 
+					  and mouse_column >= button_start_x 
+					  and mouse_column <= button_start_x + button_width else '0';
+
   calculate_percentage : process(collision_count, max_collisions)
     variable temp : integer;
   begin
@@ -52,8 +72,10 @@ BEGIN
 		  CASE (current_state) IS
 			 WHEN game_start =>
 				 state_out <= "00";
-				if count >= debounce_time and mouse_click = '1' then
+				if count >= debounce_time and mouse_click = '1' and in_game_button = '1' then
 				   next_state <= normal_mode;
+				elsif count >= debounce_time and mouse_click = '1' and in_train_button = '1' then
+				   next_state <= training_mode;
 			   elsif count >= debounce_time then
 				   count <= debounce_time;
 				else
