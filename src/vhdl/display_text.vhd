@@ -21,6 +21,8 @@ architecture behaviour of display_text is
 CONSTANT score_start_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(70, 10);
 CONSTANT health_start_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(30, 10);
 CONSTANT game_over_start_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(220,10);
+CONSTANT train_button_start_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(200, 10);
+CONSTANT game_button_start_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(250,10);
 
 CONSTANT score_rad_100_start_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(250, 10);
 CONSTANT score_rad_10_start_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(300, 10);
@@ -31,11 +33,13 @@ CONSTANT health_rad_100_start_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC
 CONSTANT health_rad_10_start_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(552, 10);
 CONSTANT health_rad_1_start_x : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(592, 10);
 
+CONSTANT button_height : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(50,10);
+CONSTANT button_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(250, 10);
 CONSTANT number_rom_offset : STD_LOGIC_VECTOR(5 downto 0) := CONV_STD_LOGIC_VECTOR(48,6);
 
 --SIGNALS
 SIGNAL temp_text_on, temp_text_on_1,temp_text_on_10,temp_text_on_100, 
-	temp_percent_on_1, temp_percent_on_10, temp_percent_on_100, heart_on, t_go_G_on, t_go_a_on, t_go_m_on, t_go_e1_on, t_go_space_on, t_go_O_on, t_go_v_on, t_go_e2_on, t_go_r_on, t_lv_l1_on, t_lv_e1_on, t_lv_v_on, t_lv_e2_on, t_lv_l2_on, t_curr_lvl_on, level_on, game_over_on: STD_LOGIC;
+	temp_percent_on_1, temp_percent_on_10, temp_percent_on_100, heart_on, t_go_G_on, t_go_a_on, t_go_m_on, t_go_e1_on, t_go_space_on, t_go_O_on, t_go_v_on, t_go_e2_on, t_go_r_on, t_lv_l1_on, t_lv_e1_on, t_lv_v_on, t_lv_e2_on, t_lv_l2_on, t_curr_lvl_on, t_trb_t_on, t_trb_r_on, t_trb_a_on, t_trb_i_on, t_trb_n_on, t_gmb_g_on, t_gmb_a_on, t_gmb_m_on, t_gmb_e_on, buttons_on, train_button_on, game_button_on, level_on, game_over_on: STD_LOGIC;
 SIGNAL radix_100_score, radix_10_score, radix_1_score: STD_LOGIC_VECTOR(3 downto 0);
 SIGNAL radix_100_score_add, radix_10_score_add, radix_1_score_add, radix_100_health, radix_10_health, radix_1_health : STD_LOGIC_VECTOR(5 downto 0);
 component sprite_8bit
@@ -267,7 +271,96 @@ level_on <= '1' when (t_lv_l1_on = '1' or t_lv_e1_on = '1' or t_lv_v_on = '1' or
 -- ---------------------------------------------------------
 -- ---------------------------------------------------------
 
-temp_text_on <= '1' when (level_on ='1' or game_over_on='1' or temp_text_on_1 = '1' or temp_text_on_10 = '1' or temp_text_on_100 = '1' or heart_on = '1' or temp_percent_on_1 = '1' or temp_percent_on_10 ='1' or temp_percent_on_100 = '1') else '0';
+
+-- ---------------------------------------------------------
+-- MENU 
+-- TRAIN BUTTON (TRB)
+-- GAME BUTTON (GMB)
+-- ---------------------------------------------------------
+
+-- Train 
+trb_t : sprite_8bit 
+generic map (
+				CONV_STD_LOGIC_VECTOR(2,10)
+			)
+port map(
+		clk, '0', horiz_sync, CONV_STD_LOGIC_VECTOR(20,6),train_button_start_y,CONV_STD_LOGIC_VECTOR(225,10), pixel_row, pixel_column, t_trb_t_on
+		);
+
+trb_r : sprite_8bit 
+generic map (
+				CONV_STD_LOGIC_VECTOR(2,10)
+			)
+port map(
+		clk, '0', horiz_sync, CONV_STD_LOGIC_VECTOR(18,6),train_button_start_y,CONV_STD_LOGIC_VECTOR(265,10), pixel_row, pixel_column, t_trb_r_on
+		);
+
+trb_a : sprite_8bit 
+generic map (
+				CONV_STD_LOGIC_VECTOR(2,10)
+			)
+port map(
+		clk, '0', horiz_sync, CONV_STD_LOGIC_VECTOR(1,6),train_button_start_y,CONV_STD_LOGIC_VECTOR(305,10), pixel_row, pixel_column, t_trb_a_on
+		);
+
+trb_i : sprite_8bit 
+generic map (
+				CONV_STD_LOGIC_VECTOR(2,10)
+			)
+port map(
+		clk, '0', horiz_sync, CONV_STD_LOGIC_VECTOR(9,6),train_button_start_y,CONV_STD_LOGIC_VECTOR(345,10), pixel_row, pixel_column, t_trb_i_on
+		);
+
+trb_n : sprite_8bit 
+generic map (
+				CONV_STD_LOGIC_VECTOR(2,10)
+			)
+port map(
+		clk, '0', horiz_sync, CONV_STD_LOGIC_VECTOR(14,6),train_button_start_y,CONV_STD_LOGIC_VECTOR(385,10), pixel_row, pixel_column, t_trb_n_on
+		);
+train_button_on <= '1' when (t_trb_t_on = '1' or t_trb_r_on ='1' or t_trb_a_on = '1' or t_trb_i_on = '1' or t_trb_n_on ='1') else '0';
+-- Game
+gmb_g : sprite_8bit 
+generic map (
+				CONV_STD_LOGIC_VECTOR(2,10)
+			)
+port map(
+		clk, '0', horiz_sync, CONV_STD_LOGIC_VECTOR(7,6),game_button_start_y,CONV_STD_LOGIC_VECTOR(260,10), pixel_row, pixel_column, t_gmb_g_on
+		);
+
+gmb_a : sprite_8bit 
+generic map (
+				CONV_STD_LOGIC_VECTOR(2,10)
+			)
+port map(
+		clk, '0', horiz_sync, CONV_STD_LOGIC_VECTOR(1,6),game_button_start_y,CONV_STD_LOGIC_VECTOR(300,10), pixel_row, pixel_column, t_gmb_a_on
+		);
+
+gmb_m : sprite_8bit 
+generic map (
+				CONV_STD_LOGIC_VECTOR(2,10)
+			)
+port map(
+		clk, '0', horiz_sync, CONV_STD_LOGIC_VECTOR(13,6),game_button_start_y,CONV_STD_LOGIC_VECTOR(340,10), pixel_row, pixel_column, t_gmb_m_on
+		);
+
+gmb_e : sprite_8bit 
+generic map (
+				CONV_STD_LOGIC_VECTOR(2,10)
+			)
+port map(
+		clk, '0', horiz_sync, CONV_STD_LOGIC_VECTOR(5,6),game_button_start_y,CONV_STD_LOGIC_VECTOR(380,10), pixel_row, pixel_column, t_gmb_e_on
+		);
+
+game_button_on <= '1' when (t_gmb_g_on = '1' or t_gmb_a_on = '1' or t_gmb_m_on = '1' or t_gmb_e_on = '1') else '0';
+
+--both
+buttons_on <= '1' when (game_button_on = '1' or train_button_on = '1') and game_state = "00" else '0';
+-- ---------------------------------------------------------
+-- ---------------------------------------------------------
+-- ---------------------------------------------------------
+
+temp_text_on <= '1' when (level_on ='1' or game_over_on='1' or buttons_on = '1' or temp_text_on_1 = '1' or temp_text_on_10 = '1' or temp_text_on_100 = '1' or heart_on = '1' or temp_percent_on_1 = '1' or temp_percent_on_10 ='1' or temp_percent_on_100 = '1') else '0';
 text_rgb <= "111111111111" 
 			when temp_text_on = '1' and heart_on = '0' 
 		else "111000000000" when temp_text_on = '1' and heart_on = '1'
