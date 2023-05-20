@@ -25,12 +25,17 @@ TYPE state_type is (IDLE, DRAW_SPRITE, WAIT_SPRITE);
 CONSTANT max : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(32, 10);
 
 SIGNAL state : state_type := IDLE;
-SIGNAL bmap_column, bmap_row : STD_LOGIC_VECTOR(bits-1 downto 0);
+SIGNAL bmap_col, bmap_row : integer;
 SIGNAL pointer : STD_LOGIC_VECTOR(9 downto 0);
 SIGNAL in_region : std_logic;
 SIGNAL t_sprite_on : STD_LOGIC;
 SIGNAL t_rom_data : STD_LOGIC_VECTOR(11 downto 0);
-SIGNAL t_rom_address : STD_LOGIC_VECTOR(8 downto 0);
+SIGNAL t_rom_address : STD_LOGIC_VECTOR(9 downto 0);
+
+function index_2d_to_1d(row : integer; col : integer) return STD_LOGIC_VECTOR is
+begin
+	return CONV_STD_LOGIC_VECTOR(row * 32 + col, 10);
+end function index_2d_to_1d;
  
 component color_rom
 PORT 
@@ -44,22 +49,26 @@ begin
 
 char_rom_component : color_rom
 port map(
-			rom_address => pointer,
+			rom_address => t_rom_address,
 			clock => clk,
 			rom_output => t_rom_data  
 	 	);
 
 rgb <= t_rom_data;
 
-in_region <= '1' when pixel_row > sprite_row and pixel_row <= sprite_row + (sprite_height * scale) 
-			 and pixel_column > sprite_column and pixel_column < sprite_column + (sprite_width * scale) else '0';  
+in_region <= '1' when pixel_row > sprite_row and pixel_row <= sprite_row + (sprite_height ) 
+			 and pixel_column > sprite_column and pixel_column < sprite_column + (sprite_width) else '0';  
 t_sprite_on <= '0' when in_region = '0' or t_rom_data = "000000000000" else '1';
 
-t_rom_address <= rom_address + bmap_row;
+bmap_row <= CONV_INTEGER(pixel_row -sprite_row);
+bmap_col <= CONV_INTEGER(pixel_column - sprite_column);
+t_rom_address <= index_2d_to_1d(bmap_row, bmap_col);
 process (clk)
 variable count : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(0,10);
 variable count_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(0,10);
 variable x_check : Integer range 0 to 64 := 0;
+
+
 begin
 	if rising_edge(clk) then
 		case state is
@@ -75,17 +84,13 @@ begin
 				state <= WAIT_SPRITE;
 
 			when WAIT_SPRITE =>
-				if x_check = 32 then
+				if bmap_col = 32 then
 					state <= IDLE;
 					count_y := count_y + CONV_STD_LOGIC_VECTOR(1, 10);
-					pointer <= pointer + 1;
-					x_check := 0;
 				else
 					state <= DRAW_SPRITE;
 					if (count > scale - CONV_STD_LOGIC_VECTOR(1,10)) then
 						count := CONV_STD_LOGIC_VECTOR(0,10);
-						pointer <= pointer + 1;
-						x_check := x_check + 1;
 					else 
 						count := count + CONV_STD_LOGIC_VECTOR(1, 10);
 					end if;
