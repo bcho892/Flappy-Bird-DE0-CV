@@ -7,12 +7,11 @@ entity sprite_32bit is
 	generic ( 
 			sprite_width : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(32,10); 
 		  	sprite_height : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(32,10); 
-		  	scale : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(1, 10);
-			bits : Integer := 4
+		  	scale : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(1, 10)
 		);
 	port (
 			clk, reset, horiz_sync : IN STD_LOGIC;
-			rom_address : IN STD_LOGIC_VECTOR(8 downto 0);
+			character_address : IN STD_LOGIC_VECTOR(12 downto 0);
 			sprite_row, sprite_column, 
 			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
 			rgb : OUT STD_LOGIC_VECTOR(11 downto 0);
@@ -22,7 +21,6 @@ end sprite_32bit;
 
 architecture behaviour of sprite_32bit is
 TYPE state_type is (IDLE, DRAW_SPRITE, WAIT_SPRITE);
-CONSTANT max : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(32, 10);
 
 SIGNAL state : state_type := IDLE;
 SIGNAL bmap_col, bmap_row : integer;
@@ -30,17 +28,17 @@ SIGNAL pointer : STD_LOGIC_VECTOR(9 downto 0);
 SIGNAL in_region : std_logic;
 SIGNAL t_sprite_on : STD_LOGIC;
 SIGNAL t_rom_data : STD_LOGIC_VECTOR(11 downto 0);
-SIGNAL t_rom_address : STD_LOGIC_VECTOR(9 downto 0);
+SIGNAL t_rom_address : STD_LOGIC_VECTOR(12 downto 0);
 
 function index_2d_to_1d(row : integer; col : integer) return STD_LOGIC_VECTOR is
 begin
-	return CONV_STD_LOGIC_VECTOR(row * 32 + col, 10);
+	return CONV_STD_LOGIC_VECTOR(row * 32 + col, 12);
 end function index_2d_to_1d;
  
 component color_rom
 PORT 
 (
-	rom_address			:	IN STD_LOGIC_VECTOR (9 DOWNTO 0);
+	rom_address			:	IN STD_LOGIC_VECTOR (12 DOWNTO 0);
 	clock				: 	IN STD_LOGIC;
 	rom_output		:	OUT STD_LOGIC_VECTOR(11 DOWNTO 0)
 );
@@ -62,7 +60,7 @@ t_sprite_on <= '0' when in_region = '0' or t_rom_data = "000000000000" else '1';
 
 bmap_row <= CONV_INTEGER(pixel_row -sprite_row);
 bmap_col <= CONV_INTEGER(pixel_column - sprite_column);
-t_rom_address <= index_2d_to_1d(bmap_row, bmap_col);
+t_rom_address <= character_address + index_2d_to_1d(bmap_row, bmap_col);
 process (clk)
 variable count : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(0,10);
 variable count_y : STD_LOGIC_VECTOR(9 downto 0) := CONV_STD_LOGIC_VECTOR(0,10);

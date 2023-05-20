@@ -9,7 +9,7 @@ USE altera_mf.all;
 ENTITY color_rom IS
 	PORT
 	(
-		rom_address			:	IN STD_LOGIC_VECTOR (9 DOWNTO 0);
+		rom_address			:	IN STD_LOGIC_VECTOR (12 DOWNTO 0);
 		clock				: 	IN STD_LOGIC ;
 		rom_output		:	OUT STD_LOGIC_VECTOR (11 DOWNTO 0)
 	);
@@ -39,7 +39,7 @@ ARCHITECTURE SYN OF color_rom IS
 	);
 	PORT (
 		clock0		: IN STD_LOGIC ;
-		address_a	: IN STD_LOGIC_VECTOR (9 DOWNTO 0);
+		address_a	: IN STD_LOGIC_VECTOR (12 DOWNTO 0);
 		q_a			: OUT STD_LOGIC_VECTOR (11 DOWNTO 0)
 	);
 	END COMPONENT;
@@ -51,15 +51,15 @@ BEGIN
 		address_aclr_a => "NONE",
 		clock_enable_input_a => "BYPASS",
 		clock_enable_output_a => "BYPASS",
-		init_file => "test.mif",
+		init_file => "characters.mif",
 		intended_device_family => "Cyclone III",
 		lpm_hint => "ENABLE_RUNTIME_MOD=NO",
 		lpm_type => "altsyncram",
-		numwords_a => 1024,
+		numwords_a => 3072,
 		operation_mode => "ROM",
 		outdata_aclr_a => "NONE",
 		outdata_reg_a => "UNREGISTERED",
-		widthad_a => 10,
+		widthad_a => 12,
 		width_a => 12,
 		width_byteena_a => 1
 	)

@@ -30,7 +30,7 @@ SIGNAL size 					: std_logic_vector(9 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(14,10);
 SIGNAL bird_y_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_x_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_y_motion			: std_logic_vector(9 DOWNTO 0);
-SIGNAL character_address 		: std_logic_vector(8 DOWNTO 0);
+SIGNAL character_address 		: std_logic_vector(12 DOWNTO 0);
 SIGNAL t_bird_rgb :  STD_LOGIC_VECTOR(11 downto 0);
 
 component sprite_32bit 
@@ -39,7 +39,7 @@ component sprite_32bit
 			);
 	port (
 			clk, reset, horiz_sync : IN STD_LOGIC;
-			rom_address : IN STD_LOGIC_VECTOR(8 downto 0);
+			character_address : IN STD_LOGIC_VECTOR(12 downto 0);
 			sprite_row, sprite_column, 
 			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
 			rgb : OUT STD_LOGIC_VECTOR(11 downto 0);
@@ -51,10 +51,10 @@ BEGIN
 
 bird_x_pos <= CONV_STD_LOGIC_VECTOR(300,10);
 with character_select select character_address <=
-	CONV_STD_LOGIC_VECTOR(0, 9) when "00",
-	CONV_STD_LOGIC_VECTOR(16, 9) when "01",
-	CONV_STD_LOGIC_VECTOR(32, 9) when "10",
-	CONV_STD_LOGIC_VECTOR(0, 9) when others;
+	CONV_STD_LOGIC_VECTOR(0, 13) when "00",
+	CONV_STD_LOGIC_VECTOR(1024, 13) when "01",
+	CONV_STD_LOGIC_VECTOR(2028, 13) when "10",
+	CONV_STD_LOGIC_VECTOR(0, 13) when others;
 
 sprite_component : sprite_32bit 
 generic map(
