@@ -23,14 +23,14 @@ process(pixel_row)
   begin
 	if temp_background_on = '1' then
 		case to_integer(unsigned(pixel_row)) is
-			when 0 to 79 => background_rgb <= "100011100111";
-			when 80 to 139 => background_rgb <= "100100101010";
-			when 140 to 189 => background_rgb <= "100101101011";
-			when 190 to 229 => background_rgb <= "100110110100";
-			when 230 to 264 => background_rgb <= "100111101101";
-			when 265 to 294 => background_rgb <= "101001001110";
-			when 295 to 319 => background_rgb <= "101011111001";
-			when 320 to ground_top_y => background_rgb <= "100110000000";
+			when 0 to 79 => background_rgb <= "000000111000";
+			when 80 to 139 => background_rgb <= "000000111000";
+			when 140 to 189 => background_rgb <= "000001111011";
+			when 190 to 229 => background_rgb <= "000010011100";
+			when 230 to 264 => background_rgb <= "000010011100";
+			when 265 to 294 => background_rgb <= "000010111101";
+			when 295 to 319 => background_rgb <= "010011001110";
+			when 320 to ground_top_y => background_rgb <= "010011001110";
 			when others => null;
 		end case;
 	end if;
