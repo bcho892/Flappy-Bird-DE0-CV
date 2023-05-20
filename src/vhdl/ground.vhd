@@ -22,16 +22,14 @@ temp_ground_on <= '1' when (ground_top_y <= to_integer(unsigned(pixel_row))) els
 ground_on <= temp_ground_on;
 process(pixel_row)
 begin
-	if temp_ground_on = '1' then
-		case to_integer(unsigned(pixel_row)) is
-			when ground_top_y => ground_rgb <= "001111000000";
-			when ground_top_y + 10 => ground_rgb <= "101101101100";
-			when ground_top_y + 30 => ground_rgb <= "101001100100";
-			when ground_top_y + 50 => ground_rgb <= "100101010000";
-			when ground_top_y + 70 => ground_rgb <= "100001000000";
-			when others => null;
-		end case;
-	end if;
+	case to_integer(unsigned(pixel_row)) is
+		when ground_top_y to ground_top_y + 9 => ground_rgb <= "001111000000";
+		when ground_top_y + 10 to ground_top_y + 19 => ground_rgb <= "010000100010";
+		when ground_top_y + 20 to ground_top_y + 29 => ground_rgb <= "010100110011";
+		when ground_top_y + 30 to ground_top_y + 39 => ground_rgb <= "011101000100";
+		when ground_top_y + 40 to ground_top_y + 60 => ground_rgb <= "101001110111";
+    when others => null;
+end case;
 end process;
 
 end architecture behaviour; 
