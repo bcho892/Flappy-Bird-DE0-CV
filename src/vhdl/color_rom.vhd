@@ -55,11 +55,11 @@ BEGIN
 		intended_device_family => "Cyclone III",
 		lpm_hint => "ENABLE_RUNTIME_MOD=NO",
 		lpm_type => "altsyncram",
-		numwords_a => 3072,
+		numwords_a => 4096,
 		operation_mode => "ROM",
 		outdata_aclr_a => "NONE",
 		outdata_reg_a => "UNREGISTERED",
-		widthad_a => 12,
+		widthad_a => 13,
 		width_a => 12,
 		width_byteena_a => 1
 	)

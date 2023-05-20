@@ -32,7 +32,7 @@ SIGNAL t_rom_address : STD_LOGIC_VECTOR(12 downto 0);
 
 function index_2d_to_1d(row : integer; col : integer) return STD_LOGIC_VECTOR is
 begin
-	return CONV_STD_LOGIC_VECTOR(row * 32 + col, 12);
+	return CONV_STD_LOGIC_VECTOR(row * 32 + col, 13);
 end function index_2d_to_1d;
  
 component color_rom
@@ -54,8 +54,8 @@ port map(
 
 rgb <= t_rom_data;
 
-in_region <= '1' when pixel_row > sprite_row and pixel_row <= sprite_row + (sprite_height ) 
-			 and pixel_column > sprite_column and pixel_column < sprite_column + (sprite_width) else '0';  
+in_region <= '1' when pixel_row >= sprite_row and pixel_row < sprite_row + (sprite_height) 
+			 and pixel_column >= sprite_column and pixel_column < sprite_column + (sprite_width) else '0';  
 t_sprite_on <= '0' when in_region = '0' or t_rom_data = "000000000000" else '1';
 
 bmap_row <= CONV_INTEGER(pixel_row -sprite_row);

@@ -53,8 +53,8 @@ bird_x_pos <= CONV_STD_LOGIC_VECTOR(300,10);
 with character_select select character_address <=
 	CONV_STD_LOGIC_VECTOR(0, 13) when "00",
 	CONV_STD_LOGIC_VECTOR(1024, 13) when "01",
-	CONV_STD_LOGIC_VECTOR(2028, 13) when "10",
-	CONV_STD_LOGIC_VECTOR(0, 13) when others;
+	CONV_STD_LOGIC_VECTOR(2048, 13) when "10",
+	CONV_STD_LOGIC_VECTOR(3072, 13) when others;
 
 sprite_component : sprite_32bit 
 generic map(
