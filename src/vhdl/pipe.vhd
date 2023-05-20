@@ -10,7 +10,8 @@ entity pipe is
 		level,game_state: IN STD_LOGIC_VECTOR(1 downto 0);
 		random_index : IN STD_LOGIC_VECTOR(3 downto 0);
 		pipe_rgb : OUT STD_LOGIC_VECTOR(11 downto 0);
-		init_next, score_pulse, pipe_on: OUT STD_LOGIC 
+		init_next, score_pulse, pipe_on, 
+		health_pickup_on, invincibility_pickup_on, death_pickup_on: OUT STD_LOGIC 
 	);
 end entity;
 
@@ -33,7 +34,8 @@ CONSTANT screen_halfway : Integer := 320;
 CONSTANT score_pulse_debounce : Integer := 40;
 
 -- SIGNALS
-SIGNAL powerup_address : STD_LOGIC_VECTOR(13 downto 0);
+SIGNAL current_powerup : Integer;
+SIGNAL powerup_address : STD_LOGIC_VECTOR(12 downto 0);
 SIGNAL powerup_rgb : STD_LOGIC_VECTOR(11 downto 0);
 SIGNAL powerup_x_pos, powerup_y_pos : Integer;
 SIGNAL pipe_x_pos : Integer := screen_max_x + pipe_width;
@@ -58,7 +60,7 @@ end component;
 begin
 
 sprite_component : sprite_16bit 
-port map( clk, '0', vert_sync, std_logic_vector(to_unsigned(0,13)),std_logic_vector(to_unsigned(powerup_y_pos, 10)),std_logic_vector(to_unsigned(powerup_x_pos, 10)), pixel_row, pixel_column, powerup_rgb, powerup_on
+port map( clk, '0', vert_sync, powerup_address,std_logic_vector(to_unsigned(powerup_y_pos, 10)),std_logic_vector(to_unsigned(powerup_x_pos, 10)), pixel_row, pixel_column, powerup_rgb, powerup_on
 );
 
 bottom_pipe_on <= '1' when (pipe_x_pos > to_integer(unsigned(pixel_column)) 
@@ -78,6 +80,7 @@ pipe_rgb <= "001001100100" when temp_pipe_on = '1' else
 current_index <= to_integer(unsigned(random_index));
 
 powerup_x_pos <= pipe_x_pos + pipe_spacing_center;
+
 
 move_pipe : process(vert_sync) 	
 variable flash_count : INTEGER := 0;
@@ -121,6 +124,16 @@ begin
 				pipe_x_motion <= 0;
 				pipe_height <= preset_pipe_heights(current_index);
 				powerup_y_pos <= preset_pipe_heights(current_index);
+				current_powerup <= preset_powerups(current_index);
+				case current_powerup is
+					when 0 =>
+						powerup_address <= std_logic_vector(to_unsigned(0,13));
+					when 1 =>
+						powerup_address <= std_logic_vector(to_unsigned(256,13));
+					when 2 =>
+						powerup_address <= std_logic_vector(to_unsigned(512,13));
+					when others => null;
+				end case;
 			end if;
 			--move the pipe
 			if enable = '1' then
