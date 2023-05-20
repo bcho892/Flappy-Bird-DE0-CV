@@ -34,7 +34,7 @@ CONSTANT score_pulse_debounce : Integer := 40;
 SIGNAL pipe_x_pos : Integer := screen_max_x + pipe_width;
 SIGNAL pipe_x_motion : Integer;
 SIGNAL pipe_height : Integer;
-SIGNAL temp_pipe_on, top_pipe_on, bottom_pipe_on : STD_LOGIC; 
+SIGNAL temp_pipe_on, top_pipe_on, bottom_pipe_on,appear : STD_LOGIC; 
 SIGNAL enable : STD_LOGIC;
 SIGNAL current_index : Integer;
 SIGNAL scroll_speed : Integer;
@@ -48,7 +48,7 @@ top_pipe_on <= '1' when (pipe_x_pos > to_integer(unsigned(pixel_column))
 and to_integer(unsigned(pixel_column)) > pipe_x_pos - pipe_width 
 and pixel_row < pipe_height) else '0'; 
 
-temp_pipe_on <= '1' when ( top_pipe_on = '1' or bottom_pipe_on = '1' ) else	'0';
+temp_pipe_on <= '1' when ( top_pipe_on = '1' or bottom_pipe_on = '1' ) and appear = '1' else '0';
 
 pipe_on <= temp_pipe_on;
 pipe_rgb <= "001001100100" when temp_pipe_on = '1' else "000000000000";
@@ -56,13 +56,27 @@ current_index <= to_integer(unsigned(random_index));
 
 
 move_pipe : process(vert_sync) 	
+variable flash_count : INTEGER := 0;
 begin
 		if Rising_Edge(vert_sync) then
 			case game_state is
-				when "00" => null;
-				when "01" => scroll_speed <= preset_scroll_speeds(to_integer(unsigned(level-"01")));
+				when "00" => appear <= '1';
+				when "01" => 
+					scroll_speed <= preset_scroll_speeds(to_integer(unsigned(level-"01")));
+					if(level = "11") then
+						flash_count :=flash_count +1;
+						case flash_count is
+							when 10 to 12 =>
+								appear <='0';
+							when 27 =>
+								appear <= '1';
+								flash_count := 0;
+							when others =>
+								appear <= '1';
+						end case;
+					end if;
 				when "10" => scroll_speed <= 2;
-				when "11" => null;
+				when "11" => appear <= '1';
 			end case;
 			--allow movement of current pipe
 			if game_state = "11" or game_state = "00" then 
