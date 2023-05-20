@@ -11,7 +11,8 @@ ENTITY bird IS
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		  game_state : IN std_logic_vector(1 downto 0); -- 00 game over, 01 game start, 10 gameplay
 		  collision : OUT STD_LOGIC_VECTOR(2 downto 0);
-		  bird_on, red, green, blue 			: OUT std_logic);		-- collision and mode are connected to the FSM
+			bird_rgb : OUT STD_LOGIC_VECTOR(11 downto 0); 
+		  bird_on		: OUT std_logic);		-- collision and mode are connected to the FSM
 END bird;
 
 architecture behavior of bird is
@@ -25,21 +26,24 @@ CONSTANT CENTRE_Y : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(240, 10);
 CONSTANT SCREEN_MAX_Y : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(480, 10);
 
 SIGNAL temp_bird_on					: std_logic;
-SIGNAL size 					: std_logic_vector(9 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(14,10);
+SIGNAL size 					: std_logic_vector(9 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(32,10);
 SIGNAL bird_y_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_x_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_y_motion			: std_logic_vector(9 DOWNTO 0);
-SIGNAL character_address 		: std_logic_vector(8 DOWNTO 0);
+SIGNAL t_collision : STD_LOGIC_VECTOR(2 downto 0);
+SIGNAL character_address 		: std_logic_vector(12 DOWNTO 0);
+SIGNAL t_bird_rgb :  STD_LOGIC_VECTOR(11 downto 0);
 
-component sprite_16bit 
+component sprite_32bit 
 	generic (
 			scale : STD_LOGIC_VECTOR	
 			);
 	port (
 			clk, reset, horiz_sync : IN STD_LOGIC;
-			rom_address : IN STD_LOGIC_VECTOR(8 downto 0);
+			character_address : IN STD_LOGIC_VECTOR(12 downto 0);
 			sprite_row, sprite_column, 
 			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
+			rgb : OUT STD_LOGIC_VECTOR(11 downto 0);
 			sprite_on: OUT STD_LOGIC
 		 );
 end component;
@@ -48,19 +52,19 @@ BEGIN
 
 bird_x_pos <= CONV_STD_LOGIC_VECTOR(300,10);
 with character_select select character_address <=
-	CONV_STD_LOGIC_VECTOR(0, 9) when "00",
-	CONV_STD_LOGIC_VECTOR(16, 9) when "01",
-	CONV_STD_LOGIC_VECTOR(32, 9) when "10",
-	CONV_STD_LOGIC_VECTOR(0, 9) when others;
+	CONV_STD_LOGIC_VECTOR(0, 13) when "00",
+	CONV_STD_LOGIC_VECTOR(1024, 13) when "01",
+	CONV_STD_LOGIC_VECTOR(2048, 13) when "10",
+	CONV_STD_LOGIC_VECTOR(3072, 13) when others;
 
-sprite_component : sprite_16bit 
+sprite_component : sprite_32bit 
 generic map(
 			BIRD_SCALE
 		   ) 
-port map( clk, '0', vert_sync, character_address,bird_y_pos,bird_x_pos, pixel_row, pixel_column, temp_bird_on
+port map( clk, '0', vert_sync, character_address,bird_y_pos,bird_x_pos, pixel_row, pixel_column, t_bird_rgb, temp_bird_on
 );
 
-collision <=
+t_collision <=
 	"001" when temp_bird_on = '1' and pipe_on = '1' else
 	"010" when bird_y_pos >= GROUND_Y_PIXEL - SIZE else
 	"011" when temp_bird_on = '1' and health_pickup_on = '1' else
@@ -68,8 +72,11 @@ collision <=
 	"101" when death_pickup_on = '1' and temp_bird_on = '1' else
 	"000"; 
 
+collision <= t_collision;
 
-Blue <= temp_bird_on;
+
+bird_rgb <= t_bird_rgb when temp_bird_on = '1' and t_collision /= "001" else  
+			"111100000000" when temp_bird_on = '1' and t_collision = "001" else "000000000000";
 bird_on <= temp_bird_on;
 
 

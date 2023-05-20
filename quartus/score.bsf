@@ -48,9 +48,16 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 240 32)
 		(output)
-		(text "score_digits[11..0]" (rect 0 0 69 12)(font "Arial" ))
-		(text "score_digits[11..0]" (rect 150 27 219 39)(font "Arial" ))
+		(text "level[1..0]" (rect 0 0 36 12)(font "Arial" ))
+		(text "level[1..0]" (rect 183 27 219 39)(font "Arial" ))
 		(line (pt 240 32)(pt 224 32)(line_width 3))
+	)
+	(port
+		(pt 240 48)
+		(output)
+		(text "score_digits[11..0]" (rect 0 0 69 12)(font "Arial" ))
+		(text "score_digits[11..0]" (rect 150 43 219 55)(font "Arial" ))
+		(line (pt 240 48)(pt 224 48)(line_width 3))
 	)
 	(drawing
 		(rectangle (rect 16 16 224 96)(line_width 1))
