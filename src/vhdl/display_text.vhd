@@ -35,7 +35,7 @@ CONSTANT number_rom_offset : STD_LOGIC_VECTOR(5 downto 0) := CONV_STD_LOGIC_VECT
 
 --SIGNALS
 SIGNAL temp_text_on, temp_text_on_1,temp_text_on_10,temp_text_on_100, 
-	temp_percent_on_1, temp_percent_on_10, temp_percent_on_100, heart_on, t_go_G_on, t_go_a_on, t_go_m_on, t_go_e1_on, t_go_space_on, t_go_O_on, t_go_v_on, t_go_e2_on, t_go_r_on, t_lv_l1_on, t_lv_e1_on, t_lv_v_on, t_lv_e2_on, t_lv_l2_on, level_on, game_over_on: STD_LOGIC;
+	temp_percent_on_1, temp_percent_on_10, temp_percent_on_100, heart_on, t_go_G_on, t_go_a_on, t_go_m_on, t_go_e1_on, t_go_space_on, t_go_O_on, t_go_v_on, t_go_e2_on, t_go_r_on, t_lv_l1_on, t_lv_e1_on, t_lv_v_on, t_lv_e2_on, t_lv_l2_on, t_curr_lvl_on level_on, game_over_on: STD_LOGIC;
 SIGNAL radix_100_score, radix_10_score, radix_1_score: STD_LOGIC_VECTOR(3 downto 0);
 SIGNAL radix_100_score_add, radix_10_score_add, radix_1_score_add, radix_100_health, radix_10_health, radix_1_health : STD_LOGIC_VECTOR(5 downto 0);
 component sprite_8bit
@@ -259,10 +259,10 @@ generic map (
 				CONV_STD_LOGIC_VECTOR(2,10)
 			)
 port map(
-		clk, '0', horiz_sync, CONV_STD_LOGIC_VECTOR(7,6),health_start_y,CONV_STD_LOGIC_VECTOR(220,10), pixel_row, pixel_column, t_lv_l2_on
+		clk, '0', horiz_sync, CONV_STD_LOGIC_VECTOR(7,6),health_start_y,CONV_STD_LOGIC_VECTOR(220,10), pixel_row, pixel_column, t_curr_lvl_on
 		);
 
-level_on <= '1' when (t_lv_l1_on = '1' or t_lv_e1_on = '1' or t_lv_v_on = '1' or t_lv_e2_on = '1' or t_lv_l2_on = '1') and game_state = "01" else '0';
+level_on <= '1' when (t_lv_l1_on = '1' or t_lv_e1_on = '1' or t_lv_v_on = '1' or t_lv_e2_on = '1' or t_lv_l2_on = '1' or t_curr_lvl_on) and game_state = "01" else '0';
 -- ---------------------------------------------------------
 -- ---------------------------------------------------------
 -- ---------------------------------------------------------
