@@ -26,7 +26,7 @@ CONSTANT CENTRE_Y : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(240, 10);
 CONSTANT SCREEN_MAX_Y : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(480, 10);
 
 SIGNAL temp_bird_on					: std_logic;
-SIGNAL size 					: std_logic_vector(9 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(14,10);
+SIGNAL size 					: std_logic_vector(9 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(32,10);
 SIGNAL bird_y_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_x_pos				: std_logic_vector(9 DOWNTO 0);
 SIGNAL bird_y_motion			: std_logic_vector(9 DOWNTO 0);
