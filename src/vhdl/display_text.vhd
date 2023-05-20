@@ -9,7 +9,7 @@ entity display_text is
 			horiz_sync : IN STD_LOGIC;
 			score : IN STD_LOGIC_VECTOR(11 downto 0);
 			health_percentage : IN STD_LOGIC_VECTOR(11 downto 0);
-			game_state : IN STD_LOGIC_VECTOR(1 downto 0);
+			game_state, level: IN STD_LOGIC_VECTOR(1 downto 0);
 			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
 			text_rgb : OUT STD_LOGIC_VECTOR(11 downto 0);
 			text_on : OUT STD_LOGIC 
@@ -259,7 +259,7 @@ generic map (
 				CONV_STD_LOGIC_VECTOR(2,10)
 			)
 port map(
-		clk, '0', horiz_sync, CONV_STD_LOGIC_VECTOR(7,6),health_start_y,CONV_STD_LOGIC_VECTOR(220,10), pixel_row, pixel_column, t_curr_lvl_on
+		clk, '0', horiz_sync, "0000" & level + number_rom_offset,health_start_y,CONV_STD_LOGIC_VECTOR(220,10), pixel_row, pixel_column, t_curr_lvl_on
 		);
 
 level_on <= '1' when (t_lv_l1_on = '1' or t_lv_e1_on = '1' or t_lv_v_on = '1' or t_lv_e2_on = '1' or t_lv_l2_on = '1' or t_curr_lvl_on = '1') and game_state = "01" else '0';

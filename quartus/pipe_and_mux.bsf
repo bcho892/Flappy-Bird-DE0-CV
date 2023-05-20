@@ -21,9 +21,9 @@ https://fpgasoftware.intel.com/eula.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 16 16 272 176)
+	(rect 16 16 272 208)
 	(text "pipe_and_mux" (rect 5 0 68 17)(font "Intel Clear" (font_size 6)))
-	(text "inst" (rect 8 139 24 156)(font "Intel Clear" ))
+	(text "inst" (rect 8 171 24 188)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -62,16 +62,23 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 0 112)
 		(input)
-		(text "game_state[1..0]" (rect 0 0 100 19)(font "Intel Clear" (font_size 8)))
-		(text "game_state[1..0]" (rect 21 107 121 126)(font "Intel Clear" (font_size 8)))
+		(text "level[1..0]" (rect 0 0 59 19)(font "Intel Clear" (font_size 8)))
+		(text "level[1..0]" (rect 21 107 80 126)(font "Intel Clear" (font_size 8)))
 		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
 		(pt 0 128)
 		(input)
-		(text "random_index[3..0]" (rect 0 0 115 19)(font "Intel Clear" (font_size 8)))
-		(text "random_index[3..0]" (rect 21 123 136 142)(font "Intel Clear" (font_size 8)))
+		(text "game_state[1..0]" (rect 0 0 100 19)(font "Intel Clear" (font_size 8)))
+		(text "game_state[1..0]" (rect 21 123 121 142)(font "Intel Clear" (font_size 8)))
 		(line (pt 0 128)(pt 16 128)(line_width 3))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "random_index[3..0]" (rect 0 0 115 19)(font "Intel Clear" (font_size 8)))
+		(text "random_index[3..0]" (rect 21 139 136 158)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 144)(pt 16 144)(line_width 3))
 	)
 	(port
 		(pt 256 32)
@@ -102,6 +109,6 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 256 80)(pt 240 80))
 	)
 	(drawing
-		(rectangle (rect 16 16 240 144))
+		(rectangle (rect 16 16 240 176))
 	)
 )

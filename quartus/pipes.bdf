@@ -117,6 +117,22 @@ https://fpgasoftware.intel.com/eula.
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
 )
 (pin
+	(input)
+	(rect -88 200 80 216)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "level[1..0]" (rect 5 0 54 17)(font "Intel Clear" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
 	(output)
 	(rect 1736 160 1912 176)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
@@ -165,9 +181,9 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 512 352 768 512)
+	(rect 512 352 768 544)
 	(text "pipe_and_mux" (rect 5 0 68 17)(font "Intel Clear" (font_size 6)))
-	(text "inst" (rect 8 139 24 156)(font "Intel Clear" ))
+	(text "inst" (rect 8 171 24 188)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -206,16 +222,23 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 0 112)
 		(input)
-		(text "game_state[1..0]" (rect 0 0 100 19)(font "Intel Clear" (font_size 8)))
-		(text "game_state[1..0]" (rect 21 107 121 126)(font "Intel Clear" (font_size 8)))
+		(text "level[1..0]" (rect 0 0 59 19)(font "Intel Clear" (font_size 8)))
+		(text "level[1..0]" (rect 21 107 80 126)(font "Intel Clear" (font_size 8)))
 		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
 		(pt 0 128)
 		(input)
-		(text "random_index[3..0]" (rect 0 0 115 19)(font "Intel Clear" (font_size 8)))
-		(text "random_index[3..0]" (rect 21 123 136 142)(font "Intel Clear" (font_size 8)))
+		(text "game_state[1..0]" (rect 0 0 100 19)(font "Intel Clear" (font_size 8)))
+		(text "game_state[1..0]" (rect 21 123 121 142)(font "Intel Clear" (font_size 8)))
 		(line (pt 0 128)(pt 16 128)(line_width 3))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "random_index[3..0]" (rect 0 0 115 19)(font "Intel Clear" (font_size 8)))
+		(text "random_index[3..0]" (rect 21 139 136 158)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 144)(pt 16 144)(line_width 3))
 	)
 	(port
 		(pt 256 32)
@@ -246,13 +269,13 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 256 80)(pt 240 80))
 	)
 	(drawing
-		(rectangle (rect 16 16 240 144))
+		(rectangle (rect 16 16 240 176))
 	)
 )
 (symbol
-	(rect 904 352 1160 512)
+	(rect 904 352 1160 544)
 	(text "pipe_and_mux" (rect 5 0 68 17)(font "Intel Clear" (font_size 6)))
-	(text "inst3" (rect 8 139 30 156)(font "Intel Clear" ))
+	(text "inst3" (rect 8 171 30 188)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -291,16 +314,23 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 0 112)
 		(input)
-		(text "game_state[1..0]" (rect 0 0 100 19)(font "Intel Clear" (font_size 8)))
-		(text "game_state[1..0]" (rect 21 107 121 126)(font "Intel Clear" (font_size 8)))
+		(text "level[1..0]" (rect 0 0 59 19)(font "Intel Clear" (font_size 8)))
+		(text "level[1..0]" (rect 21 107 80 126)(font "Intel Clear" (font_size 8)))
 		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
 		(pt 0 128)
 		(input)
-		(text "random_index[3..0]" (rect 0 0 115 19)(font "Intel Clear" (font_size 8)))
-		(text "random_index[3..0]" (rect 21 123 136 142)(font "Intel Clear" (font_size 8)))
+		(text "game_state[1..0]" (rect 0 0 100 19)(font "Intel Clear" (font_size 8)))
+		(text "game_state[1..0]" (rect 21 123 121 142)(font "Intel Clear" (font_size 8)))
 		(line (pt 0 128)(pt 16 128)(line_width 3))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "random_index[3..0]" (rect 0 0 115 19)(font "Intel Clear" (font_size 8)))
+		(text "random_index[3..0]" (rect 21 139 136 158)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 144)(pt 16 144)(line_width 3))
 	)
 	(port
 		(pt 256 32)
@@ -331,13 +361,13 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 256 80)(pt 240 80))
 	)
 	(drawing
-		(rectangle (rect 16 16 240 144))
+		(rectangle (rect 16 16 240 176))
 	)
 )
 (symbol
-	(rect 1344 344 1600 504)
+	(rect 1344 344 1600 536)
 	(text "pipe_and_mux" (rect 5 0 68 17)(font "Intel Clear" (font_size 6)))
-	(text "inst4" (rect 8 139 30 156)(font "Intel Clear" ))
+	(text "inst4" (rect 8 171 30 188)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -376,16 +406,23 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 0 112)
 		(input)
-		(text "game_state[1..0]" (rect 0 0 100 19)(font "Intel Clear" (font_size 8)))
-		(text "game_state[1..0]" (rect 21 107 121 126)(font "Intel Clear" (font_size 8)))
+		(text "level[1..0]" (rect 0 0 59 19)(font "Intel Clear" (font_size 8)))
+		(text "level[1..0]" (rect 21 107 80 126)(font "Intel Clear" (font_size 8)))
 		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
 		(pt 0 128)
 		(input)
-		(text "random_index[3..0]" (rect 0 0 115 19)(font "Intel Clear" (font_size 8)))
-		(text "random_index[3..0]" (rect 21 123 136 142)(font "Intel Clear" (font_size 8)))
+		(text "game_state[1..0]" (rect 0 0 100 19)(font "Intel Clear" (font_size 8)))
+		(text "game_state[1..0]" (rect 21 123 121 142)(font "Intel Clear" (font_size 8)))
 		(line (pt 0 128)(pt 16 128)(line_width 3))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "random_index[3..0]" (rect 0 0 115 19)(font "Intel Clear" (font_size 8)))
+		(text "random_index[3..0]" (rect 21 139 136 158)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 144)(pt 16 144)(line_width 3))
 	)
 	(port
 		(pt 256 32)
@@ -416,13 +453,13 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 256 80)(pt 240 80))
 	)
 	(drawing
-		(rectangle (rect 16 16 240 144))
+		(rectangle (rect 16 16 240 176))
 	)
 )
 (symbol
-	(rect 104 360 360 520)
+	(rect 104 360 360 552)
 	(text "pipe_and_mux" (rect 5 0 68 17)(font "Intel Clear" (font_size 6)))
-	(text "inst5" (rect 8 139 30 156)(font "Intel Clear" ))
+	(text "inst5" (rect 8 171 30 188)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -461,16 +498,23 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 0 112)
 		(input)
-		(text "game_state[1..0]" (rect 0 0 100 19)(font "Intel Clear" (font_size 8)))
-		(text "game_state[1..0]" (rect 21 107 121 126)(font "Intel Clear" (font_size 8)))
+		(text "level[1..0]" (rect 0 0 59 19)(font "Intel Clear" (font_size 8)))
+		(text "level[1..0]" (rect 21 107 80 126)(font "Intel Clear" (font_size 8)))
 		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
 		(pt 0 128)
 		(input)
-		(text "random_index[3..0]" (rect 0 0 115 19)(font "Intel Clear" (font_size 8)))
-		(text "random_index[3..0]" (rect 21 123 136 142)(font "Intel Clear" (font_size 8)))
+		(text "game_state[1..0]" (rect 0 0 100 19)(font "Intel Clear" (font_size 8)))
+		(text "game_state[1..0]" (rect 21 123 121 142)(font "Intel Clear" (font_size 8)))
 		(line (pt 0 128)(pt 16 128)(line_width 3))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "random_index[3..0]" (rect 0 0 115 19)(font "Intel Clear" (font_size 8)))
+		(text "random_index[3..0]" (rect 21 139 136 158)(font "Intel Clear" (font_size 8)))
+		(line (pt 0 144)(pt 16 144)(line_width 3))
 	)
 	(port
 		(pt 256 32)
@@ -501,7 +545,7 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 256 80)(pt 240 80))
 	)
 	(drawing
-		(rectangle (rect 16 16 240 144))
+		(rectangle (rect 16 16 240 176))
 	)
 )
 (symbol
@@ -761,11 +805,6 @@ https://fpgasoftware.intel.com/eula.
 	(bus)
 )
 (connector
-	(pt 496 656)
-	(pt 888 656)
-	(bus)
-)
-(connector
 	(pt 1344 424)
 	(pt 1312 424)
 	(bus)
@@ -793,11 +832,6 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 880 624)
 	(pt 1320 624)
-	(bus)
-)
-(connector
-	(pt 888 656)
-	(pt 1328 656)
 	(bus)
 )
 (connector
@@ -998,106 +1032,6 @@ https://fpgasoftware.intel.com/eula.
 	(bus)
 )
 (connector
-	(pt 80 656)
-	(pt 80 488)
-	(bus)
-)
-(connector
-	(pt 32 656)
-	(pt 80 656)
-	(bus)
-)
-(connector
-	(pt 80 656)
-	(pt 496 656)
-	(bus)
-)
-(connector
-	(pt 80 488)
-	(pt 104 488)
-	(bus)
-)
-(connector
-	(pt 496 480)
-	(pt 512 480)
-	(bus)
-)
-(connector
-	(pt 496 480)
-	(pt 496 656)
-	(bus)
-)
-(connector
-	(pt 888 480)
-	(pt 888 656)
-	(bus)
-)
-(connector
-	(pt 888 480)
-	(pt 904 480)
-	(bus)
-)
-(connector
-	(pt 1328 472)
-	(pt 1344 472)
-	(bus)
-)
-(connector
-	(pt 1328 472)
-	(pt 1328 656)
-	(bus)
-)
-(connector
-	(pt 456 464)
-	(pt 512 464)
-	(bus)
-)
-(connector
-	(pt 840 464)
-	(pt 904 464)
-	(bus)
-)
-(connector
-	(pt 104 472)
-	(pt 48 472)
-	(bus)
-)
-(connector
-	(pt 48 472)
-	(pt 48 688)
-	(bus)
-)
-(connector
-	(pt 840 464)
-	(pt 840 688)
-	(bus)
-)
-(connector
-	(pt 456 464)
-	(pt 456 688)
-	(bus)
-)
-(connector
-	(pt 1344 456)
-	(pt 1288 456)
-	(bus)
-)
-(connector
-	(pt 1288 456)
-	(pt 1288 688)
-	(bus)
-)
-(connector
-	(pt 456 688)
-	(pt 840 688)
-	(bus)
-)
-(connector
-	(pt 840 688)
-	(pt 1288 688)
-	(bus)
-)
-(connector
 	(pt 48 688)
 	(pt 456 688)
 	(bus)
@@ -1179,6 +1113,176 @@ https://fpgasoftware.intel.com/eula.
 	(pt 1600 424)
 	(pt 1608 424)
 )
+(connector
+	(pt 888 656)
+	(pt 888 496)
+	(bus)
+)
+(connector
+	(pt 888 496)
+	(pt 904 496)
+	(bus)
+)
+(connector
+	(pt 840 688)
+	(pt 840 480)
+	(bus)
+)
+(connector
+	(pt 456 688)
+	(pt 840 688)
+	(bus)
+)
+(connector
+	(pt 840 688)
+	(pt 1288 688)
+	(bus)
+)
+(connector
+	(pt 840 480)
+	(pt 904 480)
+	(bus)
+)
+(connector
+	(pt 1328 656)
+	(pt 1328 488)
+	(bus)
+)
+(connector
+	(pt 888 656)
+	(pt 1328 656)
+	(bus)
+)
+(connector
+	(pt 1328 488)
+	(pt 1344 488)
+	(bus)
+)
+(connector
+	(pt 1344 472)
+	(pt 1288 472)
+	(bus)
+)
+(connector
+	(pt 1288 472)
+	(pt 1288 688)
+	(bus)
+)
+(connector
+	(pt 496 656)
+	(pt 496 496)
+	(bus)
+)
+(connector
+	(pt 496 656)
+	(pt 888 656)
+	(bus)
+)
+(connector
+	(pt 496 496)
+	(pt 512 496)
+	(bus)
+)
+(connector
+	(pt 512 480)
+	(pt 456 480)
+	(bus)
+)
+(connector
+	(pt 456 480)
+	(pt 456 688)
+	(bus)
+)
+(connector
+	(pt 80 656)
+	(pt 80 504)
+	(bus)
+)
+(connector
+	(pt 32 656)
+	(pt 80 656)
+	(bus)
+)
+(connector
+	(pt 80 656)
+	(pt 496 656)
+	(bus)
+)
+(connector
+	(pt 80 504)
+	(pt 104 504)
+	(bus)
+)
+(connector
+	(pt 104 488)
+	(pt 48 488)
+	(bus)
+)
+(connector
+	(pt 48 488)
+	(pt 48 688)
+	(bus)
+)
+(connector
+	(pt 104 472)
+	(pt 96 472)
+	(bus)
+)
+(connector
+	(pt 96 472)
+	(pt 96 208)
+	(bus)
+)
+(connector
+	(pt 456 208)
+	(pt 456 464)
+	(bus)
+)
+(connector
+	(pt 80 208)
+	(pt 96 208)
+	(bus)
+)
+(connector
+	(pt 456 464)
+	(pt 512 464)
+	(bus)
+)
+(connector
+	(pt 840 208)
+	(pt 840 464)
+	(bus)
+)
+(connector
+	(pt 96 208)
+	(pt 456 208)
+	(bus)
+)
+(connector
+	(pt 840 464)
+	(pt 904 464)
+	(bus)
+)
+(connector
+	(pt 1288 208)
+	(pt 1288 456)
+	(bus)
+)
+(connector
+	(pt 456 208)
+	(pt 840 208)
+	(bus)
+)
+(connector
+	(pt 840 208)
+	(pt 1288 208)
+	(bus)
+)
+(connector
+	(pt 1288 456)
+	(pt 1344 456)
+	(bus)
+)
 (junction (pt 64 592))
 (junction (pt 72 624))
 (junction (pt 80 656))
@@ -1193,3 +1297,6 @@ https://fpgasoftware.intel.com/eula.
 (junction (pt 456 688))
 (junction (pt 840 688))
 (junction (pt 48 688))
+(junction (pt 96 208))
+(junction (pt 456 208))
+(junction (pt 840 208))

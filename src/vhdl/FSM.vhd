@@ -95,15 +95,22 @@ BEGIN
 			 WHEN training_mode =>
 				 state_out <= "10";
 				 case collision is 
-					 when "000" => next_state <= normal_mode;
+					 when "000" => next_state <= training_mode;
 					 when "001" => 
-						 next_state <= game_over;
-						 count <= 0;
+						if (collision_count > max_collisions) then
+						  next_state <= game_over;
+						  count <= 0;
+						  collision_count <= 0;
+						else
+							collision_count <= collision_count + 1;
+						end if;
 
 					 when "010" => 
 						 next_state <= game_over;
+						 collision_count <= 0;
 						 count <= 0;
-					 when others => next_state <= normal_mode;
+					 when others => 
+						 next_state <= training_mode;
 				end case;
 		  END CASE;
 		current_state <= next_state;

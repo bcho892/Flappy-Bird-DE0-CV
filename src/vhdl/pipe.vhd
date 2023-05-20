@@ -7,7 +7,7 @@ entity pipe is
 	PORT(
 		vert_sync, init : IN STD_LOGIC;
         pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
-		game_state: IN STD_LOGIC_VECTOR(1 downto 0);
+		level,game_state: IN STD_LOGIC_VECTOR(1 downto 0);
 		random_index : IN STD_LOGIC_VECTOR(3 downto 0);
 		pipe_rgb : OUT STD_LOGIC_VECTOR(11 downto 0);
 		init_next, score_pulse, pipe_on: OUT STD_LOGIC 
@@ -21,7 +21,7 @@ type speed_vector is array (0 to 4) of integer;
 type height_vector is array (0 to 16) of integer;
 
 --CONSTANTS
-CONSTANT preset_scroll_speeds : speed_vector := (5, 10, 12, 15, 18);
+CONSTANT preset_scroll_speeds : speed_vector := (2, 4, 8, 15, 18);
 CONSTANT preset_pipe_heights : height_vector:= (81, 242, 80, 171, 213, 99, 261, 174, 36, 151, 82, 37, 142, 264, 147, 234, 131);
 CONSTANT pipe_gap : Integer := 130; 
 CONSTANT pipe_width : Integer := 65; 
@@ -37,6 +37,7 @@ SIGNAL pipe_height : Integer;
 SIGNAL temp_pipe_on, top_pipe_on, bottom_pipe_on : STD_LOGIC; 
 SIGNAL enable : STD_LOGIC;
 SIGNAL current_index : Integer;
+SIGNAL scroll_speed : Integer;
 
 begin
 bottom_pipe_on <= '1' when (pipe_x_pos > to_integer(unsigned(pixel_column)) 
@@ -57,6 +58,12 @@ current_index <= to_integer(unsigned(random_index));
 move_pipe : process(vert_sync) 	
 begin
 		if Rising_Edge(vert_sync) then
+			case game_state is
+				when "00" => null;
+				when "01" => scroll_speed <= preset_scroll_speeds(to_integer(unsigned(level-"01")));
+				when "10" => scroll_speed <= 2;
+				when "11" => null;
+			end case;
 			--allow movement of current pipe
 			if game_state = "11" or game_state = "00" then 
 				enable <= '0';
@@ -78,7 +85,7 @@ begin
 			end if;
 			--move the pipe
 			if enable = '1' then
-				pipe_x_motion <= 2;
+				pipe_x_motion <= scroll_speed;
 				pipe_x_pos <= pipe_x_pos - pipe_x_motion;
 			elsif game_state /= "11" then
 				pipe_height <= preset_pipe_heights(current_index);

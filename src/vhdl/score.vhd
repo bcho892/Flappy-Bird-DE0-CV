@@ -8,6 +8,7 @@ entity score is
         clk : IN STD_LOGIC;
         score_pulse : IN STD_LOGIC;
         game_state : IN STD_LOGIC_VECTOR(1 downto 0);
+		level 		: OUT STD_LOGIC_VECTOR(1 downto 0);
         score_digits : OUT STD_LOGIC_VECTOR(11 downto 0)
     );
 end entity;
@@ -16,6 +17,15 @@ architecture behaviour of score is
     signal current_score, high_score : integer range 0 to 999 := 0;
     signal last_score_pulse : STD_LOGIC := '0';
 begin
+	process(current_score) 
+	begin
+		case current_score is
+			when 0 to 20 => level <= CONV_STD_LOGIC_VECTOR(1,2);
+			when 21 to 40 => level <= CONV_STD_LOGIC_VECTOR(2,2);
+			when others => level <= CONV_STD_LOGIC_VECTOR(3,2);
+		end case;
+	end process;
+
     process(clk)
     begin
         if rising_edge(clk) then
