@@ -9,7 +9,8 @@ entity pipe is
         pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		game_state: IN STD_LOGIC_VECTOR(1 downto 0);
 		random_index : IN STD_LOGIC_VECTOR(3 downto 0);
-		init_next, score_pulse, pipe_on, red, green, blue: OUT STD_LOGIC 
+		pipe_rgb : OUT STD_LOGIC_VECTOR(11 downto 0);
+		init_next, score_pulse, pipe_on: OUT STD_LOGIC 
 	);
 end entity;
 
@@ -49,7 +50,7 @@ and pixel_row < pipe_height) else '0';
 temp_pipe_on <= '1' when ( top_pipe_on = '1' or bottom_pipe_on = '1' ) else	'0';
 
 pipe_on <= temp_pipe_on;
-green <= temp_pipe_on;
+pipe_rgb <= "001001100100" when temp_pipe_on = '1' else "000000000000";
 current_index <= to_integer(unsigned(random_index));
 
 
