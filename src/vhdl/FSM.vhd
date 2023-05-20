@@ -94,8 +94,16 @@ BEGIN
 						else
 							collision_count <= collision_count + 1;
 						end if;
-
 					 when "010" => 
+						 next_state <= game_over;
+						 collision_count <= 0;
+						 count <= 0;
+					when "011" =>
+						next_state <= normal_mode;
+						collision_count <= 0;
+					when "100" =>
+						next_state <= normal_mode;
+					when "101" =>
 						 next_state <= game_over;
 						 collision_count <= 0;
 						 count <= 0;

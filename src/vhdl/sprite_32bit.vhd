@@ -35,6 +35,11 @@ begin
 end function index_2d_to_1d;
  
 component color_rom
+GENERIC
+(
+	t_init_file : STRING;
+	t_numwords_a : NATURAL
+);
 PORT 
 (
 	rom_address			:	IN STD_LOGIC_VECTOR (12 DOWNTO 0);
@@ -45,6 +50,10 @@ end component;
 begin
 
 char_rom_component : color_rom
+generic map(
+			t_init_file => "characters.mif",
+			t_numwords_a => 5120
+		   )
 port map(
 			rom_address => t_rom_address,
 			clock => clk,
