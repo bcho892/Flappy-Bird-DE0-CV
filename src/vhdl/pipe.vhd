@@ -27,6 +27,7 @@ CONSTANT preset_scroll_speeds : speed_vector := (2, 4, 8, 15, 18);
 CONSTANT preset_pipe_heights : preset_vector:= (81, 242, 80, 171, 213, 99, 261, 174, 36, 151, 82, 37, 142, 264, 147, 234, 131);
 CONSTANT preset_powerup_heights : preset_vector := (234, 273, 197, 34, 56, 190, 97, 122, 222, 94, 73, 192, 133, 267, 274, 90, 243);
 CONSTANT preset_powerups : preset_vector := (0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1);
+CONSTANT preset_show : std_logic_vector := "0101010101010101";
 CONSTANT pipe_gap : Integer := 130; 
 CONSTANT pipe_width : Integer := 65; 
 CONSTANT pipe_spacing : Integer := 140;
@@ -43,7 +44,7 @@ SIGNAL powerup_x_pos, powerup_y_pos : Integer;
 SIGNAL pipe_x_pos : Integer := screen_max_x + pipe_width;
 SIGNAL pipe_x_motion : Integer;
 SIGNAL pipe_height : Integer;
-SIGNAL t_powerup_on, powerup_on, temp_pipe_on, top_pipe_on, bottom_pipe_on,appear : STD_LOGIC; 
+SIGNAL t_powerup_on, powerup_on, current_show_status, temp_pipe_on, top_pipe_on, bottom_pipe_on,appear : STD_LOGIC; 
 SIGNAL enable : STD_LOGIC;
 SIGNAL current_index : Integer;
 SIGNAL scroll_speed : Integer;
@@ -86,7 +87,7 @@ powerup_x_pos <= pipe_x_pos + pipe_spacing_center;
 
 pipe_on <= '1' when temp_pipe_on = '1' else '0';
 
-powerup_on <= '1' when t_powerup_on = '1' and game_state /= "10" else '0';
+powerup_on <= '1' when t_powerup_on = '1' and game_state /= "10" and current_show_status = '1' else '0';
 
 death_pickup_on <= '1' when powerup_on = '1' and current_powerup = 0 and game_state /= "10" else '0';
 health_pickup_on <= '1' when powerup_on = '1' and current_powerup = 1 and game_state /= "10" else '0';
@@ -146,6 +147,7 @@ begin
 				pipe_height <= preset_pipe_heights(current_index);
 				powerup_y_pos <= preset_powerup_heights(current_index);
 				current_powerup <= preset_powerups(current_index);
+				current_show_status <= preset_show(current_index);
 			end if;
 			--move the pipe
 			if enable = '1' then
@@ -155,6 +157,7 @@ begin
 				pipe_height <= preset_pipe_heights(current_index);
 				powerup_y_pos <= preset_powerup_heights(current_index);
 				current_powerup <= preset_powerups(current_index);
+				current_show_status <= preset_show(current_index);
 			end if;
 			--score pulse generation
 			if pipe_x_pos < screen_halfway and pipe_x_pos > screen_halfway - score_pulse_debounce then
