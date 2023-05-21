@@ -20,8 +20,8 @@ begin
 	process(current_score) 
 	begin
 		case current_score is
-			when 0 to 20 => level <= CONV_STD_LOGIC_VECTOR(1,2);
-			when 21 to 40 => level <= CONV_STD_LOGIC_VECTOR(2,2);
+			when 0 to 14 => level <= CONV_STD_LOGIC_VECTOR(1,2);
+			when 15 to 34 => level <= CONV_STD_LOGIC_VECTOR(2,2);
 			when others => level <= CONV_STD_LOGIC_VECTOR(3,2);
 		end case;
 	end process;
