@@ -19,13 +19,14 @@ END bird;
 architecture behavior of bird is
 -- CONSTANTS
 CONSTANT ACCELERATION_RATE_DOWN : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(1,10);
-CONSTANT UPWARDS_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(6, 10);
+CONSTANT UPWARDS_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(10, 10);
 CONSTANT MAX_FALL_SPEED : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(11, 10);
 CONSTANT BIRD_SCALE : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(1, 10);
 CONSTANT GROUND_Y_PIXEL : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(420,10);
 CONSTANT CENTRE_Y : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(240, 10);
 CONSTANT SCREEN_MAX_Y : STD_LOGIC_VECTOR := CONV_STD_LOGIC_VECTOR(480, 10);
 
+signal left_click_prev : std_logic := '0';
 SIGNAL temp_bird_on					: std_logic;
 SIGNAL size 					: std_logic_vector(9 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(32,10);
 SIGNAL bird_y_pos				: std_logic_vector(9 DOWNTO 0);
@@ -82,11 +83,12 @@ bird_rgb <= "111111111111" when temp_bird_on = '1' and invincible = '1' else
 bird_on <= temp_bird_on;
 
 
+
 Move_Bird: process (vert_sync) -- Add left_click to sensitivity list
 begin
 	if Rising_Edge(vert_sync) then
 
-		if left_click = '1' then
+		if left_click = '1' and left_click_prev = '0' then
 			if game_state /= "11" then 
 				-- Go up
 				if bird_y_pos > 0 then -- Check if ball is not at the top of the screen
@@ -116,10 +118,11 @@ begin
 			bird_y_pos <= bird_y_pos + bird_y_motion; -- normal
 		end if;
 
+		left_click_prev <= left_click;
+
 	end if;
 
 end process Move_Bird;
-
 
 END behavior;
 
