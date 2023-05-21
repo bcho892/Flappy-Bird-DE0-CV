@@ -35,6 +35,7 @@ ARCHITECTURE Moore OF FSM IS
    SIGNAL in_game_button, in_train_button : STD_LOGIC;
    SIGNAL count : Integer range 0 to 25000000;
    SIGNAL collision_count : Integer range 0 to 1000000 := 0;
+	SIGNAL mouse_click_prev : std_logic := '0';
    SIGNAL health_percentage : unsigned(6 downto 0);
 
 BEGIN
@@ -76,9 +77,9 @@ BEGIN
 		  CASE (current_state) IS
 			 WHEN game_start =>
 				 state_out <= "00";
-				if count >= debounce_time and mouse_click = '1' and in_game_button = '1' then
+				if count >= debounce_time and mouse_click = '1' and mouse_click_prev ='0' and in_game_button = '1' then
 				   next_state <= normal_mode;
-				elsif count >= debounce_time and mouse_click = '1' and in_train_button = '1' then
+				elsif count >= debounce_time and mouse_click = '1' and mouse_click_prev ='0' and in_train_button = '1' then
 				   next_state <= training_mode;
 			   elsif count >= debounce_time then
 				   count <= debounce_time;
@@ -136,7 +137,7 @@ BEGIN
 				 state_out <= "11";
 				 is_invincible := '0';
 
-				if count >= debounce_time and mouse_click = '1' then
+				if count >= debounce_time and mouse_click = '1' and mouse_click_prev ='0' then
 				   next_state <= game_start;
 				   count <= 0;
 			   elsif count >= debounce_time then
@@ -168,6 +169,7 @@ BEGIN
 		  END CASE;
 		current_state <= next_state;
 		invincible <= is_invincible;
+		mouse_click_prev <= mouse_click;
 		end if;
 	  
    end process;
