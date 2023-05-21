@@ -20,6 +20,7 @@ END ENTITY FSM;
 ARCHITECTURE Moore OF FSM IS
 	CONSTANT debounce_time : Integer := 4000000;
 	CONSTANT pipe_collision_debounce_time :Integer := 24000000;
+	CONSTANT invincibility_period : Integer := 35000000;
 
 	CONSTANT train_button_start_y : STD_LOGIC_VECTOR(9 downto 0) := STD_LOGIC_VECTOR(to_unsigned(200, 10));
 	CONSTANT game_button_start_y : STD_LOGIC_VECTOR(9 downto 0) := STD_LOGIC_VECTOR(to_unsigned(250, 10));
@@ -90,17 +91,17 @@ BEGIN
 				 case collision is 
 					 when "000" => 
 						next_state <= normal_mode;
-						if invincibility_count <= 75000000 and is_invincible = '1' then
+						if invincibility_count <= invincibility_period and is_invincible = '1' then
 							invincibility_count := invincibility_count + 1;
-						elsif invincibility_count >= 75000000 and is_invincible = '1' then  
+						elsif invincibility_count >= invincibility_period and is_invincible = '1' then  
 							invincibility_count := 0;
 							is_invincible := '0';
 						end if;
 					 when "001" => 
-						 if invincibility_count <= 75000000 and is_invincible = '1' then
+						 if invincibility_count <= invincibility_period and is_invincible = '1' then
 							next_state <= normal_mode;
 							invincibility_count := invincibility_count + 1;
-						elsif invincibility_count >= 75000000 and is_invincible = '1' then  
+						elsif invincibility_count >= invincibility_period and is_invincible = '1' then  
 							invincibility_count := 0;
 							is_invincible := '0';
 						else 
