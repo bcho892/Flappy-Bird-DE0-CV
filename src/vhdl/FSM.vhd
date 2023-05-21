@@ -10,6 +10,7 @@ ENTITY FSM IS
       clk_in, reset, mouse_click : IN STD_LOGIC;
    	collision : IN STD_LOGIC_VECTOR(2 downto 0);
    	mouse_row, mouse_column : IN STD_LOGIC_VECTOR(9 downto 0);
+   	invincible : OUT STD_LOGIC;
       state_out : OUT STD_LOGIC_VECTOR(1 downto 0) := "00";	  
 	  health : OUT STD_LOGIC_VECTOR(11 downto 0));
 END ENTITY FSM;
@@ -19,6 +20,7 @@ END ENTITY FSM;
 ARCHITECTURE Moore OF FSM IS
 	CONSTANT debounce_time : Integer := 4000000;
 	CONSTANT pipe_collision_debounce_time :Integer := 24000000;
+	CONSTANT invincibility_period : Integer := 35000000;
 
 	CONSTANT train_button_start_y : STD_LOGIC_VECTOR(9 downto 0) := STD_LOGIC_VECTOR(to_unsigned(200, 10));
 	CONSTANT game_button_start_y : STD_LOGIC_VECTOR(9 downto 0) := STD_LOGIC_VECTOR(to_unsigned(250, 10));
@@ -67,6 +69,8 @@ BEGIN
   end process calculate_percentage;
    -- process to describe state transitions
    transition : process (clk_in, current_state, collision, mouse_click)
+	variable invincibility_count : Integer range 0 to 750000000:= 0;
+	variable is_invincible : STD_LOGIC := '0';
    BEGIN
 	   if Rising_Edge(clk_in) then
 		  CASE (current_state) IS
@@ -85,17 +89,43 @@ BEGIN
 			 WHEN normal_mode =>
 				 state_out <= "01";
 				 case collision is 
-					 when "000" => next_state <= normal_mode;
-					 when "001" => 
-						if (collision_count > max_collisions) then
-						  next_state <= game_over;
-						  count <= 0;
-						  collision_count <= 0;
-						else
-							collision_count <= collision_count + 1;
+					 when "000" => 
+						next_state <= normal_mode;
+						if invincibility_count <= invincibility_period and is_invincible = '1' then
+							invincibility_count := invincibility_count + 1;
+						elsif invincibility_count >= invincibility_period and is_invincible = '1' then  
+							invincibility_count := 0;
+							is_invincible := '0';
 						end if;
-
+					 when "001" => 
+						 if invincibility_count <= invincibility_period and is_invincible = '1' then
+							next_state <= normal_mode;
+							invincibility_count := invincibility_count + 1;
+						elsif invincibility_count >= invincibility_period and is_invincible = '1' then  
+							invincibility_count := 0;
+							is_invincible := '0';
+						else 
+							if (collision_count > max_collisions) then
+							  next_state <= game_over;
+							  count <= 0;
+							  collision_count <= 0;
+							else
+								collision_count <= collision_count + 1;
+							end if;
+						end if;
 					 when "010" => 
+						 next_state <= game_over;
+						 collision_count <= 0;
+						 count <= 0;
+					when "011" =>
+						next_state <= normal_mode;
+						collision_count <= 0;
+					when "100" =>
+						next_state <= normal_mode;
+						invincibility_count := 0;
+						is_invincible := '1';
+						
+					when "101" =>
 						 next_state <= game_over;
 						 collision_count <= 0;
 						 count <= 0;
@@ -104,6 +134,7 @@ BEGIN
 				end case;
 			 WHEN game_over =>
 				 state_out <= "11";
+				 is_invincible := '0';
 
 				if count >= debounce_time and mouse_click = '1' then
 				   next_state <= game_start;
@@ -136,6 +167,7 @@ BEGIN
 				end case;
 		  END CASE;
 		current_state <= next_state;
+		invincible <= is_invincible;
 		end if;
 	  
    end process;

@@ -3,14 +3,15 @@ from PIL import Image
 # https://github.com/Nananas/ImageToMif
 
 
-if (len(sys.argv) > 3):
-    input_filename = sys.argv[1]
-    output_filename = sys.argv[2]
-    temp = sys.argv[3]
+if (len(sys.argv) > 4):
+    dims = int(sys.argv[1])
+    input_filename = sys.argv[2]
+    output_filename = sys.argv[3]
+    temp = sys.argv[4]
 
     im = Image.open(input_filename)
     im = im.crop(im.getbbox())
-    im = im.resize((32, 32))  # Resize the image to 32x32
+    im = im.resize((dims, dims))  # Resize the image to required dimensions
     im.show()
     if im.mode != 'RGB':
         im = im.convert('RGB')

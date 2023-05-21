@@ -7,6 +7,11 @@ LIBRARY altera_mf;
 USE altera_mf.all;
 
 ENTITY color_rom IS
+	GENERIC
+	(
+		t_init_file : STRING;
+		t_numwords_a : NATURAL
+	);
 	PORT
 	(
 		rom_address			:	IN STD_LOGIC_VECTOR (12 DOWNTO 0);
@@ -51,11 +56,11 @@ BEGIN
 		address_aclr_a => "NONE",
 		clock_enable_input_a => "BYPASS",
 		clock_enable_output_a => "BYPASS",
-		init_file => "characters.mif",
+		init_file => t_init_file,
 		intended_device_family => "Cyclone III",
 		lpm_hint => "ENABLE_RUNTIME_MOD=NO",
 		lpm_type => "altsyncram",
-		numwords_a => 5120,
+		numwords_a => t_numwords_a,
 		operation_mode => "ROM",
 		outdata_aclr_a => "NONE",
 		outdata_reg_a => "UNREGISTERED",

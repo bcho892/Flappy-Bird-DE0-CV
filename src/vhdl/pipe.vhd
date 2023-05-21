@@ -5,12 +5,14 @@ USE IEEE.NUMERIC_STD.all;
 
 entity pipe is
 	PORT(
-		vert_sync, init : IN STD_LOGIC;
+		clk, vert_sync, init : IN STD_LOGIC;
         pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		level,game_state: IN STD_LOGIC_VECTOR(1 downto 0);
 		random_index : IN STD_LOGIC_VECTOR(3 downto 0);
 		pipe_rgb : OUT STD_LOGIC_VECTOR(11 downto 0);
-		init_next, score_pulse, pipe_on: OUT STD_LOGIC 
+		init_next, score_pulse, pipe_on, 
+		health_pickup_on, invincibility_pickup_on, death_pickup_on,
+		pipes_powerups_on : OUT STD_LOGIC
 	);
 end entity;
 
@@ -18,28 +20,52 @@ architecture behaviour of pipe is
 
 -- Typedef
 type speed_vector is array (0 to 4) of integer;
-type height_vector is array (0 to 16) of integer;
+type preset_vector is array (0 to 16) of integer;
 
 --CONSTANTS
 CONSTANT preset_scroll_speeds : speed_vector := (2, 4, 8, 15, 18);
-CONSTANT preset_pipe_heights : height_vector:= (81, 242, 80, 171, 213, 99, 261, 174, 36, 151, 82, 37, 142, 264, 147, 234, 131);
+CONSTANT preset_pipe_heights : preset_vector:= (81, 242, 80, 171, 213, 99, 261, 174, 36, 151, 82, 37, 142, 264, 147, 234, 131);
+CONSTANT preset_powerup_heights : preset_vector := (234, 273, 197, 34, 56, 190, 97, 122, 222, 94, 73, 192, 133, 267, 274, 90, 243);
+CONSTANT preset_powerups : preset_vector := (0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1);
+CONSTANT preset_show : std_logic_vector := "0101010101010101";
 CONSTANT pipe_gap : Integer := 130; 
 CONSTANT pipe_width : Integer := 65; 
 CONSTANT pipe_spacing : Integer := 140;
+CONSTANT pipe_spacing_center : Integer := pipe_spacing/2;
 CONSTANT screen_max_x : Integer := 639;
 CONSTANT screen_halfway : Integer := 320;
 CONSTANT score_pulse_debounce : Integer := 40;
 
 -- SIGNALS
+SIGNAL current_powerup : Integer;
+SIGNAL powerup_address : STD_LOGIC_VECTOR(12 downto 0);
+SIGNAL powerup_rgb : STD_LOGIC_VECTOR(11 downto 0);
+SIGNAL powerup_x_pos, powerup_y_pos : Integer;
 SIGNAL pipe_x_pos : Integer := screen_max_x + pipe_width;
 SIGNAL pipe_x_motion : Integer;
 SIGNAL pipe_height : Integer;
-SIGNAL temp_pipe_on, top_pipe_on, bottom_pipe_on,appear : STD_LOGIC; 
+SIGNAL t_powerup_on, powerup_on, current_show_status, temp_pipe_on, top_pipe_on, bottom_pipe_on,appear : STD_LOGIC; 
 SIGNAL enable : STD_LOGIC;
 SIGNAL current_index : Integer;
 SIGNAL scroll_speed : Integer;
 
+component sprite_16bit 
+	port (
+			clk, reset, horiz_sync : IN STD_LOGIC;
+			character_address : IN STD_LOGIC_VECTOR(12 downto 0);
+			sprite_row, sprite_column, 
+			pixel_row, pixel_column : IN STD_LOGIC_VECTOR(9 downto 0);
+			rgb : OUT STD_LOGIC_VECTOR(11 downto 0);
+			sprite_on: OUT STD_LOGIC
+		 );
+end component;
+
 begin
+
+sprite_component : sprite_16bit 
+port map( clk, '0', vert_sync, powerup_address,std_logic_vector(to_unsigned(powerup_y_pos, 10)),std_logic_vector(to_unsigned(powerup_x_pos, 10)), pixel_row, pixel_column, powerup_rgb, t_powerup_on
+);
+
 bottom_pipe_on <= '1' when (pipe_x_pos > to_integer(unsigned(pixel_column)) 
 and to_integer(unsigned(pixel_column)) > pipe_x_pos - pipe_width 
 and pipe_height + pipe_gap < pixel_row) else '0'; 
@@ -50,15 +76,38 @@ and pixel_row < pipe_height) else '0';
 
 temp_pipe_on <= '1' when ( top_pipe_on = '1' or bottom_pipe_on = '1' ) and appear = '1' else '0';
 
-pipe_on <= temp_pipe_on;
-pipe_rgb <= "001001100100" when temp_pipe_on = '1' else "000000000000";
+pipes_powerups_on <= '1' when temp_pipe_on = '1' or powerup_on = '1' else '0';
+
+pipe_rgb <= "001001100100" when temp_pipe_on = '1' else 
+			powerup_rgb when powerup_on = '1' else 
+			"000000000000";
 current_index <= to_integer(unsigned(random_index));
+
+powerup_x_pos <= pipe_x_pos + pipe_spacing_center;
+
+pipe_on <= '1' when temp_pipe_on = '1' else '0';
+
+powerup_on <= '1' when t_powerup_on = '1' and game_state /= "10" and current_show_status = '1' else '0';
+
+death_pickup_on <= '1' when powerup_on = '1' and current_powerup = 0 and game_state /= "10" else '0';
+health_pickup_on <= '1' when powerup_on = '1' and current_powerup = 1 and game_state /= "10" else '0';
+invincibility_pickup_on <= '1' when powerup_on = '1' and current_powerup = 2 and game_state /= "10" else '0';
 
 
 move_pipe : process(vert_sync) 	
 variable flash_count : INTEGER := 0;
 begin
 		if Rising_Edge(vert_sync) then
+			case current_powerup is
+				when 0 =>
+					powerup_address <= std_logic_vector(to_unsigned(0,13));
+				when 1 =>
+					powerup_address <= std_logic_vector(to_unsigned(256,13));
+				when 2 =>
+					powerup_address <= std_logic_vector(to_unsigned(512,13));
+				when others => null;
+			end case;
+			
 			case game_state is
 				when "00" => appear <= '1';
 				when "01" => 
@@ -96,6 +145,9 @@ begin
 				pipe_x_pos <= screen_max_x + pipe_width;
 				pipe_x_motion <= 0;
 				pipe_height <= preset_pipe_heights(current_index);
+				powerup_y_pos <= preset_powerup_heights(current_index);
+				current_powerup <= preset_powerups(current_index);
+				current_show_status <= preset_show(current_index);
 			end if;
 			--move the pipe
 			if enable = '1' then
@@ -103,6 +155,9 @@ begin
 				pipe_x_pos <= pipe_x_pos - pipe_x_motion;
 			elsif game_state /= "11" then
 				pipe_height <= preset_pipe_heights(current_index);
+				powerup_y_pos <= preset_powerup_heights(current_index);
+				current_powerup <= preset_powerups(current_index);
+				current_show_status <= preset_show(current_index);
 			end if;
 			--score pulse generation
 			if pipe_x_pos < screen_halfway and pipe_x_pos > screen_halfway - score_pulse_debounce then
