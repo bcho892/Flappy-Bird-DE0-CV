@@ -43,7 +43,7 @@ SIGNAL powerup_x_pos, powerup_y_pos : Integer;
 SIGNAL pipe_x_pos : Integer := screen_max_x + pipe_width;
 SIGNAL pipe_x_motion : Integer;
 SIGNAL pipe_height : Integer;
-SIGNAL powerup_on, temp_pipe_on, top_pipe_on, bottom_pipe_on,appear : STD_LOGIC; 
+SIGNAL t_powerup_on, powerup_on, temp_pipe_on, top_pipe_on, bottom_pipe_on,appear : STD_LOGIC; 
 SIGNAL enable : STD_LOGIC;
 SIGNAL current_index : Integer;
 SIGNAL scroll_speed : Integer;
@@ -62,7 +62,7 @@ end component;
 begin
 
 sprite_component : sprite_16bit 
-port map( clk, '0', vert_sync, powerup_address,std_logic_vector(to_unsigned(powerup_y_pos, 10)),std_logic_vector(to_unsigned(powerup_x_pos, 10)), pixel_row, pixel_column, powerup_rgb, powerup_on
+port map( clk, '0', vert_sync, powerup_address,std_logic_vector(to_unsigned(powerup_y_pos, 10)),std_logic_vector(to_unsigned(powerup_x_pos, 10)), pixel_row, pixel_column, powerup_rgb, t_powerup_on
 );
 
 bottom_pipe_on <= '1' when (pipe_x_pos > to_integer(unsigned(pixel_column)) 
@@ -85,9 +85,12 @@ current_index <= to_integer(unsigned(random_index));
 powerup_x_pos <= pipe_x_pos + pipe_spacing_center;
 
 pipe_on <= '1' when temp_pipe_on = '1' else '0';
-health_pickup_on <= '1' when powerup_on = '1' and current_powerup = 0 else '0';
-death_pickup_on <= '1' when powerup_on = '1' and current_powerup = 1 else '0';
-invincibility_pickup_on <= '1' when powerup_on = '1' and current_powerup = 2 else '0';
+
+powerup_on <= '1' when t_powerup_on = '1' and game_state /= "10" else '0';
+
+health_pickup_on <= '1' when powerup_on = '1' and current_powerup = 0 and game_state /= "10" else '0';
+invincibility_pickup_on <= '1' when powerup_on = '1' and current_powerup = 1 and game_state /= "10" else '0';
+death_pickup_on <= '1' when powerup_on = '1' and current_powerup = 2 and game_state /= "10" else '0';
 
 
 move_pipe : process(vert_sync) 	
@@ -149,7 +152,7 @@ begin
 				pipe_x_pos <= pipe_x_pos - pipe_x_motion;
 			elsif game_state /= "11" then
 				pipe_height <= preset_pipe_heights(current_index);
-				powerup_y_pos <= preset_pipe_heights(current_index);
+				powerup_y_pos <= preset_powerup_heights(current_index);
 			end if;
 			--score pulse generation
 			if pipe_x_pos < screen_halfway and pipe_x_pos > screen_halfway - score_pulse_debounce then
