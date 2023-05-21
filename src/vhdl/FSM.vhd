@@ -67,6 +67,8 @@ BEGIN
   end process calculate_percentage;
    -- process to describe state transitions
    transition : process (clk_in, current_state, collision, mouse_click)
+	variable invincibility_count : Integer range 0 to 750000000:= 0;
+	variable is_invincible : STD_LOGIC := '1';
    BEGIN
 	   if Rising_Edge(clk_in) then
 		  CASE (current_state) IS
@@ -85,14 +87,29 @@ BEGIN
 			 WHEN normal_mode =>
 				 state_out <= "01";
 				 case collision is 
-					 when "000" => next_state <= normal_mode;
+					 when "000" => 
+						next_state <= normal_mode;
+						if invincibility_count <= 75000000 and is_invincible = '1' then
+							invincibility_count := invincibility_count + 1;
+						elsif invincibility_count >= 75000000 and is_invincible = '1' then  
+							invincibility_count := 0;
+							is_invincible := '0';
+						end if;
 					 when "001" => 
-						if (collision_count > max_collisions) then
-						  next_state <= game_over;
-						  count <= 0;
-						  collision_count <= 0;
-						else
-							collision_count <= collision_count + 1;
+						 if invincibility_count <= 75000000 and is_invincible = '1' then
+							next_state <= normal_mode;
+							invincibility_count := invincibility_count + 1;
+						elsif invincibility_count >= 75000000 and is_invincible = '1' then  
+							invincibility_count := 0;
+							is_invincible := '0';
+						else 
+							if (collision_count > max_collisions) then
+							  next_state <= game_over;
+							  count <= 0;
+							  collision_count <= 0;
+							else
+								collision_count <= collision_count + 1;
+							end if;
 						end if;
 					 when "010" => 
 						 next_state <= game_over;
@@ -103,6 +120,9 @@ BEGIN
 						collision_count <= 0;
 					when "100" =>
 						next_state <= normal_mode;
+						invincibility_count := 0;
+						is_invincible := '1';
+						
 					when "101" =>
 						 next_state <= game_over;
 						 collision_count <= 0;
@@ -112,6 +132,7 @@ BEGIN
 				end case;
 			 WHEN game_over =>
 				 state_out <= "11";
+				 is_invincible := '0';
 
 				if count >= debounce_time and mouse_click = '1' then
 				   next_state <= game_start;
