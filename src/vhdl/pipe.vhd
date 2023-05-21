@@ -89,14 +89,24 @@ pipe_on <= '1' when temp_pipe_on = '1' else '0';
 powerup_on <= '1' when t_powerup_on = '1' and game_state /= "10" else '0';
 
 health_pickup_on <= '1' when powerup_on = '1' and current_powerup = 0 and game_state /= "10" else '0';
-invincibility_pickup_on <= '1' when powerup_on = '1' and current_powerup = 1 and game_state /= "10" else '0';
-death_pickup_on <= '1' when powerup_on = '1' and current_powerup = 2 and game_state /= "10" else '0';
+death_pickup_on <= '1' when powerup_on = '1' and current_powerup = 1 and game_state /= "10" else '0';
+invincibility_pickup_on <= '1' when powerup_on = '1' and current_powerup = 2 and game_state /= "10" else '0';
 
 
 move_pipe : process(vert_sync) 	
 variable flash_count : INTEGER := 0;
 begin
 		if Rising_Edge(vert_sync) then
+			case current_powerup is
+				when 0 =>
+					powerup_address <= std_logic_vector(to_unsigned(0,13));
+				when 1 =>
+					powerup_address <= std_logic_vector(to_unsigned(256,13));
+				when 2 =>
+					powerup_address <= std_logic_vector(to_unsigned(512,13));
+				when others => null;
+			end case;
+			
 			case game_state is
 				when "00" => appear <= '1';
 				when "01" => 
@@ -136,15 +146,6 @@ begin
 				pipe_height <= preset_pipe_heights(current_index);
 				powerup_y_pos <= preset_powerup_heights(current_index);
 				current_powerup <= preset_powerups(current_index);
-				case current_powerup is
-					when 0 =>
-						powerup_address <= std_logic_vector(to_unsigned(0,13));
-					when 1 =>
-						powerup_address <= std_logic_vector(to_unsigned(256,13));
-					when 2 =>
-						powerup_address <= std_logic_vector(to_unsigned(512,13));
-					when others => null;
-				end case;
 			end if;
 			--move the pipe
 			if enable = '1' then
@@ -153,6 +154,7 @@ begin
 			elsif game_state /= "11" then
 				pipe_height <= preset_pipe_heights(current_index);
 				powerup_y_pos <= preset_powerup_heights(current_index);
+				current_powerup <= preset_powerups(current_index);
 			end if;
 			--score pulse generation
 			if pipe_x_pos < screen_halfway and pipe_x_pos > screen_halfway - score_pulse_debounce then
