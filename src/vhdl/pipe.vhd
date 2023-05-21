@@ -88,8 +88,8 @@ pipe_on <= '1' when temp_pipe_on = '1' else '0';
 
 powerup_on <= '1' when t_powerup_on = '1' and game_state /= "10" else '0';
 
-health_pickup_on <= '1' when powerup_on = '1' and current_powerup = 0 and game_state /= "10" else '0';
-death_pickup_on <= '1' when powerup_on = '1' and current_powerup = 1 and game_state /= "10" else '0';
+death_pickup_on <= '1' when powerup_on = '1' and current_powerup = 0 and game_state /= "10" else '0';
+health_pickup_on <= '1' when powerup_on = '1' and current_powerup = 1 and game_state /= "10" else '0';
 invincibility_pickup_on <= '1' when powerup_on = '1' and current_powerup = 2 and game_state /= "10" else '0';
 
 
