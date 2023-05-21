@@ -6,7 +6,8 @@ USE  IEEE.STD_LOGIC_SIGNED.all;
 
 ENTITY bird IS
 	PORT
-		(clk, vert_sync, left_click, pipe_on, health_pickup_on, invincibility_pickup_on, death_pickup_on : IN std_logic;
+		(clk, vert_sync, invincible, left_click, pipe_on, health_pickup_on, invincibility_pickup_on, 
+		 death_pickup_on : IN std_logic;
 		character_select : IN STD_LOGIC_VECTOR(1 downto 0);
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		  game_state : IN std_logic_vector(1 downto 0); -- 00 game over, 01 game start, 10 gameplay
@@ -75,7 +76,8 @@ t_collision <=
 collision <= t_collision;
 
 
-bird_rgb <= t_bird_rgb when temp_bird_on = '1' and t_collision /= "001" else  
+bird_rgb <= "111111111111" when temp_bird_on = '1' and invincible = '1' else
+			t_bird_rgb when temp_bird_on = '1' and t_collision /= "001" else  
 			"111100000000" when temp_bird_on = '1' and t_collision = "001" else "000000000000";
 bird_on <= temp_bird_on;
 

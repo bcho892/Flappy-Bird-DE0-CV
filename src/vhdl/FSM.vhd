@@ -10,6 +10,7 @@ ENTITY FSM IS
       clk_in, reset, mouse_click : IN STD_LOGIC;
    	collision : IN STD_LOGIC_VECTOR(2 downto 0);
    	mouse_row, mouse_column : IN STD_LOGIC_VECTOR(9 downto 0);
+   	invincible : OUT STD_LOGIC;
       state_out : OUT STD_LOGIC_VECTOR(1 downto 0) := "00";	  
 	  health : OUT STD_LOGIC_VECTOR(11 downto 0));
 END ENTITY FSM;
@@ -68,7 +69,7 @@ BEGIN
    -- process to describe state transitions
    transition : process (clk_in, current_state, collision, mouse_click)
 	variable invincibility_count : Integer range 0 to 750000000:= 0;
-	variable is_invincible : STD_LOGIC := '1';
+	variable is_invincible : STD_LOGIC := '0';
    BEGIN
 	   if Rising_Edge(clk_in) then
 		  CASE (current_state) IS
@@ -165,6 +166,7 @@ BEGIN
 				end case;
 		  END CASE;
 		current_state <= next_state;
+		invincible <= is_invincible;
 		end if;
 	  
    end process;
