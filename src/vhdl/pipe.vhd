@@ -26,7 +26,7 @@ type preset_vector is array (0 to 16) of integer;
 CONSTANT preset_scroll_speeds : speed_vector := (2, 4, 8, 15, 18);
 CONSTANT preset_pipe_heights : preset_vector:= (81, 242, 80, 171, 213, 99, 261, 174, 36, 151, 82, 37, 142, 264, 147, 234, 131);
 CONSTANT preset_powerup_heights : preset_vector := (234, 273, 197, 34, 56, 190, 97, 122, 222, 94, 73, 192, 133, 267, 274, 90, 243);
-CONSTANT preset_powerups : preset_vector := (0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1);
+CONSTANT preset_powerups : preset_vector := (0,1,1,1,1,2,0,1,2,1,1,2,1,1,1,0,1);
 CONSTANT preset_show : std_logic_vector := "1101111101010111";
 CONSTANT pipe_gap : Integer := 130; 
 CONSTANT pipe_width : Integer := 65; 

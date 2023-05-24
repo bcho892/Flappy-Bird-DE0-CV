@@ -28,7 +28,7 @@ ARCHITECTURE Moore OF FSM IS
 	CONSTANT button_height : STD_LOGIC_VECTOR(9 downto 0) := STD_LOGIC_VECTOR(to_unsigned(30,10));
 	CONSTANT button_width : STD_LOGIC_VECTOR(9 downto 0) := STD_LOGIC_VECTOR(to_unsigned(250, 10));
 
-	SIGNAL max_collisions : INTEGER range 0 to 1000000:= 30000;
+	SIGNAL max_collisions : INTEGER range 0 to 1000000:= 15000;
    -- define states
    type state_type is (game_start, normal_mode, training_mode, game_over);
    SIGNAL current_state, next_state : state_type := game_start;
