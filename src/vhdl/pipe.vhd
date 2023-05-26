@@ -5,7 +5,7 @@ USE IEEE.NUMERIC_STD.all;
 
 entity pipe is
 	PORT(
-		clk, vert_sync, init : IN STD_LOGIC;
+		clk, vert_sync, init, pause_switch : IN STD_LOGIC;
         pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		level,game_state: IN STD_LOGIC_VECTOR(1 downto 0);
 		random_index : IN STD_LOGIC_VECTOR(3 downto 0);
@@ -25,7 +25,7 @@ type preset_vector is array (0 to 16) of integer;
 --CONSTANTS
 CONSTANT preset_scroll_speeds : speed_vector := (2, 4, 8, 15, 18);
 CONSTANT preset_pipe_heights : preset_vector:= (81, 242, 80, 171, 213, 99, 261, 174, 36, 151, 82, 37, 142, 264, 147, 234, 131);
-CONSTANT preset_powerup_heights : preset_vector := (234, 273, 197, 34, 56, 190, 97, 122, 222, 94, 73, 192, 133, 267, 274, 90, 243);
+CONSTANT preset_powerup_heights : preset_vector := (90, 111, 91, 153, 73, 86, 180, 118, 127, 218, 135, 224, 146, 203, 61, 158, 71);
 CONSTANT preset_powerups : preset_vector := (0,0,2,0,1,0,0,0,2,0,1,2,0,1,0,0,1);
 CONSTANT preset_show : std_logic_vector := "1101111101010111";
 CONSTANT pipe_gap : Integer := 130; 
@@ -151,7 +151,11 @@ begin
 			end if;
 			--move the pipe
 			if enable = '1' then
-				pipe_x_motion <= scroll_speed;
+				if (pause_switch = '1') then
+					pipe_x_motion <= 0;
+				else
+					pipe_x_motion <= scroll_speed;
+				end if;
 				pipe_x_pos <= pipe_x_pos - pipe_x_motion;
 			elsif game_state /= "11" then
 				pipe_height <= preset_pipe_heights(current_index);

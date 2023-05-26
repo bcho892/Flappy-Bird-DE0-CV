@@ -7,7 +7,7 @@ USE  IEEE.STD_LOGIC_SIGNED.all;
 ENTITY bird IS
 	PORT
 		(clk, vert_sync, invincible, left_click, pipe_on, health_pickup_on, invincibility_pickup_on, 
-		 death_pickup_on : IN std_logic;
+		 death_pickup_on, pause_switch: IN std_logic;
 		character_select : IN STD_LOGIC_VECTOR(1 downto 0);
           pixel_row, pixel_column	: IN std_logic_vector(9 DOWNTO 0);
 		  game_state : IN std_logic_vector(1 downto 0); -- 00 game over, 01 game start, 10 gameplay
@@ -110,6 +110,8 @@ begin
 
 		if game_state = "00" then
 			bird_y_pos <= CENTRE_Y;
+		elsif pause_switch = '1' then
+			bird_y_motion <= CONV_STD_LOGIC_VECTOR(0,10);
 		elsif bird_y_pos + bird_y_motion >= (GROUND_Y_PIXEL - size) then
 			bird_y_pos <= GROUND_Y_PIXEL - size; --Make it fall to bottom gracefully
 		elsif bird_y_pos + bird_y_motion >= SCREEN_MAX_Y then

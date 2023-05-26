@@ -70,7 +70,23 @@ https://fpgasoftware.intel.com/eula.
 )
 (pin
 	(input)
-	(rect 360 384 536 400)
+	(rect 360 336 528 352)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "clk" (rect 5 0 19 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 368 400 544 416)
 	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
 	(text "pixel_row[9..0]" (rect 5 0 75 12)(font "Arial" ))
 	(pt 176 8)
@@ -86,7 +102,7 @@ https://fpgasoftware.intel.com/eula.
 )
 (pin
 	(input)
-	(rect 352 400 536 416)
+	(rect 360 416 544 432)
 	(text "INPUT" (rect 141 0 169 10)(font "Arial" (font_size 6)))
 	(text "pixel_column[9..0]" (rect 5 0 92 17)(font "Intel Clear" ))
 	(pt 184 8)
@@ -102,7 +118,7 @@ https://fpgasoftware.intel.com/eula.
 )
 (pin
 	(input)
-	(rect 336 448 528 464)
+	(rect 344 464 536 480)
 	(text "INPUT" (rect 149 0 177 10)(font "Arial" (font_size 6)))
 	(text "random_index[3..0]" (rect 5 0 99 12)(font "Arial" ))
 	(pt 192 8)
@@ -118,7 +134,7 @@ https://fpgasoftware.intel.com/eula.
 )
 (pin
 	(input)
-	(rect 312 432 496 448)
+	(rect 320 448 504 464)
 	(text "INPUT" (rect 141 0 169 10)(font "Arial" (font_size 6)))
 	(text "game_state[1..0]" (rect 5 0 88 12)(font "Arial" ))
 	(pt 184 8)
@@ -134,7 +150,7 @@ https://fpgasoftware.intel.com/eula.
 )
 (pin
 	(input)
-	(rect 384 416 552 432)
+	(rect 392 432 560 448)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
 	(text "level[1..0]" (rect 5 0 54 12)(font "Arial" ))
 	(pt 168 8)
@@ -150,9 +166,9 @@ https://fpgasoftware.intel.com/eula.
 )
 (pin
 	(input)
-	(rect 360 336 528 352)
+	(rect 312 384 480 400)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "clk" (rect 5 0 20 12)(font "Arial" ))
+	(text "pause_switch" (rect 5 0 72 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -162,7 +178,7 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 109 4)(pt 113 8))
 		(line (pt 109 12)(pt 113 8))
 	)
-	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+	(text "GND" (rect 128 7 149 17)(font "Arial" (font_size 6)))
 )
 (pin
 	(output)
@@ -329,9 +345,9 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 568 312 832 488)
+	(rect 568 312 832 520)
 	(text "pipe" (rect 5 0 25 12)(font "Arial" ))
-	(text "inst" (rect 8 160 25 172)(font "Arial" ))
+	(text "inst" (rect 8 192 25 204)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -356,37 +372,44 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 0 80)
 		(input)
-		(text "pixel_row[9..0]" (rect 0 0 70 12)(font "Arial" ))
-		(text "pixel_row[9..0]" (rect 21 75 91 87)(font "Arial" ))
-		(line (pt 0 80)(pt 16 80)(line_width 3))
+		(text "pause_switch" (rect 0 0 66 12)(font "Arial" ))
+		(text "pause_switch" (rect 21 75 87 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80))
 	)
 	(port
 		(pt 0 96)
 		(input)
-		(text "pixel_column[9..0]" (rect 0 0 89 12)(font "Arial" ))
-		(text "pixel_column[9..0]" (rect 21 91 110 103)(font "Arial" ))
+		(text "pixel_row[9..0]" (rect 0 0 70 12)(font "Arial" ))
+		(text "pixel_row[9..0]" (rect 21 91 91 103)(font "Arial" ))
 		(line (pt 0 96)(pt 16 96)(line_width 3))
 	)
 	(port
 		(pt 0 112)
 		(input)
-		(text "level[1..0]" (rect 0 0 49 12)(font "Arial" ))
-		(text "level[1..0]" (rect 21 107 70 119)(font "Arial" ))
+		(text "pixel_column[9..0]" (rect 0 0 89 12)(font "Arial" ))
+		(text "pixel_column[9..0]" (rect 21 107 110 119)(font "Arial" ))
 		(line (pt 0 112)(pt 16 112)(line_width 3))
 	)
 	(port
 		(pt 0 128)
 		(input)
-		(text "game_state[1..0]" (rect 0 0 83 12)(font "Arial" ))
-		(text "game_state[1..0]" (rect 21 123 104 135)(font "Arial" ))
+		(text "level[1..0]" (rect 0 0 49 12)(font "Arial" ))
+		(text "level[1..0]" (rect 21 123 70 135)(font "Arial" ))
 		(line (pt 0 128)(pt 16 128)(line_width 3))
 	)
 	(port
 		(pt 0 144)
 		(input)
-		(text "random_index[3..0]" (rect 0 0 94 12)(font "Arial" ))
-		(text "random_index[3..0]" (rect 21 139 115 151)(font "Arial" ))
+		(text "game_state[1..0]" (rect 0 0 83 12)(font "Arial" ))
+		(text "game_state[1..0]" (rect 21 139 104 151)(font "Arial" ))
 		(line (pt 0 144)(pt 16 144)(line_width 3))
+	)
+	(port
+		(pt 0 160)
+		(input)
+		(text "random_index[3..0]" (rect 0 0 94 12)(font "Arial" ))
+		(text "random_index[3..0]" (rect 21 155 115 167)(font "Arial" ))
+		(line (pt 0 160)(pt 16 160)(line_width 3))
 	)
 	(port
 		(pt 264 32)
@@ -445,7 +468,7 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 264 144)(pt 248 144))
 	)
 	(drawing
-		(rectangle (rect 16 16 248 160))
+		(rectangle (rect 16 16 248 192))
 	)
 )
 (connector
@@ -566,31 +589,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 568 344)
 )
 (connector
-	(pt 536 392)
-	(pt 568 392)
-	(bus)
-)
-(connector
-	(pt 536 408)
-	(pt 568 408)
-	(bus)
-)
-(connector
-	(pt 552 424)
-	(pt 568 424)
-	(bus)
-)
-(connector
-	(pt 496 440)
-	(pt 568 440)
-	(bus)
-)
-(connector
-	(pt 528 456)
-	(pt 568 456)
-	(bus)
-)
-(connector
 	(text "pipes_powerups_on" (rect 824 461 841 555)(font "Intel Clear" )(vertical))
 	(pt 840 504)
 	(pt 840 560)
@@ -599,5 +597,34 @@ https://fpgasoftware.intel.com/eula.
 	(text "pipes_powerups_on" (rect 952 264 1046 281)(font "Intel Clear" ))
 	(pt 1016 280)
 	(pt 952 280)
+)
+(connector
+	(pt 544 408)
+	(pt 568 408)
+	(bus)
+)
+(connector
+	(pt 544 424)
+	(pt 568 424)
+	(bus)
+)
+(connector
+	(pt 560 440)
+	(pt 568 440)
+	(bus)
+)
+(connector
+	(pt 504 456)
+	(pt 568 456)
+	(bus)
+)
+(connector
+	(pt 536 472)
+	(pt 568 472)
+	(bus)
+)
+(connector
+	(pt 568 392)
+	(pt 480 392)
 )
 (junction (pt 840 504))
